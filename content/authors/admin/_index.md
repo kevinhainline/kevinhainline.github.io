@@ -1,17 +1,17 @@
 ---
 # Display name
-title: 吳健雄
+title: Associate Research Professor Kevin Hainline
 
 # Name pronunciation (optional)
-name_pronunciation: Chien Shiung Wu
+name_pronunciation: KEH-vin HAYN-line
 
 # Full name (for SEO)
-first_name: Shiung Wu
-last_name: Chien
+first_name: Kevin
+last_name: Hainline
 
 # Status emoji
 status:
-  icon: ☕️
+  icon: 🌌
 
 # Is this the primary user of the site?
 superuser: true
@@ -20,31 +20,31 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Chief Scientist
+role: Associate Research Professor
 
 # Organizations/Affiliations to display in Biography blox
 organizations:
-  - name: OpenAI
-    url: https://openai.com/
+  - name: Steward Observatory, University of Arizona
+    url: https://www.as.arizona.edu/
 
 # Social network links
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
 profiles:
   - icon: at-symbol
-    url: 'mailto:your-email@example.com'
+    url: 'mailto:kevinhainline@arizona.ed'
     label: E-mail Me
   - icon: brands/x
-    url: https://twitter.com/GetResearchDev
+    url: https://twitter.com/kevinhainline
   - icon: brands/instagram
-    url: https://www.instagram.com/
+    url: https://www.instagram.com/kevinhainline
   - icon: brands/github
-    url: https://github.com/gcushen
+    url: https://github.com/kevinhainline
   - icon: brands/linkedin
-    url: https://www.linkedin.com/
+    url: www.linkedin.com/in/kevin-hainline-2763a7251
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/
+    url: https://scholar.google.com/citations?user=vfDumXIAAAAJ&hl=en
   - icon: academicons/orcid
-    url: https://orcid.org/
+    url: https://orcid.org/0000-0003-4565-8239
 
 interests:
   - Artificial Intelligence
