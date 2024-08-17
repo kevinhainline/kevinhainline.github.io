@@ -64,27 +64,38 @@ education:
     button:
       text: 'PhD Thesis'
       url: 'https://escholarship.org/uc/item/39r1m06w'
-  - area: BSc Physics
-    institution: Harvey Mudd College
-    date_start: 2002-09-01
-    date_end: 2006-5-14
+  - area: MEng Artificial Intelligence
+    institution: Massachusetts Institute of Technology
+    date_start: 2016-01-01
+    date_end: 2020-12-31
     summary: |
-      GPA: XXX
+      GPA: 3.8/4.0
 
       Courses included:
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
-work:
-  - position: Postdoctoral Researcher
-    company_name:  Dartmouth College
-    company_url: 'www.dartmouth.edu'
-    company_logo: ''
-    date_start: 2012-09-01
-    date_end: 2015-08-15
+  - area: BSc Artificial Intelligence
+    institution: Massachusetts Institute of Technology
+    date_start: 2016-01-01
+    date_end: 2020-12-31
     summary: |
-      Research under Postdoctoral advisor Dr. Ryan Hickox.
+      GPA: 3.4/4.0
+      
+      Courses included:
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
+      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+work:
+  - position: Backend Software Engineer
+    company_name: X
+    company_url: ''
+    company_logo: ''
+    date_start: 2016-01-01
+    date_end: 2020-12-31
+    summary: |
+      Responsibilities include:
+      - Migrated infrastructure to a new data center
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
 
