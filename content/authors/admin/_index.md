@@ -69,22 +69,22 @@ education:
     date_start: 2002-09-01
     date_end: 2006-05-14
     summary: |
-      GPA: 3.4/4.0
+      GPA: XXX
       
       Courses included:
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
 work:
-  - position: Backend Software Engineer
-    company_name: X
-    company_url: ''
+  - position: Postdoctoral Researcher
+    company_name: Dartmouth College
+    company_url: 'www.dartmouth.edu'
     company_logo: ''
-    date_start: 2016-01-01
-    date_end: 2020-12-31
+    date_start: 2012-09-01
+    date_end: 2015-08-15
     summary: |
-      Responsibilities include:
-      - Migrated infrastructure to a new data center
+      Research under Postdoctoral advisor Dr. Ryan Hickox. 
+      - lorem ipsum dolor sit amet, consectetur adipiscing elit
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
 
