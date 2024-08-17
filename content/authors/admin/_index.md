@@ -64,10 +64,10 @@ education:
     button:
       text: 'PhD Thesis'
       url: 'https://escholarship.org/uc/item/39r1m06w'
-  - area: BSc Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    date_start: 2016-01-01
-    date_end: 2020-12-31
+  - area: BSc Physics
+    institution: Harvey Mudd College
+    date_start: 2002-09-01
+    date_end: 2006-05-14
     summary: |
       GPA: 3.4/4.0
       
