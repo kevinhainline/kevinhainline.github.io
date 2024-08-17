@@ -69,7 +69,7 @@ education:
     date_start: 2002-09-01
     date_end: 2006-5-14
     summary: |
-      GPA: xxx
+      GPA: xxxx
       
       Courses included:
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
