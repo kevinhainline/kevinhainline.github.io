@@ -1,6 +1,6 @@
 ---
 # Display name
-title: Associate Research Professor Kevin Hainline
+title: Kevin Hainline
 
 # Name pronunciation (optional)
 name_pronunciation: KEH-vin HAYN-line
@@ -31,7 +31,7 @@ organizations:
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
 profiles:
   - icon: at-symbol
-    url: 'mailto:kevinhainline@arizona.ed'
+    url: 'mailto:kevinhainline@arizona.edu'
     label: E-mail Me
   - icon: brands/x
     url: https://twitter.com/kevinhainline
@@ -40,16 +40,19 @@ profiles:
   - icon: brands/github
     url: https://github.com/kevinhainline
   - icon: brands/linkedin
-    url: www.linkedin.com/in/kevin-hainline-2763a7251
+    url: https://www.linkedin.com/in/kevin-hainline/
   - icon: academicons/google-scholar
     url: https://scholar.google.com/citations?user=vfDumXIAAAAJ&hl=en
   - icon: academicons/orcid
     url: https://orcid.org/0000-0003-4565-8239
 
 interests:
-  - Artificial Intelligence
-  - Computational Linguistics
-  - Information Retrieval
+  - Galaxy Evolution
+  - Black Holes and Active Galactic Nuclei
+  - High-Redshift Galaxies
+  - Infrared Science
+  - Brown Dwarfs
+  - Science Outreach Education and Communication
 
 education:
   - area: PhD Artificial Intelligence
