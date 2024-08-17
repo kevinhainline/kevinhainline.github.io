@@ -64,17 +64,6 @@ education:
     button:
       text: 'PhD Thesis'
       url: 'https://escholarship.org/uc/item/39r1m06w'
-  - area: BSc Physics
-    institution: Harvey Mudd College
-    date_start: 2002-09-01
-    date_end: 2006-5-14
-    summary: |
-      GPA: 3.8/4.0
-
-      Courses included:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
   - area: BSc Artificial Intelligence
     institution: Massachusetts Institute of Technology
     date_start: 2016-01-01
