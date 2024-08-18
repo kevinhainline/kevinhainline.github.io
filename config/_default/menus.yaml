@@ -16,12 +16,12 @@ main:
   - name: News
     url: /#news
     weight: 13
-  - name: Experience
+  - name: Education
     url: experience/
     weight: 20
   - name: Projects
     url: projects/
     weight: 30
-  - name: Teaching
-    url: teaching/
+  - name: Public Speaking
+    url: www.thestarsconnectus.com
     weight: 40
