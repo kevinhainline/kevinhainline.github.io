@@ -39,7 +39,7 @@ sections:
 
         Since moving to the University of Arizona, I worked to support JWST NIRCam. My research focuses on exploring sources in the JWST Advanced Deep Extragalactic Survey, or JADES. I have helped identify some of the farthest galaxies humans have ever seen, stretching back to a redshift of 14. I've also explored how JWST NIRCam can find low-temperature brown dwarfs in our galaxy. 
 
-        I have a passion for science outreach education, and I've worked with many local and national schools and outreach groups. I'm an active member of [Skype a Scientist](https://www.skypeascientist.com/), where you can have me speak to your students about astronomy and the Universe!
+        I have a passion for science outreach education, and I've worked with many local and national schools and outreach groups. I'm an active member of <a href="https://www.skypeascientist.com/">Skype A Scientist</a>, where you can have me speak to your students about astronomy and the Universe!
         
     design:
       columns: '1'
