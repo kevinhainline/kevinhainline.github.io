@@ -18,7 +18,7 @@ publication_types: ["article"]
 publication: "The Cosmos in Its Infancy: JADES Galaxy Candidates at z > 8 in GOODS-S and GOODS-N"
 publication_short: "JADES z > 8 Galaxies"
 
-abstract: asdf
+abstract: We present a catalog of 717 candidate galaxies at z > 8 selected from 125 square arcmin of NIRCam imaging as part of the JWST Advanced Deep Extragalactic Survey (JADES). We combine the full JADES imaging data set with data from the JWST Extragalactic Medium Survey and First Reionization Epoch Spectroscopic COmplete Survey (FRESCO) along with extremely deep existing observations from Hubble Space Telescope (HST)/Advanced Camera for Surveys (ACS) for a final filter set that includes 15 JWST/NIRCam filters and five HST/ ACS filters.
 
 # Summary. An optional shortened abstract.
 summary: JADES High-redshift Galaxies
