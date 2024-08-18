@@ -1,5 +1,5 @@
 ---
-title: STScI Releases Fly-to to JADES-GS-z14-0! 
+title: STScI Releases Simulated Fly Through to JADES-GS-z14-0
 summary: Take a gentle journey to a galaxy from the dawn of time! 
 date: 2024-08-18
 
