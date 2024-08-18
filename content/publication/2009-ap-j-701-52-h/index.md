@@ -1,8 +1,7 @@
 ---
-title: Rest-Frame Optical Spectra of Three Strongly Lensed Galaxies at z åisebox-0.5ex~
-  2
+title: Rest-Frame Optical Spectra of Three Strongly Lensed Galaxies at z ~ 2
 authors:
-- Kevin N. Hainline
+- admin
 - Alice E. Shapley
 - Katherine A. Kornei
 - Max Pettini
@@ -13,7 +12,7 @@ date: '2009-08-01'
 publishDate: '2024-08-18T00:30:26.785244Z'
 publication_types:
 - article-journal
-publication: '*apj*'
+publication: '*The Astrophysical Journal*, 701:52–65'
 doi: 10.1088/0004-637X/701/1/52
 tags:
 - 'galaxies: abundances'
