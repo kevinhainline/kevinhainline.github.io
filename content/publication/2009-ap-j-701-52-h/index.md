@@ -12,7 +12,7 @@ date: '2009-08-01'
 publishDate: '2024-08-18T00:30:26.785244Z'
 publication_types:
 - article-journal
-publication: '*The Astrophysical Journal*'
+publication: "*The Astrophysical Journal* 701:52-65"
 doi: 10.1088/0004-637X/701/1/52
 tags:
 - 'galaxies: abundances'
