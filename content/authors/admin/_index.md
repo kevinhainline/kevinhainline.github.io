@@ -69,12 +69,7 @@ education:
     date_start: 2002-09-01
     date_end: 2006-05-14
     summary: |
-      GPA: XXX
-      
-      Courses included:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+      Researched stellar clusters with Dr. Ann Esin. 
 work:
   - position: Postdoctoral Researcher
     company_name: Dartmouth College
@@ -158,4 +153,4 @@ languages:
 
 ## About Me
 
-Chien Shiung Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Kevin Hainline is an astronomer at Steward Observatory at University of Arizona. He is a member of the JWST NIRCam Science Team, helping with testing and commissioning the primary camera on board the observatory. His research explores the ultra high redshift universe, supermassive black holes and their host galaxies, and infrared selection of cold brown dwarfs. He is also an advocate for science outreach education and public speaking. He's very enthusiastic. 
