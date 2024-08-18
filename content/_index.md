@@ -35,11 +35,11 @@ sections:
       title: 'My Research'
       subtitle: ''
       text: |-
-        Prior to the launch of JWST, my primary focus was optical and infrared observations of obscured active galactic nuclei, or AGNs. I helped identify new obscured sources using the Wide Field Infrared Survey Explorer, or WISE, telescope. I also helped uncover the physical extent of the narrow-line regions for local obscured quasars. 
+        Prior to the launch of JWST, my primary focus was <a href="https://arxiv.org/abs/1206.3308">optical and infrared observations of obscured active galactic nuclei</a>, or AGNs. I helped identify <a href="https://arxiv.org/abs/1409.4773">new obscured sources using the Wide Field Infrared Survey Explorer, or WISE, telescope</a>. I also helped uncover the <a href="https://arxiv.org/abs/1307.5852">physical extent of the narrow-line regions for local obscured quasars</a>. 
 
-        Since moving to the University of Arizona, I worked to support JWST NIRCam. My research focuses on exploring sources in the JWST Advanced Deep Extragalactic Survey, or JADES. I have helped identify some of the farthest galaxies humans have ever seen, stretching back to a redshift of 14. I've also explored how JWST NIRCam can find low-temperature brown dwarfs in our galaxy. 
+        Since moving to the University of Arizona, I worked to support <a href="https://jwst-docs.stsci.edu/jwst-near-infrared-camera">JWST NIRCam</a>. My research focuses on exploring sources in the <a href="https://jades-survey.github.io">JWST Advanced Deep Extragalactic Survey, or JADES</a>. I have helped identify some of the <a href="https://arxiv.org/abs/2306.02468">farthest galaxies humans have ever seen</a>, stretching <a href="https://www.nature.com/articles/s41586-024-07860-9">back to a redshift of 14</a>. I've also explored how JWST NIRCam can find <a href="https://arxiv.org/abs/2309.03250">low-temperature brown dwarfs in our galaxy</a>. 
 
-        I have a passion for science outreach education, and I've worked with many local and national schools and outreach groups. I'm an active member of <a href="https://www.skypeascientist.com/">Skype A Scientist</a>, where you can have me speak to your students about astronomy and the Universe!
+        I have a passion for <a href="https://www.thestarsconnectus.com">science outreach education</a>, and I've worked with <a href="https://thestarsconnectus.com/people-ive-worked-with">many local and national schools and outreach groups</a>. I'm an active member of <a href="https://www.skypeascientist.com/">Skype A Scientist</a>, where you can have me virtually speak with your students about astronomy and the Universe!
         
         <a href="https://ui.adsabs.harvard.edu/search/q=author%3A%22Hainline%2C%20Kevin%20N.%22">You can find all of my publications here.</a>
         

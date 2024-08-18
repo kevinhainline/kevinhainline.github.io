@@ -34,7 +34,7 @@ profiles:
     url: 'mailto:kevinhainline@arizona.edu'
     label: E-mail Me
   - icon: brands/x
-    url: https://twitter.com/kevinhainline
+    url: https://twitter.com/kevin_hainline
   - icon: brands/instagram
     url: https://www.instagram.com/kevinhainline
   - icon: brands/github
