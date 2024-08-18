@@ -1,5 +1,6 @@
 ---
-title: Rest-Frame Optical Spectra of Three Strongly Lensed Galaxies at z ~ 2
+title: Rest-Frame Optical Spectra of Three Strongly Lensed Galaxies at z åisebox-0.5ex~
+  2
 authors:
 - admin
 - Alice E. Shapley
@@ -12,7 +13,7 @@ date: '2009-08-01'
 publishDate: '2024-08-18T00:30:26.785244Z'
 publication_types:
 - article-journal
-publication: '*The Astrophysical Journal*, 701:52–65'
+publication: '*apj*'
 doi: 10.1088/0004-637X/701/1/52
 tags:
 - 'galaxies: abundances'
