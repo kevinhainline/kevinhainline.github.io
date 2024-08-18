@@ -2,7 +2,7 @@
 title: 'Searching for Emission Lines at $z>11$: The Role of Damped Lyman-$α$ and Hints
   About the Escape of Ionizing Photons'
 authors:
-- Kevin N. Hainline
+- admin
 - Francesco D'Eugenio
 - Peter Jakobsen
 - Jacopo Chevallard

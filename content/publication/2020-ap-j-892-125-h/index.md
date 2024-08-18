@@ -1,7 +1,7 @@
 ---
 title: Simulating JWST/NIRCam Color Selection of High-redshift Galaxies
 authors:
-- Kevin N. Hainline
+- admin
 - Raphael E. Hviding
 - Marcia Rieke
 - Irene Shivaei
@@ -20,7 +20,7 @@ date: '2020-04-01'
 publishDate: '2024-08-18T00:30:26.725948Z'
 publication_types:
 - article-journal
-publication: '*apj*'
+publication: "*The Astrophysical Journal* 892:125"
 doi: 10.3847/1538-4357/ab7dc3
 tags:
 - High-redshift galaxies

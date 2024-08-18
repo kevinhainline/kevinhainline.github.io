@@ -1,7 +1,7 @@
 ---
 title: 'JADES: Spectroscopic Confirmation and Proper Motion for a T-Dwarf at 2 Kiloparsecs'
 authors:
-- Kevin N. Hainline
+- admin
 - Francesco D'Eugenio
 - Fengwu Sun
 - Jakob M. Helton
