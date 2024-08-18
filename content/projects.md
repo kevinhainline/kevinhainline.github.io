@@ -12,7 +12,7 @@ sections:
   - block: collection
     content:
       title: Selected Projects
-      text: I have made a few open source projects for help with JWST and JADES
+      text: I have made a few open source projects for help with JWST and JADES.
       filters:
         folders:
           - project
