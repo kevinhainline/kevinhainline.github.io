@@ -1,7 +1,7 @@
 ---
 title: Stellar Populations of Ultraviolet-selected Active Galactic Nuclei Host Galaxies at z ~ 2-3
 authors:
-- Kevin N. Hainline
+- admin
 - Alice E. Shapley
 - Jenny E. Greene
 - Charles C. Steidel
@@ -11,7 +11,7 @@ date: '2012-11-01'
 publishDate: '2024-08-18T00:30:26.765518Z'
 publication_types:
 - article-journal
-publication: '*The Astrophysical Journal*'
+publication: "*The Astrophysical Journal* 760:74"
 doi: 10.1088/0004-637X/760/1/74
 tags:
 - 'cosmology: observations'

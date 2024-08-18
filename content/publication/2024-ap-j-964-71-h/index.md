@@ -2,7 +2,7 @@
 title: 'The Cosmos in Its Infancy: JADES Galaxy Candidates at z > 8 in GOODS-S and
   GOODS-N'
 authors:
-- Kevin N. Hainline
+- admin
 - Benjamin D. Johnson
 - Brant Robertson
 - Sandro Tacchella
