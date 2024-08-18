@@ -1,18 +1,18 @@
 ---
-title: JWST: The Future of Astronomy
+title: Example Talk
 
-event: Bryce Canyon National Park
-event_url: https://www.nps.gov/brca/index.htm
+event: Hugo Blox Builder Conference
+event_url: https://example.org
 
 location: Hugo Blox Builder HQ
 address:
-  street: Highway 63
-  city: Bryce
-  region: UT
-  postcode: '84764'
+  street: 450 Serra Mall
+  city: Stanford
+  region: CA
+  postcode: '94305'
   country: United States
 
-summary: Bryce Canyon JWST Launch Event 
+summary: An example talk using Hugo Blox Builder's Markdown slides feature.
 abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellusac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam.'
 
 # Talk start and end times.
@@ -41,10 +41,10 @@ image:
 #    icon_pack: fab
 #    name: Follow
 #    url: https://twitter.com/georgecushen
-url_code: ''
+url_code: 'https://github.com'
 url_pdf: ''
-url_slides: ''
-url_video: 'https://www.youtube.com/watch?v=3wuFSUxvRY0'
+url_slides: 'https://slideshare.net'
+url_video: 'https://youtube.com'
 
 # Markdown Slides (optional).
 #   Associate this talk with Markdown slides.
