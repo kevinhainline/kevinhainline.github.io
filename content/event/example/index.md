@@ -1,10 +1,10 @@
 ---
 title: JWST, The Future of Astronomy
 
-event: Bryce Canyon National Park
+event: Bryce Canyon JWST Launch Event
 event_url: https://www.nps.gov/brca/index.htm
 
-location: Hugo Blox Builder HQ
+location: Bryce Canyon National Park
 address:
   street: Highway 63
   city: Bryce
@@ -12,7 +12,7 @@ address:
   postcode: '84764'
   country: United States
 
-summary: Bryce Canyon JWST Launch Event 
+summary: A discussion of what JWST will provide in the coming years
 abstract: 'Live Virtual Interview in Visitor Center Theater with Dr. Kevin Hainline'
 
 # Talk start and end times.
