@@ -35,7 +35,11 @@ sections:
       title: 'My Research'
       subtitle: ''
       text: |-
-        I'm an astronomy professor
+        Prior to the launch of JWST, my primary focus was optical and infrared observations of obscured active galactic nuclei, or AGNs. I helped identify new obscured sources using the Wide Field Infrared Survey Explorer, or WISE, telescope. I also helped uncover the physical extent of the narrow-line regions for local obscured quasars. 
+
+        Since moving to the University of Arizona, I worked to support JWST NIRCam. My research focuses on exploring sources in the JWST Advanced Deep Extragalactic Survey, or JADES. I have helped identify some of the farthest galaxies humans have ever seen, stretching back to a redshift of 14. I've also explored how JWST NIRCam can find low-temperature brown dwarfs in our galaxy. 
+
+        I have a passion for science outreach education, and I've worked with many local and national schools and outreach groups. I'm an active member of Skype a Scientist, and I have an entire page dedicated to my public speaking: www.thestarsconnectus.com. 
     design:
       columns: '1'
   - block: collection
@@ -62,7 +66,7 @@ sections:
   - block: collection
     id: talks
     content:
-      title: Recent & Upcoming Talks
+      title: Recent & Upcoming Lectures
       filters:
         folders:
           - event
