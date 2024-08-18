@@ -22,7 +22,6 @@ publication_types:
 - article-journal
 publication: '*apj*'
 doi: 10.3847/1538-4357/ab7dc3
-featured: true
 tags:
 - High-redshift galaxies
 - Galaxy colors

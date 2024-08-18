@@ -23,6 +23,7 @@ publication_types:
 - article-journal
 publication: '*apj*'
 doi: 10.3847/1538-4357/ad20d1
+featured: true
 tags:
 - Brown dwarfs
 - T dwarfs
