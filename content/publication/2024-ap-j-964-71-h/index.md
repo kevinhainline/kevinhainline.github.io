@@ -62,11 +62,6 @@ tags:
 - James Webb Space Telescope
 - High-redshift galaxies
 - Galaxies
-- '506'
-- '1378'
-- '2291'
-- '734'
-- '573'
 - Astrophysics - Astrophysics of Galaxies
 links:
 - name: arXiv
