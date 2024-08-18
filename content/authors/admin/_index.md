@@ -153,4 +153,4 @@ languages:
 
 ## About Me
 
-Kevin Hainline is an astronomer at Steward Observatory at University of Arizona. He is a member of the JWST NIRCam Science Team, helping with testing and commissioning the primary camera on board the observatory. His research explores the ultra high redshift universe, supermassive black holes and their host galaxies, and infrared selection of cold brown dwarfs. He is also an advocate for science outreach education and public speaking. He's very enthusiastic. 
+I am an astronomer at Steward Observatory at University of Arizona. I'm a member of the JWST NIRCam Science Team, and I helped with testing and commissioning the primary camera on board the observatory. My research explores the ultra high redshift universe, supermassive black holes and their host galaxies, and infrared selection of cold brown dwarfs. I am also an advocate for science outreach education. I'm very enthusiastic. 
