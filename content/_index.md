@@ -39,7 +39,9 @@ sections:
 
         Since moving to the University of Arizona, I worked to support JWST NIRCam. My research focuses on exploring sources in the JWST Advanced Deep Extragalactic Survey, or JADES. I have helped identify some of the farthest galaxies humans have ever seen, stretching back to a redshift of 14. I've also explored how JWST NIRCam can find low-temperature brown dwarfs in our galaxy. 
 
-        I have a passion for science outreach education, and I've worked with many local and national schools and outreach groups. I'm an active member of Skype a Scientist, where you can bring me out to speak to your students about astronomy and the Universe!  
+        I have a passion for science outreach education, and I've worked with many local and national schools and outreach groups. I'm an active member of [Skype a Scientist](https://www.skypeascientist.com/), where you can have me speak to your students about astronomy and the Universe!
+        
+       [You can find all of my publications here.](https://ui.adsabs.harvard.edu/search/q=author%3A%22Hainline%2C%20Kevin%20N.%22)
     design:
       columns: '1'
   - block: collection
