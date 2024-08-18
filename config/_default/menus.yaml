@@ -23,5 +23,5 @@ main:
     url: projects/
     weight: 30
   - name: Public Speaking
-    url: www.thestarsconnectus.com
+    url: http://www.thestarsconnectus.com
     weight: 40
