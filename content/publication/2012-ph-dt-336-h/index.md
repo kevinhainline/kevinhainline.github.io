@@ -1,5 +1,5 @@
 ---
-title: Understanding star formation and AGN activity at z ensuremath∼ 2 – 3
+title: Understanding star formation and AGN activity at z ∼ 2 – 3
 authors:
 - Kevin Nicholas Hainline
 date: '2012-06-01'
