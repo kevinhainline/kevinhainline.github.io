@@ -41,7 +41,6 @@ sections:
 
         I have a passion for science outreach education, and I've worked with many local and national schools and outreach groups. I'm an active member of [Skype a Scientist](https://www.skypeascientist.com/), where you can have me speak to your students about astronomy and the Universe!
         
-       [You can find all of my publications here.](https://ui.adsabs.harvard.edu/search/q=author%3A%22Hainline%2C%20Kevin%20N.%22)
     design:
       columns: '1'
   - block: collection
