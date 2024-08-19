@@ -60,7 +60,9 @@ education:
     date_start: 2006-09-01
     date_end: 2012-09-14
     summary: |
-      Researched galaxy and AGN evolution at cosmic noon with Dr. Alice Shapley. Director of the UCLA Planetarium, 2007 - 2012. Co-founder UCLA Astronomy Live!
+      Researched galaxy and AGN evolution at cosmic noon with Dr. Alice Shapley
+      - Director of the [UCLA Planetarium](https://planetarium.astro.ucla.edu/), 2007 - 2012
+      - Co-founder [_UCLA Astronomy Live!_](https://astro.ucla.edu/astronomy-live.html)
     button:
       text: 'PhD Thesis'
       url: 'https://escholarship.org/uc/item/39r1m06w'
@@ -79,9 +81,8 @@ work:
     date_end: 2015-08-15
     summary: |
       Research under Postdoctoral advisor Dr. Ryan Hickox. 
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+      - Mentored Undergraduates Raphael Hviding and Alexandros Zervos
+      - Taught Dartmouth Course "Introduction to the Solar System," Summer 2015
 
 # Skills
 # Add your own SVG icons to `assets/media/icons/`
