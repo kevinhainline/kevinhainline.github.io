@@ -1,7 +1,7 @@
 ---
 title: Brown Dwarf Candidates in the JADES and CEERS Extragalactic Surveys
 authors:
-- Kevin N. Hainline
+- admin
 - Jakob M. Helton
 - Benjamin D. Johnson
 - Fengwu Sun
