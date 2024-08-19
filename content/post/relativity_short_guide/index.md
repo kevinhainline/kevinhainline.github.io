@@ -66,36 +66,35 @@ So, let's go over this in a little more detail.
 	
 	So, let's illustrate some of the weirdness in relativity with a problem:
 	
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	
-	1. The barn-bus paradox. (also called barn-pole, or barn-ladder paradox). So let's say a bus that's 30 feet long is driving towards a barn that 20 feet long, with two doors on the barn. Inside the barn are two people who are manning the controls for each door. The bus is going really fast, and therefore, is experiencing length contraction, and get this, in the reference frame of the people in the barn - the bus looks only 15 feet long! This means that the bus could actually fit INSIDE the barn! (Think about this for a second. This is just a consequence of weirdness number 2 above)
+	**The barn-bus paradox.** (also called barn-pole, or barn-ladder paradox). So let's say a bus that's 30 feet long is driving towards a barn that 20 feet long, with two doors on the barn. Inside the barn are two people who are manning the controls for each door. The bus is going really fast, and therefore, is experiencing length contraction, and get this, in the reference frame of the people in the barn - the bus looks only 15 feet long! This means that the bus could actually fit INSIDE the barn! (Think about this for a second. This is just a consequence of weirdness number 2 above)
 	
-	So, they decide that once the now-squished bus is fully inside the barn, they are going to close the doors at the same time, and then open them quickly, so that for a split second, the bus can fit inside the barn. Easy enough.
+	>So, they decide that once the now-squished bus is fully inside the barn, they are going to close the doors at the same time, and then open them quickly, so that for a split second, the bus can fit inside the barn. Easy enough.
 	
-	But, let's now switch viewpoints, and say we are on the bus. (Again, this is an important point. Most of special relativity involves going into different frames, and remember, in the buses frame of reference it is not moving, but the barn is coming towards it) So, we're on a 30 foot long bus, and from our perspective, there's a barn moving towards us, and it is all squished, so it looks like it's only 10 feet long! The bus we're on is 30 feet long!
+	>But, let's now switch viewpoints, and say we are on the bus. (Again, this is an important point. Most of special relativity involves going into different frames, and remember, in the buses frame of reference it is not moving, but the barn is coming towards it) So, we're on a 30 foot long bus, and from our perspective, there's a barn moving towards us, and it is all squished, so it looks like it's only 10 feet long! The bus we're on is 30 feet long!
 	
-	So, to recap:
+	>So, to recap:
 	
-	1. Frame of the barn - Bus is squished, and can fit inside the barn.
-	2. Frame of the bus - Barn is squished, no freakin' way can the bus fit inside the barn.
+	>1. Frame of the barn - Bus is squished, and can fit inside the barn.
+	>2. Frame of the bus - Barn is squished, no freakin' way can the bus fit inside the barn.
 	
-	Who is right? They both are! The bus moves through the barn, and the doors work, and everyone is happy.
+	>Who is right? They both are! The bus moves through the barn, and the doors work, and everyone is happy.
 	
-	In the frame of the barn, they close the doors and open them, and the 30 foot bus does indeed contract to 15 feet and fit inside the 20 foot long barn.
+	>In the frame of the barn, they close the doors and open them, and the 30 foot bus does indeed contract to 15 feet and fit inside the 20 foot long barn.
 	
-	The trick comes when we consider the frame of the bus. Now, the bus is moving towards this small squished barn, where two guys are going to try (and actually succeed) to close the doors. But remember what I said above - simultaneous events depend on the reference frame. So, for the bus, first one door closes and then opens and then only after the bus passes by the front door, does the other door open and close. Instead of them closing at the same time, one closes before the other, and then instead of them opening at the same time, one opens before the other, and the bus makes it through.
+	>The trick comes when we consider the frame of the bus. Now, the bus is moving towards this small squished barn, where two guys are going to try (and actually succeed) to close the doors. But remember what I said above - simultaneous events depend on the reference frame. So, for the bus, first one door closes and then opens and then only after the bus passes by the front door, does the other door open and close. Instead of them closing at the same time, one closes before the other, and then instead of them opening at the same time, one opens before the other, and the bus makes it through.
 	
-	You can find some pictures [here](https://en.wikipedia.org/wiki/Ladder_paradox).
+	>You can find some pictures [here](https://en.wikipedia.org/wiki/Ladder_paradox).
 	
-	But...what if the bus, after passing this first barn, comes to a second barn 20 foot long barn where there is only one door, and entrance, and there is no exit. In this second barn's frame of reference, he is going to close the door when the squished bus enters the barn, and then leave it closed.
+	>But...what if the bus, after passing this first barn, comes to a second barn 20 foot long barn where there is only one door, and entrance, and there is no exit. In this second barn's frame of reference, he is going to close the door when the squished bus enters the barn, and then leave it closed.
 	
-	In the bus frame of reference, there is a barn with a wall at the end moving towards it, and this barn is squished to ten feet. What happens?
+	>In the bus frame of reference, there is a barn with a wall at the end moving towards it, and this barn is squished to ten feet. What happens?
 	
-	Well, in the reference frame of the barn, the bus comes in, hits the wall, and the door closes behind it. Once the bus stops, it is not length contracted, so it busts out the back door!
+	>Well, in the reference frame of the barn, the bus comes in, hits the wall, and the door closes behind it. Once the bus stops, it is not length contracted, so it busts out the back door!
 	
-	But...in the reference frame of the bus, how did it ever get into the barn, if the barn were so squished so small?
+	>But...in the reference frame of the bus, how did it ever get into the barn, if the barn were so squished so small?
 	
-	Well, the trick here comes from the fact that the bus goes into the barn and hits the back wall. Remember though, that nothing can travel faster than the speed of light - not even the bus crash - so the signal from the front of the bus (all of the molecules squishing together as it crashes) actually goes back through the bus at some velocity. Meanwhile, since the back of the bus has no idea it has crashed (since the signal hasn't gotten there yet), it keeps right on driving in. Here, the bus will keep driving in and eventually make it all the way into the barn before the door is closed and the signal finally reaches the back of the bus, which stops, and then breaks through the back wall.
+	>Well, the trick here comes from the fact that the bus goes into the barn and hits the back wall. Remember though, that nothing can travel faster than the speed of light - not even the bus crash - so the signal from the front of the bus (all of the molecules squishing together as it crashes) actually goes back through the bus at some velocity. Meanwhile, since the back of the bus has no idea it has crashed (since the signal hasn't gotten there yet), it keeps right on driving in. Here, the bus will keep driving in and eventually make it all the way into the barn before the door is closed and the signal finally reaches the back of the bus, which stops, and then breaks through the back wall.
 
 
 Now, there are a lot of paradoxes that all work the same way, but the important point to remember for most of them is that length is contracted, and simultaneous events depend on frame of reference. (What you think might happen at the same time doesn't happen that way for someone moving quickly.)
