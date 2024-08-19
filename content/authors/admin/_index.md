@@ -61,8 +61,8 @@ education:
     date_end: 2012-09-14
     summary: |
       Researched galaxy and AGN evolution at cosmic noon with Dr. Alice Shapley
-      - Director of the [UCLA Planetarium](https://planetarium.astro.ucla.edu/), 2007 - 2012
-      - Co-founder [_UCLA Astronomy Live!_](https://astro.ucla.edu/astronomy-live.html)
+      - Director of the <a href="https://planetarium.astro.ucla.edu/">UCLA Planetarium</a>, 2007 - 2012
+      - Co-founder of <a href="https://astro.ucla.edu/astronomy-live.html">_UCLA Astronomy Live!_</a>, 2007 - 2012
     button:
       text: 'PhD Thesis'
       url: 'https://escholarship.org/uc/item/39r1m06w'
