@@ -1,5 +1,5 @@
 ---
-title: 'Searching for Emission Lines at $z>11$: The Role of Damped Lyman-$α$ and Hints
+title: 'Searching for Emission Lines at z>11: The Role of Damped Lyman-$α$ and Hints
   About the Escape of Ionizing Photons'
 authors:
 - admin
