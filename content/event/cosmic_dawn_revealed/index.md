@@ -1,15 +1,15 @@
 ---
-title: JWST’s Tiny Red Sources and the Big Questions They Raise 
+title: Cosmic Dawn Revealed: The JADES View of Galaxies at z > 10
 
-event: Youtube Discussion 
-event_url: https://www.youtube.com/watch?v=hQWt3P4Eb-c
+event: Research Talk
+event_url: https://www.youtube.com/watch?v=QKRKoCgR0Cc
 
 
-summary: A discussion of the intriguing "Little Red Dots" seen in JWST imaging
-abstract: 'In its first three years, JWST has transformed our view of galaxy evolution. Among its most puzzling discoveries are the Little Red Dots, compact, distant sources scattered across the sky that continue to defy easy explanation. In this talk, Dr. Kevin Hainline (Associate Research Professor, Steward Observatory, University of Arizona) explores their discovery, the growing list of mysteries they present, and what they might reveal about the early universe.'
+summary: A research talk given at the Kavli Institute for Theoretical Physics
+abstract: 'Since the launch of JWST, our understanding of the first stars and galaxies has come into sharp focus. Photometric and spectroscopic observations of these sources teach us about the unique star formation histories as well as gas and ionization properties in the first few hundred million years after the Big Bang. In this talk, JWST Advanced Deep Extragalactic Survey (JADES) team member Kevin Hainline will describe what has been learned about galaxies at z > 10 from ultra deep observations in both the GOODS-S and GOODS-N fields. He will discuss the challenges of photometric redshift measurement for these sources in light of the discovery of damped Lyman alpha absorption at high redshift. He will describe the spectroscopic confirmation of the highest-redshift galaxies, and what their emission lines, and lack thereof, tells us about the gas metallicity, escape fractions, and star-formation histories for these sources. Finally, he will discuss the recent discovery of JADES-GS-z14-0 at z = 14.32, including the NIRSpec spectroscopy and detection in deep MIRI imaging, and what this means for galaxy formation.'
 
 # Schedule page publish date (NOT talk date).
-publishDate: '2025-06-26T00:00:00Z'
+publishDate: '2024-08-26T00:00:00Z'
 
 authors:
   - admin
@@ -17,7 +17,7 @@ authors:
 tags: []
 
 # Is this a featured talk? (true/false)
-featured: true
+featured: false
 
 image:
   caption: 'Screen Capture from Youtube Recording'
@@ -26,8 +26,8 @@ image:
 #links:
 url_code: ''
 url_pdf: ''
-url_slides: ''
-url_video: 'https://www.youtube.com/watch?v=hQWt3P4Eb-c'
+url_slides: 'https://online.kitp.ucsb.edu/online/firstbillion-c24/hainline/'
+url_video: 'https://www.youtube.com/watch?v=QKRKoCgR0Cc'
 
 # Markdown Slides (optional).
 #   Associate this talk with Markdown slides.
