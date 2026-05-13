@@ -1,15 +1,15 @@
 ---
-title: JWST Smashes Distance Record! 
+title: JWST’s Tiny Red Sources and the Big Questions They Raise 
 
-event: Youtube Explainer 
-event_url: https://www.youtube.com/watch?v=YXRJH4-bOSA&t=1s
+event: Youtube Discussion 
+event_url: https://www.youtube.com/watch?v=hQWt3P4Eb-c
 
 
-summary: A look at how we found the ultra distant galaxy JADES-GS-z14-0
-abstract: 'An inside look at how we identified two galaxies at a redshift of 14'
+summary: A discussion of the intriguing "Little Red Dots" seen in JWST imaging
+abstract: 'An conversation about the mysterious Little Red Dots and their possibile origins'
 
 # Schedule page publish date (NOT talk date).
-publishDate: '2024-05-30T00:00:00Z'
+publishDate: '2026-05-10T00:00:00Z'
 
 authors:
   - admin
@@ -17,7 +17,7 @@ authors:
 tags: []
 
 # Is this a featured talk? (true/false)
-featured: false
+featured: true
 
 image:
   caption: 'Screen Capture from Youtube Recording'
@@ -27,7 +27,7 @@ image:
 url_code: ''
 url_pdf: ''
 url_slides: ''
-url_video: 'https://www.youtube.com/watch?v=YXRJH4-bOSA&t=1s'
+url_video: 'https://www.youtube.com/watch?v=hQWt3P4Eb-c'
 
 # Markdown Slides (optional).
 #   Associate this talk with Markdown slides.
