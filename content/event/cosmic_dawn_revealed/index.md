@@ -1,15 +1,15 @@
 ---
 title: Cosmic Dawn Revealed: The JADES View of Galaxies at z > 10
 
-event: Research Talk
-event_url: https://www.youtube.com/watch?v=QKRKoCgR0Cc
+event: Youtube Discussion 
+event_url: https://www.youtube.com/watch?v=hQWt3P4Eb-c
 
 
-summary: A research talk given at the Kavli Institute for Theoretical Physics
-abstract: 'Testing'
+summary: A discussion of the intriguing "Little Red Dots" seen in JWST imaging
+abstract: 'In its first three years, JWST has transformed our view of galaxy evolution. Among its most puzzling discoveries are the Little Red Dots, compact, distant sources scattered across the sky that continue to defy easy explanation. In this talk, Dr. Kevin Hainline (Associate Research Professor, Steward Observatory, University of Arizona) explores their discovery, the growing list of mysteries they present, and what they might reveal about the early universe.'
 
 # Schedule page publish date (NOT talk date).
-publishDate: '2024-08-26T00:00:00Z'
+publishDate: '2025-06-26T00:00:00Z'
 
 authors:
   - admin
@@ -17,7 +17,7 @@ authors:
 tags: []
 
 # Is this a featured talk? (true/false)
-featured: false
+featured: true
 
 image:
   caption: 'Screen Capture from Youtube Recording'
@@ -27,7 +27,7 @@ image:
 url_code: ''
 url_pdf: ''
 url_slides: ''
-url_video: 'https://www.youtube.com/watch?v=QKRKoCgR0Cc'
+url_video: 'https://www.youtube.com/watch?v=hQWt3P4Eb-c'
 
 # Markdown Slides (optional).
 #   Associate this talk with Markdown slides.
