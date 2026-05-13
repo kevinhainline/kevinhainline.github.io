@@ -404,7 +404,7 @@ zout, hdu = self.standard_output(
 
         <p>After running this, you can reload previously computed results without re-fitting:</p>
         <pre><code class="language-python">eazy = photoz.PhotoZ(params=params, load_products=True)
-# Reads photz.zout.fits and photz.data.fits automatically</code>.</pre>
+# Reads photz.zout.fits and photz.data.fits automatically.</code></pre>
       </section>
 
       <!-- ═══════════════════════════════════════ -->
@@ -914,12 +914,40 @@ app.make_dash_app(server_mode='external', port=8050)
           <div class="pitfall">
             <div class="pitfall-num">3</div>
             <div class="pitfall-body">
+              <strong>The creation of the tempfilt object can take a long time, especially if you have a lot of filters, and lot of redshift values.</strong> A quick hack, if you want to fit additional sources in the future with the same filters, templates, and redshift grid (ie, the exact same fitting setup, just new sources), is that you can <i>save</i> the tempfilt to something like a pickle file:
+              <pre><code class="language-python">import pickle
+with open("tempfilt_example.pkl","wb") as f:
+      pickle.dump(self.tempfilt,f)</code></pre>
+      
+              ...and then you can read it in before running EAZY:
+
+              <pre><code class="language-python">with open("tempfilt_example.pkl","rb") as inp:
+      test_tempfilt = pickle.load(inp)</code></pre>
+      
+               ...and at this point:
+
+              <pre><code class="language-python">self = eazy.photoz.PhotoZ(params=params,
+                   param_file=None,
+                   translate_file='zphot.translate',
+                   tempfilt = test_tempfilt, # <-- right here! 
+                   zeropoint_file=None,
+                   load_prior=False,
+                   load_products=False,
+                   n_proc=0)</code></pre>     
+      
+            </div>
+          </div>
+
+
+          <div class="pitfall">
+            <div class="pitfall-num">4</div>
+            <div class="pitfall-body">
               <strong>Non-detection convention.</strong> Fluxes below <code>NOT_OBS_THRESHOLD</code> (default −90) are masked. If your catalog uses 0.0 for non-detections, those are treated as real zero-flux detections, which you likely do not want, given that this will break your fits.
             </div>
           </div>
 
           <div class="pitfall">
-            <div class="pitfall-num">4</div>
+            <div class="pitfall-num">5</div>
             <div class="pitfall-body">
               <strong>chi2 = 0 means the object was not fit.</strong> Check <code>self.nusefilt[i]</code> — if too few filters pass the threshold, the object is skipped.
               <pre><code class="language-python">unfitted = (self.chi2_fit == 0).all(axis=1)
@@ -928,21 +956,21 @@ print(f"{unfitted.sum()} objects not fit")</code></pre>
           </div>
 
           <div class="pitfall">
-            <div class="pitfall-num">5</div>
+            <div class="pitfall-num">6</div>
             <div class="pitfall-body">
               <strong>Multimodal P(z).</strong> It is very important that you look at χ²(z) to explore the goodness of fit for alternate redshift solutions. The 
             </div>
           </div>
 
           <div class="pitfall">
-            <div class="pitfall-num">6</div>
+            <div class="pitfall-num">7</div>
             <div class="pitfall-body">
               <strong>Memory usage.</strong> With <code>random_draws=100</code>, <code>self.coeffs_draws</code> has shape <code>(NOBJ, 100, NTEMP)</code>. For 100k objects × 12 templates, this is ~5 GB. Reduce <code>random_draws</code> if memory is tight.
             </div>
           </div>
 
           <div class="pitfall">
-            <div class="pitfall-num">7</div>
+            <div class="pitfall-num">8</div>
             <div class="pitfall-body">
               <strong>You could do a simple estimate to explore the reduced χ² values.</strong>
               <pre><code class="language-python">chi2_best = self.chi2_fit[np.arange(self.NOBJ), ez.izbest]
