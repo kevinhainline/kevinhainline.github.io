@@ -45,7 +45,7 @@
 
     <header class="hero">
       <div class="hero-label">Helpful (?) Advice</div>
-      <h1 class="hero-title">A Completely Unauthorized User's Guide<br>to <em>EAZY-py</em></h1>
+      <h1 class="hero-title">A Completely Unauthorized Users Guide<br>to <em>EAZY-py</em></h1>
       <p class="hero-sub">So You Want To Calculate Photometric Redshifts</p>
       <div class="hero-meta">
         Written by <a href="https://kevinhainline.github.io/" target="_blank">Kevin Hainline</a>
@@ -62,10 +62,11 @@
       <!-- ═══════════════════════════════════════ -->
       <section id="s1">
         <h2><span class="sec-num">01</span> What is EAZY-py?</h2>
-        <p>EAZY-py is a Python version of the ``EAZY'' photometric redshift code originally presented in <a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...686.1503B/abstract" target="_blank">Brammer, van Dokkum &amp; Coppi (2008)</a>. The acronym EAZY, <a href = "http://www.astro.yale.edu/eazy/">it turns out</a>, stands for <b>E</b>asy and <b>A</b>ccurate <b>z</b>phot from <b>Y</b>ale. While originally written in C, this code has been superseded by a Python package, though you'll want to still download the template and filter files hosted at the <a href="https://github.com/gbrammer/eazy-photoz" target="_blank">eazy-photoz</a> repository.</p>
+        <p>EAZY-py is a Python version of the ``EAZY'' photometric redshift code originally written by <a href="https://gbrammer.github.io/">Gabe Brammer</a> and presented in <a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...686.1503B/abstract" target="_blank">Brammer, van Dokkum &amp; Coppi (2008)</a>. The acronym EAZY, <a href = "http://www.astro.yale.edu/eazy/">it turns out</a>, stands for <b>E</b>asy and <b>A</b>ccurate <b>z</b>phot from <b>Y</b>ale. While originally written in C, this code has been superseded by a Python package, though you'll want to still download the template and filter files hosted at the <a href="https://github.com/gbrammer/eazy-photoz" target="_blank">eazy-photoz</a> repository.</p>
         <p>EAZY is designed to produce photometric redshift estimates by comparing observed photometry to physically motivated sets of galaxy SED templates, these are fit simultaneously (either all of the templates co-added, or individual templates, or user-selected template subsets) in a non-negative linear combination. The key insight of EAZY is that <i>real galaxies rarely look like a single pure template</i>. By allowing linear combinations of templates, EAZY dramatically improves photometric redshift accuracy.</p>
+        <p>Most importantly (and this is something I try to stress to anyone who uses EAZY): EAZY-py uses χ² minimization for comparing the templates to the observations, and as such, one of the most important outputs from the code is the χ² values as a function of redshift. You will get photometric redshifts derived from χ²(z), but you should always go back to the χ² values if you want to understand how accurate the redshifts are. </p>
         <div class="callout callout-cite">
-          <strong> The key take home message of this entire guide is: EAZY-py uses χ² minimization for comparing the templates to the observations, and as such, one of the most important outputs from the code is the χ² values as a function of redshift. 
+          <strong> This is an unofficial guide, and as such, it is potentially (likely?) incorrect in a few places. Send me an email if you find something wrong, or if you have something I should add to the page to make it more helpful. 
         </div>
       </section>
 
