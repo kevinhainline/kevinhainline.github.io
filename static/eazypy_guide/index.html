@@ -62,7 +62,7 @@
       <!-- ═══════════════════════════════════════ -->
       <section id="s1">
         <h2><span class="sec-num">01</span> What is EAZY-py?</h2>
-        <p>EAZY-py is a Python version of the ``EAZY'' (EAZY, it turns out, stands for <b>E</b>AZY and <b>A</b>ccurate <b>z</b>phot from <b>Y</b>ale) photometric redshift code originally presented in <a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...686.1503B/abstract" target="_blank">Brammer, van Dokkum &amp; Coppi (2008)</a>. While originally written in C, this code has been superseded by a Python package, though you'll want to still download the template and filter files hosted at the <a href="https://github.com/gbrammer/eazy-photoz" target="_blank">eazy-photoz</a> repository.</p>
+        <p>EAZY-py is a Python version of the ``EAZY'' photometric redshift code originally presented in <a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...686.1503B/abstract" target="_blank">Brammer, van Dokkum &amp; Coppi (2008)</a>. The acronym EAZY, it turns out, stands for <b>E</b>AZY and <b>A</b>ccurate <b>z</b>phot from <b>Y</b>ale. While originally written in C, this code has been superseded by a Python package, though you'll want to still download the template and filter files hosted at the <a href="https://github.com/gbrammer/eazy-photoz" target="_blank">eazy-photoz</a> repository.</p>
         <p>EAZY is designed to produce photometric redshift estimates by comparing observed photometry to physically motivated sets of galaxy SED templates, these are fit simultaneously (either all of the templates co-added, or individual templates, or user-selected template subsets) in a non-negative linear combination. The key insight of EAZY is that <i>real galaxies rarely look like a single pure template</i>. By allowing linear combinations of templates, EAZY dramatically improves photometric redshift accuracy.</p>
         <div class="callout callout-cite">
           <strong> The key take home message of this entire guide is: EAZY-py uses χ² minimization for comparing the templates to the observations, and as such, one of the most important outputs from the code is the χ² values as a function of redshift. 
@@ -79,7 +79,7 @@ pip install eazy
 # You can add in a built-in Dash/Plotly interactive visualization tool
 pip install eazy[vistool]
 
-# Optional, but you should go ahead and do this, download these updated dust attenuation models
+# Optional, but you should go ahead and download these updated dust attenuation models
 pip install git+https://github.com/karllark/dust_attenuation.git
 
 # And you should download the template and filter files from eazy-photoz
