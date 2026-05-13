@@ -71,6 +71,34 @@ education:
     summary: |
       Researched stellar clusters with Dr. Ann Esin. 
 work:
+  - position: Associate Research Professor
+    company_name: University of Arizona, Steward Observatory
+    company_url: 'www.arizona.edu'
+    company_logo: ''
+    date_start: 2024-07-01
+    summary: |
+      JADES Researcher
+      - Mentored Graduate Student Jakob Helton and Sophie Lebowitz
+      - Mentored Undergraduate Student Tristen Shields
+
+  - position: Assistant Research Professor
+    company_name: University of Arizona, Steward Observatory
+    company_url: 'www.arizona.edu'
+    company_logo: ''
+    date_start: 2020-03-01
+    date_end: 2024-07-01
+
+  - position: Postdoctoral Researcher
+    company_name: University of Arizona, Steward Observatory
+    company_url: 'www.arizona.edu'
+    company_logo: ''
+    date_start: 2015-08-01
+    date_end: 2020-03-01
+    summary: |
+      Researcher on the JWST/NIRCam Science Team
+      - Helped write <a href="https://fenrir.as.arizona.edu/jwstmock/index.html">JAGUAR</a>, <a href="https://github.com/kevinhainline/NIRCPrepareMock">NIRCPrepareMock</a>, and used these to assist in the development of <a href="https://jades-survey.github.io/">JADES</a>.
+      - Mentored Graduate Student Raphael Hviding
+
   - position: Postdoctoral Researcher
     company_name: Dartmouth College
     company_url: 'www.dartmouth.edu'
