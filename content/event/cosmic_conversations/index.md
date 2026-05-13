@@ -6,7 +6,7 @@ event_url: https://www.youtube.com/watch?v=hQWt3P4Eb-c
 
 
 summary: A discussion of the intriguing "Little Red Dots" seen in JWST imaging
-abstract: 'In its first three years, JWST has transformed our view of galaxy evolution. Among its most puzzling discoveries are the 'little red dots'—compact, distant sources scattered across the sky that continue to defy easy explanation. In this talk, Dr. Kevin Hainline (Associate Research Professor, Steward Observatory, University of Arizona) explores their discovery, the growing list of mysteries they present, and what they might reveal about the early universe.'
+abstract: 'In its first three years, JWST has transformed our view of galaxy evolution. Among its most puzzling discoveries are the 'little red dots'-compact, distant sources scattered across the sky that continue to defy easy explanation. In this talk, Dr. Kevin Hainline (Associate Research Professor, Steward Observatory, University of Arizona) explores their discovery, the growing list of mysteries they present, and what they might reveal about the early universe.'
 
 # Schedule page publish date (NOT talk date).
 publishDate: '2025-06-26:00:00Z'
