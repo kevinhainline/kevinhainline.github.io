@@ -25,3 +25,6 @@ main:
   - name: Public Speaking
     url: http://www.thestarsconnectus.com
     weight: 40
+  - name: Unofficial EAZY-py Guide
+    url: http://kevinhainline.github.io/eazypy_guide/
+    weight: 50

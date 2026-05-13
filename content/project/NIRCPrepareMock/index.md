@@ -1,6 +1,6 @@
 ---
 title: NIRCPrepareMock
-date: 2023-10-26
+date: 2018-09-01
 external_link: https://github.com/kevinhainline/NIRCPrepareMock
 tags:
   - JADES

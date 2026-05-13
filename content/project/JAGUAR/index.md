@@ -1,6 +1,6 @@
 ---
 title: JAGUAR
-date: 2023-10-26
+date: 2018-06-01
 external_link: https://fenrir.as.arizona.edu/jwstmock/index.html
 tags:
   - JADES
