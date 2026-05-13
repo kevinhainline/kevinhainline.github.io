@@ -1,6 +1,6 @@
 ---
 title: NIFTY
-date: 2026-50-12
+date: 2026-05-12
 external_link: https://github.com/kevinhainline/NIFTY
 tags:
   - Brown Dwarf

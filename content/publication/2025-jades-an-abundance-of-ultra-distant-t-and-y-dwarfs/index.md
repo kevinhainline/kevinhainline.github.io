@@ -35,6 +35,7 @@ tags:
 
 doi: "10.48550/arXiv.2510.00111"
 bibcode: "2025arXiv251000111H"
+featured: true
 
 links:
 - name: arXiv
