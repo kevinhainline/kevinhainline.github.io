@@ -6,7 +6,7 @@ event_url: https://www.youtube.com/watch?v=QKRKoCgR0Cc
 
 
 summary: A research talk given at the Kavli Institute for Theoretical Physics
-abstract: 'Since the launch of JWST, our understanding of the first stars and galaxies has come into sharp focus. Photometric and spectroscopic observations of these sources teach us about the unique star formation histories as well as gas and ionization properties in the first few hundred million years after the Big Bang. In this talk, JWST Advanced Deep Extragalactic Survey (JADES) team member Kevin Hainline will describe what has been learned about galaxies at z > 10 from ultra deep observations in both the GOODS-S and GOODS-N fields. He will discuss the challenges of photometric redshift measurement for these sources in light of the discovery of damped Lyman alpha absorption at high redshift. He will describe the spectroscopic confirmation of the highest-redshift galaxies, and what their emission lines, and lack thereof, tells us about the gas metallicity, escape fractions, and star-formation histories for these sources. Finally, he will discuss the recent discovery of JADES-GS-z14-0 at z = 14.32, including the NIRSpec spectroscopy and detection in deep MIRI imaging, and what this means for galaxy formation.'
+abstract: 'Testing'
 
 # Schedule page publish date (NOT talk date).
 publishDate: '2024-08-26T00:00:00Z'
