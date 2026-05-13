@@ -1,5 +1,5 @@
 ---
-title: "JWST Advanced Deep Extragalactic Survey (JADES) Data Release 5: Photometrically Selected Galaxy Candidates at z &gt; 8"
+title: "JWST Advanced Deep Extragalactic Survey (JADES) Data Release 5: Photometrically Selected Galaxy Candidates at z > 8"
 authors:
 - admin
 - Eisenstein, Daniel J.
@@ -48,12 +48,13 @@ publication: "arXiv e-prints"
 
 abstract: >
   We present a sample of 2081 sources selected at photometric redshift $z_{\mathrm{phot}} &gt; 8$ across the JADES DR5 data release in GOODS-S and GOODS-N over a total area of 469 square arcmin. These sources range from $M_{\mathrm{UV}} = -22$ to $M_{\mathrm{UV}} = -16$, with 19 objects at $z_{\mathrm{phot}} &gt; 14$. We estimate the UV slopes for the full sample from fits to the photometry and find evidence for a steepening of the relationship between the UV continuum slope and $M_{\mathrm{UV}}$ to higher redshifts, a result that differs from prior analyses of brighter samples in the literature. We provide evidence that over one quarter of our sources have evidence for being morphologically extended, with many galaxies showing multiple bright knots or clumps even out to $z \sim 13 - 14$, an indication of how galaxies at Cosmic Dawn are growing and evolving. We discuss JADES-GN+189.15982+62.28899, a GOODS-N F200W dropout galaxy at $z_{\mathrm{phot}} \sim 15 - 18$ which has been observed spectroscopically with JWST/NIRSpec in prism mode, resulting in a very low signal-to-noise spectrum that is consistent with the photometry and rules out a number of low-redshift solutions for the source. Finally, we use a subsample of 123 objects in our sample with spectroscopic redshifts to explore the usage of alternate fitting templates and a prescription for Ly-$α$ damping wing absorption, finding that both produce significant improvements to the estimated photometric redshifts.
-featured: true
+
 tags:
 - Astrophysics of Galaxies
 
 doi: "10.48550/arXiv.2601.15959"
 bibcode: "2026arXiv260115959H"
+featured: true
 
 links:
 - name: arXiv
