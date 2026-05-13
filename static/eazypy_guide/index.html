@@ -949,7 +949,7 @@ with open("tempfilt_example.pkl","wb") as f:
           <div class="pitfall">
             <div class="pitfall-num">5</div>
             <div class="pitfall-body">
-              <strong>chi2 = 0 means the object was not fit.</strong> Check <code>self.nusefilt[i]</code> — if too few filters pass the threshold, the object is skipped.
+              <strong>If a source has χ² = 0, that means the object was not fit.</strong> Check <code>self.nusefilt[i]</code> — if too few filters pass the threshold, the object is skipped.
               <pre><code class="language-python">unfitted = (self.chi2_fit == 0).all(axis=1)
 print(f"{unfitted.sum()} objects not fit")</code></pre>
             </div>
@@ -958,7 +958,7 @@ print(f"{unfitted.sum()} objects not fit")</code></pre>
           <div class="pitfall">
             <div class="pitfall-num">6</div>
             <div class="pitfall-body">
-              <strong>Multimodal P(z).</strong> It is very important that you look at χ²(z) to explore the goodness of fit for alternate redshift solutions. The 
+              <strong>Multiple χ² minima.</strong> It is very important that you look at χ²(z) to explore the goodness of fit for alternate redshift solutions. Plotting these alternate solutions, as described above, will help to see how much you should trust your own photometric redshift. But know that, from fitting sources with known spectroscopic redshifts, the P(z) width is often underestimated, meaning your uncertainties on the photo-z from these fits will be too low. 
             </div>
           </div>
 
@@ -972,7 +972,7 @@ print(f"{unfitted.sum()} objects not fit")</code></pre>
           <div class="pitfall">
             <div class="pitfall-num">8</div>
             <div class="pitfall-body">
-              <strong>You could do a simple estimate to explore the reduced χ² values.</strong>
+              <strong>You could do a simple estimate to explore the reduced χ² values:</strong>
               <pre><code class="language-python">chi2_best = self.chi2_fit[np.arange(self.NOBJ), ez.izbest]
 chinu     = chi2_best / np.maximum(self.nusefilt - 1, 1)
 bad_fits  = chinu > 5   # Flag very poor fits</code></pre>
