@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EAZY-py User's Guide</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+</head>
+<body>
+
+  <!-- Starfield canvas background -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">EAZY<span>-py</span></div>
+      <div class="sidebar-subtitle">A Practical Guide</div>
+      <div class="sidebar-subtitle">(written by Kevin Hainline)</div>
+    </div>
+    <ul class="nav-list" id="nav-list">
+      <!-- Populated by JS -->
+    </ul>
+    <div class="sidebar-footer">
+      <a href="https://github.com/gbrammer/eazy-py" target="_blank" rel="noopener">EAZY-py GitHub ↗</a>
+      <a href="https://eazy-py.readthedocs.io/" target="_blank" rel="noopener">EAZY-py Readthedocs ↗</a>
+    </div>
+  </nav>
+
+  <!-- Hamburger for mobile -->
+  <button id="menu-toggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Main content -->
+  <main id="main">
+
+    <header class="hero">
+      <div class="hero-label">Helpful (?) Advice</div>
+      <h1 class="hero-title">A Completely Unauthorized User's Guide<br>to <em>EAZY-py</em></h1>
+      <p class="hero-sub">So You Want To Calculate Photometric Redshifts</p>
+      <div class="hero-meta">
+        Written by <a href="https://kevinhainline.github.io/" target="_blank">Kevin Hainline</a>
+      </div>
+
+      <div class="hero-meta">
+        EAZY can be found at <a href="https://github.com/gbrammer/eazy-py" target="_blank">gbrammer/eazy-py</a> v0.8.5 &nbsp;·&nbsp;
+        (<a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...686.1503B/abstract" target="_blank">Brammer, van Dokkum &amp; Coppi, 2008</a>)
+      </div>
+    </header>
+
+    <article id="content">
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s1">
+        <h2><span class="sec-num">01</span> What is EAZY-py?</h2>
+        <p>EAZY-py is a Python version of the ``EAZY'' (EAZY, it turns out, stands for <b>E</b>AZY and <b>A</b>ccurate <b>z</b>phot from <b>Y</b>ale) photometric redshift code originally presented in <a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...686.1503B/abstract" target="_blank">Brammer, van Dokkum &amp; Coppi (2008)</a>. While originally written in C, this code has been superseded by a Python package, though you'll want to still download the template and filter files hosted at the <a href="https://github.com/gbrammer/eazy-photoz" target="_blank">eazy-photoz</a> repository.</p>
+        <p>EAZY is designed to produce photometric redshift estimates by comparing observed photometry to physically motivated sets of galaxy SED templates, these are fit simultaneously (either all of the templates co-added, or individual templates, or user-selected template subsets) in a non-negative linear combination. The key insight of EAZY is that <i>real galaxies rarely look like a single pure template</i>. By allowing linear combinations of templates, EAZY dramatically improves photometric redshift accuracy.</p>
+        <div class="callout callout-cite">
+          <strong> The key take home message of this entire guide is: EAZY-py uses χ² minimization for comparing the templates to the observations, and as such, one of the most important outputs from the code is the χ² values as a function of redshift. 
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s2">
+        <h2><span class="sec-num">02</span> Installation and Setup</h2>
+
+        <pre><code class="language-bash"># Basic install
+pip install eazy
+
+# You can add in a built-in Dash/Plotly interactive visualization tool
+pip install eazy[vistool]
+
+# Optional, but you should go ahead and do this, download these updated dust attenuation models
+pip install git+https://github.com/karllark/dust_attenuation.git
+
+# And you should download the template and filter files from eazy-photoz
+python -c "import eazy; eazy.fetch_eazy_photoz()"</code></pre>
+
+        <p>After installation, you need to make sure that the templates and filters are findable. The easiest approach, on a mac or in linux, is to <strong>symlink them into your working directory</strong>:</p>
+
+        <pre><code class="language-python">import eazy
+
+# If using fetch_eazy_photoz(), this links from your eazy install:
+eazy.symlink_eazy_inputs()
+
+# If you have a local clone of eazy-photoz from the github repository, point to it:
+eazy.symlink_eazy_inputs(path='/path/to/eazy-photoz', path_is_env=False)
+
+# Or you can set the EAZYCODE environment variable:
+eazy.symlink_eazy_inputs(path='EAZYCODE', path_is_env=True)</code></pre>
+
+        <p>This creates symlinks like <code>./templates →</code> and <code>./FILTER.RES.latest →</code> in your current working directory, which EAZY will need to use when it runs.</p>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s3">
+        <h2><span class="sec-num">03</span> A Rough Explanation of How EAZY Fits Sources</h2>
+        <p>Understanding what EAZY is doing under the hood is essential for making sense of what is output from the code.</p>
+
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>First, EAZY reads in the User parameters, and from that, builds the template grid.</strong> EAZY integrates each template SED through each filter at every redshift on a grid from a minimum to a maximum redshift, with a defined grid spacing. This produces <code>tempfilt</code>, an array of shape <code>(NZ, NTEMP, NFILT)</code>, which is the predicted flux of each template in each filter at each redshift. This is precomputed and cached as <code>self.tempfilt</code>. If you have a large span of redshift and a fine grid spacing, this step can take a while, and there are ways in which the user can save this tempfilt file as a pickle for use in future runs, given the same redshift parameters and template set. 
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Next, EAZY fits each object at each user specified redshift.</strong> At every redshift grid point, EAZY solves for the non-negative linear combination of templates that best fits the observed photometry (NNLS), based on the minimum χ². The result is <code>chi2_fit</code>, an array of shape <code>(NOBJ, NZ)</code>. The shape of this distribution with redshift is very helpful for understanding other, alternate χ² minima redshifts.
+              <div class="equation">χ² = Σ<sub>filters</sub> [ (F<sub>obs</sub> − Σ<sub>j</sub> c<sub>j</sub> · F<sub>temp,j</sub>(z))² / σ² ]&ensp; where c<sub>j</sub> ≥ 0</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>At this point, EAZY converts the χ² values to a likelihood.</strong> The log-probability <code>lnp</code> is computed from the χ² distribution, with optional corrections from the user specified template error function (TEF) and any priors.
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <strong>Finally, EAZY finds the ``best'' redshift.</strong> As we discuss below, there are multiple redshift values that EAZY produces based on the χ² distribution. The maximum of <code>lnp</code> over the redshift grid gives <code>z_ml</code> (maximum likelihood). Derived quantities like percentiles come from integrating under the <code>lnp</code> curve.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s4">
+        <h2><span class="sec-num">04</span> Setting Up Your Catalog</h2>
+        <p>Generally, with EAZY, I am trying to fit a large number of sources, and as such, I usually write all of the input properties and fluxes for my sources into a file. I'm going to write this guide as if you are doing the same. The input flux file needs to have columns representing the source fluxes, flux errors, and IDs for the objects, and you then pass this file to EAZY. To let EAZY know how to parse the file, the first two lines of the input file will provide information describing the individual columns. Those two lines will start with "# ", and note the space after the little octothorpe.</p>
+        
+        <p><strong>There is a required column:</strong> <code>id</code> — a unique integer identifier for each object.<br>
+        <strong>There are also some non-required, but helpful columns:</strong> <code>z_spec</code>, <code>ra</code>, <code>dec</code>, and these can go in any place, so before the fluxes, or after the fluxes. I tend to put this before the fluxes.</p>
+        
+        <p>You will include the above values on both of the two header lines. Now, at this point, you'll want to include a number of columns with source fluxes and uncertainties. Here is where it gets tricky. The first line of header will indicate the fluxes and errors, and I think it's not super important what this says, but it's good for you to have for your own sanity. When I do this, I name my flux columns <code>f_{instrument}_{filter}</code>, so, for instance, <code>f_NRC_F200W</code>. And as you might expect, the little <code>f</code> means flux, so for error, I just go with <code>e_{instrument}_{filter}</code> (e.g. <code>e_NRC_F200W</code>). You'll print both on the first header line of the input file. For the second line of the header file, you'll repeat the ID/z_spec/RA/DEC/etc lines as in the first line, but instead of <code>f_{instrument}_{filter}</code>, Flux columns are named <code>F{n}</code> and error columns <code>E{n}</code>. Here, the <code>n</code> is the 1-based index of the filter in <code>FILTER.RES.latest</code>, which is this enormous file (that you got when you downloaded the templates, <a href = "https://github.com/gbrammer/eazy-photoz/blob/master/filters/FILTER.RES.latest.info">you can find FILTERS.RES.latest.info here.</a>) which has all of the various filters that EAZY currently uses. You can go and actually figure out what's in there by looking at <code>FILTER.RES.latest.info</code>. For example, filter #366 (JWST/NIRCam F200W) would be columns <code>F366</code> and <code>E366</code>. If this is confusing, I have an example input file below. Note that you can include new filters at the end of FILTER.RES.latest, in the same format, and then these new filters would be accessed in the same way, increasing the index. I do that, since I am using specific updated JWST filters when I run EAZY.</p>
+        
+        <p>Now that you have the header lines, you can start including the actual data. First, you'll include your integer ID numbers, and then your values for spectroscopic redshift, RA, and DEC, if you want. More importantly, however, your input catalog must contain photometric fluxes in units of F<sub>ν</sub> (or AB magnitudes, if you set <code>MAGNITUDES = y</code> within the parameter file, but I'm going to assume you're just doing this with observed fluxes). When I do this, I use nanojansky (nJy), because I primarily work with JWST/NIRCam data. You could also just use microjansky (µJy) or any consistent unit, because EAZY doesn't care about absolute units as it normalizes the templates. However, depending on the flux values that you specify, you'll need to update <code>PRIOR_ABZP</code>, the AB Zero point. If you're using nJy, <code>PRIOR_ABZP</code> will be 31.4. If fluxes are in µJy, <code>PRIOR_ABZP</code> should be 23.9.</p>
+
+		<p>Here's an example flux catalog: </p>
+
+        <pre><code> 
+# id z_spec f_HST_F435W e_HST_F435W f_HST_F606W e_HST_F606W f_NRC_F070W e_NRC_F070W f_HST_F775W e_HST_F775W f_HST_F814W e_HST_F814W f_HST_F850LP e_HST_F850LP f_NRC_F090W e_NRC_F090W f_NRC_F115W e_NRC_F115W f_NRC_F150W e_NRC_F150W f_NRC_F162M e_NRC_F162M f_NRC_F182M e_NRC_F182M f_NRC_F200W e_NRC_F200W f_NRC_F210M e_NRC_F210M f_NRC_F250M e_NRC_F250M f_NRC_F277W e_NRC_F277W f_NRC_F300M e_NRC_F300M f_NRC_F335M e_NRC_F335M f_NRC_F356W e_NRC_F356W f_NRC_F410M e_NRC_F410M f_NRC_F430M e_NRC_F430M f_NRC_F444W e_NRC_F444W f_NRC_F460M e_NRC_F460M f_NRC_F480M e_NRC_F480M  
+# id z_spec F428 E428 F429 E429 F442 E442 F430 E430 F431 E431 F432 E432 F443 E443 F444 E444 F445 E445 F446 E446 F447 E447 F448 E448 F449 E449 F450 E450 F451 E451 F454 E454 F455 E455 F458 E458 F462 E462 F465 E465 F467 E467 F470 E470 F473 E473  
+6137 -9999.0 0.8652090430259705 1.9152350425720215 1.0464285612106323 1.866912603378296 1.0355695486068726 1.3543280363082886 -1.1824941635131836 3.1081478595733643 0.9099689722061157 3.3087193965911865 -4.610594272613525 4.810393333435059 -1.999252200126648 1.6229639053344727 3.552814245223999 1.3917655944824219 7.9091644287109375 1.3670780658721924 -9999.0 -9999.0 -9999.0 -9999.0 8.000021934509277 1.2555376291275024 -9999.0 -9999.0 -9999.0 -9999.0 8.723151206970215 1.0130071640014648 -9999.0 -9999.0 -9999.0 -9999.0 9.757173538208008 0.9876021146774292 7.229896068572998 1.980042576789856 -9999.0 -9999.0 7.868745803833008 1.4598652124404907 -9999.0 -9999.0 -9999.0 -9999.0  
+6344 -9999.0 1.3033239841461182 1.7997325658798218 -0.21943077445030212 2.619831085205078 -1.4234607219696045 0.7520608901977539 -3.767868757247925 3.6438543796539307 4.429419040679932 2.2065176963806152 -9.91839599609375 8.691930770874023 -0.06491388380527496 0.5057762861251831 0.364867240190506 0.5430588126182556 0.24401046335697174 0.4989297688007355 -0.4772273600101471 0.6282024383544922 0.05435359850525856 0.44584786891937256 0.08488233387470245 0.4324727952480316 -0.19102150201797485 0.5252905488014221 0.04583820700645447 0.6130997538566589 2.553574323654175 0.32815033197402954 0.9084392189979553 0.4422816038131714 1.5835182666778564 0.39926978945732117 3.614173412322998 0.37787064909935 5.058170795440674 0.6488636136054993 -9999.0 -9999.0 4.7173380851745605 0.5026225447654724 -9999.0 -9999.0 -9999.0 -9999.0   
+        </code></pre>
+
+		<p>Notice how, for values where I don't have an input value, I just go with -9999. I don't know the spectroscopic redshifts for these objects, so that's just -9999.</p>
+		
+        <div class="callout callout-warn">
+          <strong>Non-detection convention:</strong> Fluxes below <code>NOT_OBS_THRESHOLD</code> (default −90) are masked. If your catalog uses 0.0 for non-detections, those will be treated as real zero-flux detections and will badly bias your fits. Make sure your missing-data sentinel matches the threshold.
+        </div>		
+
+        <p><strong>Now, EAZY also requires a translate file</strong> which maps your column names to the <code>F{n}</code>/<code>E{n}</code> convention:</p>
+
+        <pre><code class="language-bash"># zphot.translate
+f_HST_F435W F428 
+e_HST_F435W E428 
+f_HST_F606W F429 
+e_HST_F606W E429 
+f_NRC_F070W F442 
+e_NRC_F070W E442 
+f_HST_F775W F430 
+e_HST_F775W E430 
+f_HST_F814W F431 
+e_HST_F814W E431 
+f_HST_F850LP F432 
+e_HST_F850LP E432 
+f_NRC_F090W F443 
+e_NRC_F090W E443 
+f_NRC_F115W F444 
+e_NRC_F115W E444 
+f_NRC_F150W F445 
+e_NRC_F150W E445 
+... (etc etc)
+ </code></pre>
+
+        <p>Eventually, you'll pass it to EAZY-py with <code>translate_file='zphot.translate'</code>.</p>
+
+        <p>Note: within EAZY, the <code>N_MIN_COLORS</code> parameter (default 5) sets the minimum number of valid filters required to fit an object. Objects with fewer detected bands are skipped. Maybe I'm getting ahead of myself. Once you've set up your input photometry file and your translate file, you can start setting up your EAZY parameters.</p>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s5">
+        <h2><span class="sec-num">05</span> EAZY Parameters, Field-by-Field</h2>
+        <p>Historically, EAZY was run using a separate parameters file (<code>zphot.param</code>), but in the Python implementation you can pass a <code>params</code> dictionary to <code>PhotoZ</code>. However, any parameters that are not specified fall back to the defaults in <code>eazy/data/zphot.param.default</code>, so be careful! </p>
+
+        <h3>Catalog Parameters</h3>
+        <div class="param-table">
+          <div class="param-row">
+            <div class="param-name"><code>CATALOG_FILE</code></div>
+            <div class="param-desc">Path to your input photometric catalog.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>CATALOG_FORMAT</code></div>
+            <div class="param-desc">Format for non-FITS catalogs. Generally I just use the default: <code>ascii.commented_header</code>.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>MAGNITUDES</code></div>
+            <div class="param-desc">Set to <code>y</code> if your catalog fluxes are in AB magnitudes.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>NOT_OBS_THRESHOLD</code></div>
+            <div class="param-desc">Flux values below this (default −90) are treated as missing/unobserved.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>MW_EBV</code></div>
+            <div class="param-desc">Milky Way E(B-V) toward your field. You can look this up at <a href="https://irsa.ipac.caltech.edu/applications/DUST/" target="_blank">IRSA Dust Tool</a>, if you want to include this effect.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>CAT_HAS_EXTCORR</code></div>
+            <div class="param-desc">If <code>y</code> (default), you're indicating that the catalog fluxes are already MW-extinction corrected. EAZY removes that correction before fitting templates.</div>
+          </div>
+        </div>
+
+
+        <h3>Redshift Grid Parameters</h3>
+        <div class="param-table">
+          <div class="param-row">
+            <div class="param-name"><code>Z_MIN</code> / <code>Z_MAX</code></div>
+            <div class="param-desc">Redshift search range (defaults: 0.01 – 12.0). Restrict to your science range to save compute time. I tend to use 0.01 to 22.0.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>Z_STEP</code></div>
+            <div class="param-desc">Redshift step size (default 0.01). This is the grid spacing that you want EAZY to use. The smaller this is, the longer it takes to generate the <code>tempfilt</code>, and the longer it takes EAZY to run.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>Z_STEP_TYPE</code></div>
+            <div class="param-desc">You can specify <code>Z_STEP_TYPE=0</code>, linear redshift spacing, which is what I use, or <code>Z_STEP_TYPE=1</code>, where the step is <code>Z_STEP × (1+z)</code> (logarithmic spacing).</div>
+          </div>          
+        </div>
+
+
+
+        <h3>Template Parameters</h3>
+        <div class="param-table">
+          <div class="param-row">
+            <div class="param-name"><code>TEMPLATES_FILE</code></div>
+            <div class="param-desc">The file listing your SED templates. Default: <code>templates/fsps_full/tweak_fsps_QSF_12_v3.param</code> — 12 FSPS-based galaxy templates covering a range of star formation histories and dust levels. Below, we will talk about the built-in templates, and how you can add in your own templates, and point to that templates file.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>TEMPLATE_COMBOS</code></div>
+            <div class="param-desc">How templates are combined. In eazy-py, you'll generally want to go with <code>a</code> (all templates simultaneously as non-negative linear combination). There are historical modes where you can specify which templates are combined, but I think this mode my depcrecated.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>APPLY_IGM</code></div>
+            <div class="param-desc">Apply IGM absorption to templates (default <code>y</code>). Uses Inoue et al. (2014) prescription.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>IGM_SCALE_TAU</code></div>
+            <div class="param-desc">Scale factor for IGM optical depth (default 1.0). Values &gt;1 increase absorption strength — sometimes useful for high-redshift studies.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>ADD_CGM</code></div>
+            <div class="param-desc">Apply CGM damping wing absorption from <a href="https://doi.org/10.3847/2041-8213/adc388">Asada et al. (2024)</a>. Relevant for z &gt; 6 studies.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>SIGMOID_PARAM{n}</code></div>
+            <div class="param-desc">These are the parameters that define the <a href="https://doi.org/10.3847/2041-8213/adc388">Asada et al. (2024)</a> CGM model. These are set to the finalized published values by default.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>TEMP_ERR_A2</code></div>
+            <div class="param-desc">Amplitude scaling for the template error function (default 0.20). Increasing this makes EAZY more forgiving of template-data mismatches, effectively broadening P(z).</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>SYS_ERR</code></div>
+            <div class="param-desc">Systematic flux error added in quadrature as a fraction of the flux (default 0.01 = 1%). Prevents bright sources from being over-constrained. Increase to 0.02–0.05 for surveys with known systematics.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>FITTER</code></div>
+            <div class="param-desc">Template fitting algorithm. Default <code>nnls</code> (non-negative least squares). Alternative: <code>lstsq</code> (unconstrained), which allows negative coefficients.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>SCALE_2175_BUMP</code></div>
+            <div class="param-desc">Adds a 2175Å dust bump. Value 0.13 ≈ 10% absorption at peak; 0.27 ≈ 20%. Default 0.00.</div>
+          </div>
+        </div>
+
+
+        <h3>Prior Parameters</h3>
+        <div class="param-table">
+          <div class="param-row">
+            <div class="param-name"><code>APPLY_PRIOR</code></div>
+            <div class="param-desc">Apply apparent magnitude prior. I tend to specify <code>False</code>, as I don't want to use a prior when fitting very high-redshift galaxies.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>PRIOR_FILE</code></div>
+            <div class="param-desc">If you do want to specify a prior, you point to the prior grid file here. The most common EAZY prior, and the default is <code>templates/prior_F160W_TAO.dat</code>. Choose a prior matching your reference band.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>PRIOR_FILTER</code></div>
+            <div class="param-desc">Filter number of your magnitude reference band (for the prior lookup). Must match the band used to build the prior file. This filter is also the filter by which the photometric zeropoints are derived, as discussed below. </div>
+          </div>
+          <div class="param-row param-highlight">
+            <div class="param-name"><code>PRIOR_ABZP</code></div>
+            <div class="param-desc">AB zeropoint of your flux units. If fluxes are in µJy → use <code>23.9</code>, if fluxes are in nJy → use <code>31.4</code> If normalized to 1 "exposure unit" at 25 mag → use <code>25.0</code>. Getting this wrong would be bad for normalization and comparing to fluxes.</div>
+          </div>
+          <div class="param-row">
+            <div class="param-name"><code>PRIOR_FLOOR</code></div>
+            <div class="param-desc">Minimum value of normalized prior (default 1e-2). Prevents P(z) from hitting exactly zero anywhere.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s6">
+        <h2><span class="sec-num">06</span> Running a Fit: Step by Step</h2>
+        <p>Here's some example Python for running an EAZY fit. You can run this as a script, or in a Jupyter notebook, or within an interactive python terminal:</p>
+
+        <pre><code class="language-python">import os
+import numpy as np
+import eazy
+import h5py       # this is for saving an h5 file if you want 
+import eazy.hdf5  # to resinstantiate EAZY, for plotting, later
+import warnings
+from astropy.utils.exceptions import AstropyWarning
+
+warnings.simplefilter('ignore', category=AstropyWarning)
+np.seterr(all='ignore')
+
+# Step 1: Symlink templates and filters
+eazy.symlink_eazy_inputs()
+
+# Step 2: Set parameters
+params = {}
+params['CATALOG_FILE']      = 'my_flux_catalog.txt'
+params['MAIN_OUTPUT_FILE']  = 'photz'     # This is how the output filenames are specified
+params['OUTPUT_DIRECTORY']  = 'OUTPUT'    # Name of the directory to put output files in
+params['FILTERS_RES']       = 'FILTER.RES.latest'
+params['CATALOG_FORMAT']    = 'ascii.commented_header' # Format if not FITS
+params['MAGNITUDES']        = 'n'         # Catalog photometry in magnitudes rather than f_nu fluxes
+params['NOT_OBS_THRESHOLD'] = -90         # Ignore flux point if <NOT_OBS_THRESH>
+params['N_MIN_COLORS']      = 5           # Require N_MIN_COLORS to fit
+
+params['FIX_ZSPEC']         = False       # Fix redshift to catalog zspec
+params['Z_MIN']             = 0.01
+params['Z_MAX']             = 22.0
+params['Z_STEP']            = 0.01
+params['Z_STEP_TYPE']       = 0           # 0 = ZSTEP, 1 = Z_STEP*(1+z)
+
+params['APPLY_PRIOR']       = False       # some of the other lines below aren't necessary as a result.
+params['PRIOR_ABZP']        = 31.4        # If fluxes are in nJy
+params['PRIOR_FILTER']      = 366         # NIRCam F200W — change to match your ref band
+params['PRIOR_FILE']        = 'templates/prior_F160W_TAO.dat'
+
+params['TEMPLATES_FILE']    = 'templates/sfhz/agn_blue_sfhz_13.param'
+params['TEMPLATE_COMBOS']   = 'a'         # Combine all of the templates
+params['WAVELENGTH_FILE']   = 'templates/uvista_nmf/lambda.def'        # Wavelength grid definition file
+params['TEMP_ERR_FILE']     = 'templates/TEMPLATE_ERROR.v2.0.zfourge' # Template error definition file
+params['TEMP_ERR_A2']       = 1.00        # Template error amplitude
+params['SYS_ERR']           = 0.00        # Systematic flux error (% of flux)
+
+params['MW_EBV']            = 0.012       # Galactic reddening toward your field
+params['ADD_CGM']           = False       # Add Asada24 CGM damping wing absorption
+params['SIGMOID_PARAM1']    = 3.5918      # Sigmoid func parameter (A) for the N_HI-z relation in Asada24
+params['SIGMOID_PARAM2']    = 1.8414      # Sigmoid func parameter (a) for the N_HI-z relation in Asada24
+params['SIGMOID_PARAM3']    = 18.001      # Sigmoid func parameter (C) for the N_HI-z relation in Asada24
+	
+params['SCALE_2175_BUMP']   = 0.00        # Scaling of 2175A bump.  Values 0.13 (0.27) absorb ~10 (20) % at peak.
+
+## Cosmology
+params['H0']                = 70.0        # Hubble constant (km/s/Mpc)
+params['OMEGA_M']           = 0.3         # Omega_matter
+params['OMEGA_L']           = 0.7         # Omega_lambda
+
+
+# Step 3: Initialize the PhotoZ object
+# This step will take a while depending on your ZMIN, ZMAX, and Z_STEP values, as it creates the
+# template grid. NOTE: I personally like to call this PhotoZ object "self," and this is how I will be referencing this throughout the remainder of the guide.
+self = eazy.photoz.PhotoZ(params=params,
+                   param_file=None,
+                   translate_file='zphot.translate', 
+                   zeropoint_file=None,
+                   load_prior=False,
+                   load_products=False,
+                   n_proc=0)   # 0 = serial; set >0 for running in parallel
+
+# Step 4: Fit the full catalog
+self.fit_catalog(self.idx, n_proc=8)
+
+# Step 5: Generate output table
+zout, hdu = self.standard_output(
+    prior=False,
+    beta_prior=False,
+    rf_pad_width=0.5,
+    rf_max_err=2,
+    percentile_limits=[2.5, 16, 50, 84, 97.5]
+)
+# zout is an astropy Table; also saved to photz.zout.fits
+# data = self.show_fit(object_ID, show_fnu = True, zshow = z_a_value, get_spec = True)
+</code></pre>
+
+
+        <p>After running this, you can reload previously computed results without re-fitting:</p>
+        <pre><code class="language-python">eazy = photoz.PhotoZ(params=params, load_products=True)
+# Reads photz.zout.fits and photz.data.fits automatically</code>.</pre>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s7">
+        <h2><span class="sec-num">08</span> The χ² and lnp Arrays and Probability Distributions</h2>
+        <p>The central object in EAZY-py is <code>self.chi2_fit</code> and <code>self.lnp</code>, 2D arrays of shape <code>(NOBJ, NZ)</code> containing the χ², and log-probability of each redshift for each object.</p>
+
+
+        <h3>self.chi2_fit</h3>
+        <p>The code will calculate the minimum χ² from co-adding the templates at each redshift value specified between <code>Z_MIN</code> and <code>Z_MAX</code> on the grid defined by <code>Z_STEP</code> (<code>self.zgrid</code>). You can access the χ² values as a function of redshift with <code>self.chi2_fit</code>, which is a 2D array of size <code>Nobj</code> by the length of  <code>self.zgrid</code>. So, the fifth object in the flux file would have χ² values given in the array <code>self.chi2_fit[4,:].</code></p>
+
+
+        <h3>compute_lnp()</h3>
+        <p><code>self.compute_lnp(prior=False, beta_prior=False, clip_wavelength=1100)</code> converts <code>chi2_fit</code> to <code>lnp</code>:</p>
+        <div class="equation">lnp[i, iz] = −½ χ²[i, iz] + lnp<sub>prior</sub>[i, iz] + lnp<sub>tef</sub>[i, iz]</div>
+        <p>The <code>clip_wavelength</code> parameter (default 1100 Å) sets <code>lnp = −∞</code> at redshifts where <code>clip_wavelength × (1+z)</code> exceeds the reddest valid filter for a given object — preventing trivially good fits at redshifts where the SED has redshifted entirely beyond the photometric coverage. Similar to <code>self.zgrid</code>, you can access the lnp with <code>self.lnp</code>, which has the same size and shape as <code>self.zgrid</code>.</p>
+
+        <h3>Accessing P(z) Directly</h3>
+        <pre><code class="language-python"># Get normalized P(z) for object at index i
+obj_idx = 42
+chisq_obj = self.chi2_fit[obj_idx, :]
+pz = np.exp((-1.0) * (chisq_obj - np.min(chisq_obj))/2.0)
+
+import matplotlib.pyplot as plt
+plt.plot(self.zgrid, pz)
+plt.xlabel('Redshift')
+plt.ylabel('P(z)')
+</code></pre>
+
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s8">
+        <h2><span class="sec-num">07</span> Understanding EAZY's output: z_ml, z_best, z_phot, and z_min_chisq</h2>
+        <p>This is one of the most confusing aspects of EAZY-py — there are multiple "best redshift" concepts that are closely related but subtly different. Here are the output values as I understand them.</p>
+
+        <h3>zml (Maximum Likelihood Redshift)</h3>
+        <p><code>self.zml</code> is the primary internal redshift estimate, and it's defined as the redshift at the maximum of <code>lnp</code>. However, there's some nuance here, as it is computed by <code>eazy.evaluate_zml()</code>, which:</p>
+        <ol>
+          <li>Finds <code>iz_best = argmax(lnp[i, :])</code> for each object</li>
+          <li>Fits a parabola around that peak for sub-grid-spacing precision</li>
+          <li>Returns the continuous redshift at the parabola peak as <code>eazy.zml</code></li>
+        </ol>
+        <p>It incorporates whatever priors were active when <code>compute_lnp()</code> was called:</p>
+        <pre><code class="language-python">self.compute_lnp(prior=True, beta_prior=True)
+self.evaluate_zml(prior=True, beta_prior=True)
+# Now self.zml reflects the prior-weighted maximum likelihood</code></pre>
+
+        <h3>z_best (zbest)</h3>
+        <p><code>self.zbest</code> is the redshift used for computing physical parameters (rest-frame colors, masses, etc.). It defaults to <code>self.zml</code>, but can be set to any user-specified value. If <code>FIX_ZSPEC = True</code>, <code>zbest</code> is set to <code>z_spec</code> for objects where it's available.</p>
+
+        <h3>zout['z_phot']</h3>
+        <p>In the output table, <code>z_phot</code> is the maximum-likelihood redshift used to compute everything in that table, effectively <code>zml</code> with whatever prior settings were passed to <code>standard_output()</code>.</p>
+
+        <h3>zout['z_raw_chi2']</h3>
+        <p>This is the redshift that corresponds to the overall minimum χ² value across all of the redshifts in the redshift grid.</p>
+
+		<h3>zout['z500'] (and z025, z160, z840, z975)</h3>
+		<p>This redshift corresponding to the 50th percentile in the P(z) surface, derived from the output χ²(z), and a prior, if one is used. The other values are the 2.5, 16, 84, and 97.5th percentiles, for understanding uncertainty. You can specify these values with <code> percentile_limits=[2.5, 16, 50, 84, 97.5]</code> in <code>self.standard_output()</code>.</p>
+
+        <h3>Summary</h3>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Name</th><th>Location</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>self.zml</code></td><td>PhotoZ attribute</td><td>argmax of lnp (parabola-refined), with/without priors</td></tr>
+              <tr><td><code>self.zbest</code></td><td>PhotoZ attribute</td><td>Redshift used for physical params; defaults to zml</td></tr>
+              <tr><td><code>self.chi2_fit</code></td><td>PhotoZ attribute</td><td>Raw χ² at every (object, z) grid point — shape (NOBJ, NZ)</td></tr>
+              <tr><td><code>zout['z_phot']</code></td><td>Output table</td><td>The z_ml used in standard_output</td></tr>
+              <tr><td><code>zout['z_phot_chi2']</code></td><td>Output table</td><td>χ² at z_phot</td></tr>
+              <tr><td><code>zout['z500']</code></td><td>Output table</td><td>Median of P(z) (50th percentile)</td></tr>
+              <tr><td><code>zout['z_raw_chi2']</code></td><td>Output table</td><td>Redshift corresponding to the minimum χ² .</td></tr>
+              <tr><td><code>zout['raw_chi2']</code></td><td>Output table</td><td>Minimum χ² at all redshifts.</td></tr>              
+              <tr><td><code>zout['z_phot_risk']</code></td><td>Output table</td><td>"Risk" redshift minimizing catastrophic outlier rate</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>Which to use?</strong> I personally use <code>zout['z_raw_chi2']</code>, since it's easiest to re-calculate, given the fitting involved in estimating <code>self.zml</code>. I also think that <code>zout['z500']</code> is helpful, and the percentile columns (<code>z160</code>–<code>z840</code>) characterize P(z) width, so they are useful for understanding uncertainties. I tend to avoid <code>self.zml</code>, but I think it's the standard value used across the literature. 
+        </div>
+      </section>
+
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s9">
+        <h2><span class="sec-num">09</span> Priors: Magnitude Prior &amp; Beta Prior</h2>
+
+        <h3>The Apparent Magnitude Prior</h3>
+        <p>The magnitude prior encodes the expectation that fainter sources are more likely to be at higher redshift. It is read from a file (default <code>templates/prior_F160W_TAO.dat</code>) that contains P(m, z) — the probability of a source being at redshift z given its apparent magnitude m.</p>
+
+        <div class="callout callout-warn">
+          <strong>Setup checklist:</strong>
+          <ul>
+            <li><code>PRIOR_FILTER</code> must be the filter number of your reference band</li>
+            <li><code>PRIOR_ABZP</code> must match your flux zeropoint (23.9 for µJy)</li>
+            <li><code>PRIOR_FILE</code> should match your reference band</li>
+          </ul>
+        </div>
+
+        <pre><code class="language-python"># Recompute without prior to diagnose bias
+ez.compute_lnp(prior=False, beta_prior=False)
+ez.evaluate_zml(prior=False, beta_prior=False)</code></pre>
+
+        <h3>The Beta Prior</h3>
+        <p>The UV slope beta prior (<code>beta_prior=True</code>) adds a soft constraint on the UV spectral slope, discouraging fits where the galaxy would need an unusual UV slope at the fitted redshift. The prior width is a sigmoid function of redshift:</p>
+        <ul>
+          <li>At z &lt; z_split (default 4): tight, σ = 0.5</li>
+          <li>At z &gt; z_split: widens significantly toward σ = 20</li>
+        </ul>
+        <p>Particularly useful for JWST high-z work where Lyman-break galaxies tend to have very blue UV slopes, and the beta prior helps avoid low-z degeneracies.</p>
+
+        <pre><code class="language-python"># Customize the beta prior shape
+ez.prior_beta(width_params={
+    'k': -5, 'z_split': 4,
+    'sigma0': 20, 'sigma1': 0.5, 'center': -1.5
+})</code></pre>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s10">
+        <h2><span class="sec-num">10</span> The Template Error Function (TEF)</h2>
+        <p>The TEF addresses a fundamental problem: even perfect photometry gives poor χ² if the templates don't perfectly match your galaxies. The TEF adds wavelength-dependent "template uncertainty" to the error budget:</p>
+        <div class="equation">σ²<sub>total</sub> = σ²<sub>phot</sub> + (TEMP_ERR_A2 · TEF(λ))² · F²<sub>template</sub></div>
+        <p>The TEF is read from <code>TEMP_ERR_FILE</code> and scaled by <code>TEMP_ERR_A2</code>. Increasing <code>TEMP_ERR_A2</code> broadens all P(z) distributions, and could be used when you don't fully trust your templates.</p>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s11">
+        <h2><span class="sec-num">11</span> Running standard_output: What You Get</h2>
+        <p><code>self.standard_output()</code> is the main output-generation function. It:</p>
+        <ol>
+          <li>Refits template coefficients at <code>zbest</code> (or <code>z_ml</code>)</li>
+          <li>Computes redshift statistics (percentiles of P(z), risk function, etc.)</li>
+          <li>Computes rest-frame photometry in UBVJ and any other specified filters</li>
+          <li>Optionally computes SPS-derived physical parameters (stellar mass, SFR, Lv, Av)</li>
+          <li>Saves <code>{MAIN_OUTPUT_FILE}.zout.fits</code> and <code>{MAIN_OUTPUT_FILE}.data.fits</code></li>
+        </ol>
+
+        <pre><code class="language-python">zout, hdu = ez.standard_output(
+    zbest=None,           # Use z_ml by default; pass array for custom redshifts
+    prior=False,          # Apply magnitude prior
+    beta_prior=False,     # Apply beta prior
+    UBVJ=[153, 154, 155, 161],                   # Filter numbers for rest-frame U, B, V, J
+    extra_rf_filters=[270, 274, 120, 121, ...],  # In case you want to calculate rest-frame photometry through these filters
+    rf_pad_width=0.5,     # Padding (fraction of filter width) for rest-frame interp
+    rf_max_err=2,         # Max allowed fractional error on rest-frame flux
+    percentile_limits=[2.5, 16, 50, 84, 97.5],   # For z500, z160, etc.
+    get_err=True,         # Compute rest-frame flux uncertainties via random draws
+    save_fits=True,
+    n_proc=0              # Parallelization for rest-frame computation
+)</code></pre>
+
+        <div class="callout callout-tip">
+          <strong><code>rf_pad_width</code> &amp; <code>rf_max_err</code>:</strong> These control rest-frame flux estimation. <code>rf_pad_width=0.5</code> uses observed filters within ±50% of the rest-frame filter's effective wavelength. <code>rf_max_err=2</code> (generous) vs <code>0.5</code> (conservative) governs how poorly constrained rest-frame fluxes are allowed to be.
+        </div>
+
+        <p>To reload products later:</p>
+        <pre><code class="language-python">from astropy.table import Table
+zout = Table.read('photz.zout.fits')
+
+# Or reload the full PhotoZ state
+self = photoz.PhotoZ(params=params, load_products=True)
+# self.zout, self.chi2_fit, self.fit_coeffs, self.ubvj all populated</code></pre>
+
+        <p>NOTE: You will need to specify trhe rest-frame UBVJ filters, or else the code fails, so if you are defining your own filter file, either point these to arbitrary filter numbers (that exist!) or include the UBVJ filters from <code>FILTER.RES.latest</code>. I tend to just add on filters to the end of this file, as shown above.</p>
+
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s12">
+        <h2><span class="sec-num">12</span> The zout Table: Column-by-Column</h2>
+
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Column</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>id</code></td><td>Object ID from input catalog</td></tr>
+              <tr><td><code>z_spec</code></td><td>Spectroscopic redshift from catalog (−99 if not available)</td></tr>
+              <tr><td><code>nusefilt</code></td><td>Number of filters actually used in the fit</td></tr>
+              <tr><td><code>z_phot</code></td><td>Best photometric redshift (z_ml with priors)</td></tr>
+              <tr><td><code>z_phot_chi2</code></td><td>χ² at z_phot</td></tr>
+              <tr><td><code>z_phot_risk</code></td><td>Redshift minimizing the "risk" of catastrophic outliers</td></tr>
+              <tr><td><code>z_min_risk</code></td><td>Redshift at minimum risk</td></tr>
+              <tr><td><code>min_risk</code></td><td>Value of the risk function at z_min_risk</td></tr>
+              <tr><td><code>z025, z160, z500, z840, z975</code></td><td>Percentiles of P(z): 2.5th, 16th, 50th, 84th, 97.5th</td></tr>
+              <tr><td><code>restU, restB, restV, restJ</code></td><td>Rest-frame flux densities in U, B, V, J bands</td></tr>
+              <tr><td><code>restU_err ... restJ_err</code></td><td>Uncertainties on rest-frame fluxes</td></tr>
+              <tr><td><code>Lv</code></td><td>Rest-frame V-band luminosity (L<sub>☉</sub>)</td></tr>
+              <tr><td><code>MLv</code></td><td>Mass-to-light ratio in V band</td></tr>
+              <tr><td><code>Av</code></td><td>V-band dust attenuation (magnitudes)</td></tr>
+              <tr><td><code>mass</code></td><td>Stellar mass (M<sub>☉</sub>) from SPS template fitting</td></tr>
+              <tr><td><code>SFR</code></td><td>Star formation rate (M<sub>☉</sub>/yr)</td></tr>
+              <tr><td><code>LIR</code></td><td>Integrated IR luminosity (8–1000 µm, L<sub>☉</sub>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Computing UVJ Colors</h3>
+        <pre><code class="language-python">uv = -2.5 * np.log10(zout['restU'] / zout['restV'])
+vj = -2.5 * np.log10(zout['restV'] / zout['restJ'])
+
+uverr = 2.5 * np.sqrt((zout['restU_err']/zout['restU'])**2 +
+                       (zout['restV_err']/zout['restV'])**2)
+vjerr = 2.5 * np.sqrt((zout['restV_err']/zout['restV'])**2 +
+                       (zout['restJ_err']/zout['restJ'])**2)</code></pre>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s13">
+        <h2><span class="sec-num">13</span> Iterative Zeropoint Corrections</h2>
+        <p>There may be underlying differences in the fluxes between the photometric datapoints that can be ascertained with EAZY fits. The function <code>iterate_zp_templates()</code> iteratively adjusts per-filter flux zeropoints to minimize the template residuals as compared to the observed flues. After running, <code>self.zp</code> will contain the multiplicative correction factors per filter (close to 1.0 for well-calibrated data), which are normalized to the <code>params['PRIOR_FILTER']</code> filter. </p>
+
+        <pre><code class="language-python">NITER = 3
+NBIN  = min(self.NOBJ // 100, 180)
+
+for i in range(NITER):
+    sn   = self.fnu / self.efnu
+    clip = (sn > 3).sum(axis=1) > 4   # objects with good multi-band SNR, you can adjust this to your liking
+
+    self.iterate_zp_templates(
+        idx=self.idx[clip],
+        update_templates=False,
+        update_zeropoints=True,
+        iter=i,
+        n_proc=4,
+        error_residuals=(i > 0),   # rescale errors after first iteration
+        NBIN=NBIN,
+        get_spatial_offset=False
+    )</code></pre>
+
+        <p>The <code>error_residuals=True</code> option rescales per-filter error arrays so that the normalized χ² per filter is ~1,  effectively correcting for over/underestimated uncertainties.</p>
+
+        <div class="callout callout-warn">
+        If you have fewer than ~50 sources, the corrections may be poorly constrained, so only use this function when you have enough objects for meaningful statistics per filter.
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s14">
+        <h2><span class="sec-num">14</span> Template Sets: Which One to Use</h2>
+
+        <div class="param-table">
+          <div class="param-row">
+            <div class="param-name"><code>agn_blue_sfhz_13.param</code></div>
+            <div class="param-desc"><strong>(Recommended)</strong> 13 SFHZ-derived templates covering a range of star formation histories and dust levels, with a few updated templates including an AGN ('j0647agn+torus.fits'). Works quite well even out to high redshifts (z > 8).</div>
+          </div>
+
+          <div class="param-row">
+            <div class="param-name"><code>tweak_fsps_QSF_12_v3.param</code></div>
+            <div class="param-desc"> 12 FSPS templates covering a range of star formation histories and dust levels, empirically adjusted for better photo-z performance. Works well for most survey applications from z ~ 0.1–6.</div>
+          </div>
+          
+          <div class="param-row">
+            <div class="param-name"><code>fsps_QSF_12_v3.param</code></div>
+            <div class="param-desc">Similar to the above but without the empirical tweaks. Generally use the <code>tweak_</code> version unless you have a specific reason not to.</div>
+          </div>
+
+        </div>
+
+        <p>Examine the templates after initialization:</p>
+        <pre><code class="language-python">import matplotlib.pyplot as plt
+for i, temp in enumerate(self.templates):
+    plt.plot(temp.wave / 1e4, temp.flux[0,:], label=temp.name, alpha=0.7)
+plt.xlabel('Wavelength (µm)')
+plt.xscale('log')
+plt.yscale('log')
+plt.legend(fontsize=6)</code></pre>
+
+        <div class="callout callout-tip">
+          <strong>For z &gt; 6 JWST work:</strong> The default FSPS templates work reasonably but do not capture extremely blue UV slopes common at high-z. There are many template sets available online which can be used for these high-redshift sources:
+        <ol>
+          <li><a href = "https://doi.org/10.3847/1538-4357/acfed4">Larson et al. (2023)</a> - <a href="https://ceers.github.io/LarsonSEDTemplates">download here</a>.</li>
+          <li><a href = "https://doi.org/10.3847/2041-8213/acdef6">Steinhardt et al. (2023)</a> - <a href="https://github.com/e-m-garcia/hot-templates">download here</a></li>
+          <li><a href = "https://doi.org/10.3847/1538-4357/ad1ee4">Hainline et al. (2024)</a> - <a href="https://doi.org/10.5281/zenodo.7996500">download here</a></li>
+          <li><a href = "https://doi.org/10.1088/1475-7516/2025/10/084">Luberto et al. (2025)</a> - <a href="hhttps://github.com/JudahRockLuberto/high-z_template_set">download here</a></li>
+
+        </ol>
+
+
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s15">
+        <h2><span class="sec-num">15</span> Visualizing Results</h2>
+
+        <h3>Individual SED Fits</h3>
+        <pre><code class="language-python"># By object ID (from catalog)
+fig, data = self.show_fit(
+    id=12345,
+    xlim=[0.3, 9],           # Wavelength range in µm
+    show_components=True,    # Show individual template contributions
+    logpz=True,              # Log scale for P(z)
+    zr=[0, 7],               # Redshift range for P(z) panel
+    show_prior=True,         # Overlay the magnitude prior
+    show_stars=True,         # Overlay best-fit stellar templates
+    delta_chi2_stars=-20,    # χ² threshold for flagging stars
+    snr_thresh=2.0,          # SNR threshold for detections vs. limits
+    showpz=0.6               # Fraction of figure height for P(z) panel
+)
+
+# By index rather than ID
+fig, data = self.show_fit(id=42, id_is_idx=True)
+
+# At a specific redshift (e.g., z_spec)
+fig, data = self.show_fit(id=12345, zshow=1.234)</code></pre>
+        <p>The <code>data</code> return value is a dict containing the SED, template fluxes, and P(z) arrays — useful for customizing the plot.</p>
+
+		<h3>plot_fit_EAZY()</h3>
+
+		<p>While the built-in function <code>self.show_fit()</code> works well, here is a python function I wrote which will allow you to plot the fit for individual sources with the minimum χ² value as well as the χ² surface, while also allowing the user to plot alternate redshift solutions and save the plot, or the SED fit and/or χ²(z) values. </p>
+		
+		<p>Primarily I am including this to show the user how to go and grab information from <code>self</code> and <code>zout</code>, and specifically the power of <code>self.show_fit()</code> to extract information without making a plot.</p>
+		
+        <pre><code class="language-python">
+        import numpy as np
+        import matplotlib.pyplot as plt
+        
+        def plot_fit_EAZY(object_ID, self, zout, primary_z = -9999, alt_z = 0.0, h5file = False, savefile = None, savesed = False, savechisq = False):
+	
+	template_color = '#56B4E9'#'
+	NIRC_photometry_color = '#D55E00'
+	HST_photometry_color =  '#F786AA'
+	chisq_surface_color = '#E69F00'
+	zspec_color = '#332288'
+	alternate_color = 'grey'
+
+	# First, the redshift grid for the chisq surface. 
+	output_zgrid = self.zgrid
+	
+	# the index of the source. 
+	i = np.where(self.OBJID == object_ID)[0][0]
+
+	# the chisq values. 
+	if (h5file == False):
+		output_chisq = self.chi2_fit[i,:]
+	else:
+		_data = self.get_object_data(i)
+		z, fnu_i, efnu_i, ra_i, dec_i, output_chisq, zspec_i, ok_i = _data
+	
+	z_a_value = np.round(zout['z_raw_chi2'][i],2)
+	
+	if (primary_z < 0):
+		data = self.show_fit(object_ID, show_fnu = True, zshow = z_a_value, get_spec = True)
+	else:
+		data = self.show_fit(object_ID, show_fnu = True, zshow = primary_z, get_spec = True)
+
+	output_wavelength = data['templz']
+	output_flux = data['templf']*1e3
+
+	output_phot_wavelength = data['pivot']
+	output_phot_template = data['model']*1e3
+
+	output_phot_err_template = data['emodel']*1e3
+
+	output_phot = data['fobs']*1e3
+
+	output_phot_err = data['efobs']*1e3
+
+	output_tef = data['tef']
+
+	pos_flux_errors = np.where(output_phot_err > 0)[0]
+
+	plt.figure(figsize = (12, 5))
+	plt.subplot(121)
+	if (primary_z < 0):
+		plt.plot(output_wavelength/1e4, output_flux, color = template_color, lw = 3, zorder = 0, label = 'z = '+str(round(zout['z_raw_chi2'][i],2)))
+	else:
+		plt.plot(output_wavelength/1e4, output_flux, color = template_color, lw = 3, zorder = 0, label = 'z = '+str(round(primary_z,2)))
+	
+	plt.scatter(output_phot_wavelength/1e4, output_phot_template, marker = 's', s = 110, linewidth = 3, edgecolor = template_color, color = 'None', zorder = 5)
+	plt.scatter(output_phot_wavelength[pos_flux_errors]/1e4, output_phot[pos_flux_errors], color = NIRC_photometry_color, s = 50, linewidth = 3, zorder = 10)
+	plt.errorbar(output_phot_wavelength[pos_flux_errors]/1e4, output_phot[pos_flux_errors], yerr = output_phot_err[pos_flux_errors], color = 'black', ls = 'None', alpha = 0.4)
+	plt.semilogy()
+	plt.xlabel('Observed Wavelength ($\mu$m)')
+	plt.ylabel('Flux (nJy)')
+	plt.xlim(0.3, 5.0)
+	pos_fluxes = np.where(output_phot > 0)[0]
+	ymin = np.min(output_phot[pos_fluxes]) - (0.4 * np.min(output_phot[pos_fluxes]))
+	if (ymin < 0.01):
+		ymin = 0.01
+	ymax = np.max(output_phot[pos_fluxes]) + (10.0 * np.max(output_phot[pos_fluxes]))
+	if (ymax > (100.*np.median(output_phot[np.where(output_phot > 0)[0]]))):
+		ymax = 100.*np.median(output_phot[np.where(output_phot > 0)[0]])
+	print(ymin, ymax)
+	plt.ylim(ymin, ymax)
+	plt.title(self.OBJID[i])
+
+	if (alt_z < 0):
+		alt_z_value = alt_z * -1.0
+		if (zout['z_raw_chi2'][i] > alt_z_value):
+			zgrid_lt_7 = np.where(output_zgrid <= alt_z_value)[0]
+			z_a_lt_7 = np.round(output_zgrid[zgrid_lt_7][np.argmin(output_chisq[zgrid_lt_7])],2)
+			data_zlt_7 = self.show_fit(object_ID, show_fnu = True, zshow = z_a_lt_7, get_spec = True)
+
+			delta_chisq = output_chisq[np.argmin(output_chisq[zgrid_lt_7])] - output_chisq[np.argmin(output_chisq)]
+			print('Delta chisq = '+str(np.round(delta_chisq,2)))
+
+			output_wavelength_zlt_7 = data_zlt_7['templz']
+			output_flux_zlt_7 = data_zlt_7['templf']*1e3
+			output_phot_template_zlt_7 = data_zlt_7['model']*1e3
+		
+			plt.plot(output_wavelength_zlt_7/1e4, output_flux_zlt_7, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(z_a_lt_7,2)), alpha = 0.4)
+		else:
+			zgrid_gt_7 = np.where(output_zgrid > alt_z_value)[0]
+			z_a_gt_7 = np.round(output_zgrid[zgrid_gt_7][np.argmin(output_chisq[zgrid_gt_7])],2)
+			data_zgt_7 = self.show_fit(object_ID, show_fnu = True, zshow = z_a_gt_7, get_spec = True)
+
+			delta_chisq = output_chisq[np.argmin(output_chisq[zgrid_gt_7])] - output_chisq[np.argmin(output_chisq)]
+			print('Delta chisq = -'+str(np.round(delta_chisq,2)))
+
+			output_wavelength_zgt_7 = data_zgt_7['templz']
+			output_flux_zgt_7 = data_zgt_7['templf']*1e3
+			output_phot_template_zgt_7 = data_zgt_7['model']*1e3
+		
+			plt.plot(output_wavelength_zgt_7/1e4, output_flux_zgt_7, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(z_a_gt_7,2)), alpha = 0.4)
+	if (alt_z > 0):
+		alt_z_value = alt_z
+		data_zalt = self.show_fit(object_ID, show_fnu = True, zshow = alt_z_value, get_spec = True)
+
+		delta_chisq = output_chisq[np.where(output_zgrid == np.round(alt_z_value,2))[0]] - output_chisq[np.argmin(output_chisq)]
+		print('Delta chisq = '+str(np.round(delta_chisq,2)))
+
+		output_wavelength_zalt = data_zalt['templz']
+		output_flux_zalt = data_zalt['templf']*1e3
+		output_phot_template_zalt = data_zalt['model']*1e3
+	
+		plt.plot(output_wavelength_zalt/1e4, output_flux_zalt, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(alt_z_value,2)), alpha = 0.4)
+		
+
+	plt.legend()
+
+	plt.subplot(122)
+	plt.plot(output_zgrid, output_chisq, color = chisq_surface_color, lw = 3, zorder = 10)
+	if (primary_z < 0):
+		plt.axvline(zout['z_raw_chi2'][i], lw = 3, zorder = 0)
+	else:
+		plt.axvline(primary_z, lw = 3, zorder = 0)
+
+	if (alt_z < 0):
+		if (zout['z_raw_chi2'][i] > 7.0):
+			plt.axvline(z_a_lt_7, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
+		else:
+			plt.axvline(z_a_gt_7, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
+	if (alt_z > 0):
+		plt.axvline(alt_z_value, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
+		
+	plt.xlabel('Redshift')
+	plt.ylabel('$\chi^2$')
+
+	plt.tight_layout()
+	if (savefile == None):
+		plt.show()
+	else:
+		savefile_name = str(object_ID)+'_wave_sed.png'
+		plt.savefig(savefile_name, dpi = 300)
+
+	if (savesed == True):
+		np.savetxt(str(object_ID)+'_wave_sed.dat', np.c_[output_wavelength/1e4, output_flux])
+		np.savetxt(str(object_ID)+'_wave_sed_photometry.dat', np.c_[output_phot_wavelength/1e4, output_phot_template])
+	
+	if (savechisq == True):
+		np.savetxt(str(object_ID)+'_z_chisq.dat', np.c_[output_zgrid, output_chisq])
+		</code></pre>
+
+
+        <h3>z_phot vs z_spec Comparison</h3>
+        <p> If you happen to have spectroscopic redshifts for your sources, you could use the built-in function <code>self.zphot_zspec()</code>:</p>
+        
+        <pre><code class="language-python">fig = self.zphot_zspec()   # Produces a standard comparison plot</code></pre>
+
+        <h3>Interactive Dashboard</h3>
+        <p> Similarly, there's a Plotly/Dash browser app that you can run which will allow you to explore the source fits interactively:</p>
+                
+        <pre><code class="language-python">from eazy import visualization
+app = visualization.EazyExplorer(photoz=self, zout=zout)
+app.make_dash_app(server_mode='external', port=8050)
+# Opens a Plotly/Dash browser app for interactive exploration</code></pre>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s16">
+        <h2><span class="sec-num">16</span> Common Pitfalls &amp; Tips</h2>
+
+        <div class="pitfall-list">
+          <div class="pitfall">
+            <div class="pitfall-num">1</div>
+            <div class="pitfall-body">
+              <strong>PRIOR_ABZP mismatch.</strong> If fluxes are in nJy, use <code>PRIOR_ABZP = 31.4</code>. If fluxes are in µJy, use <code>PRIOR_ABZP = 23.9</code>. If they're normalized to a "25.0 = 1 unit" convention, use <code>25.0</code>. Getting this wrong silently biases redshifts.
+            </div>
+          </div>
+
+          <div class="pitfall">
+            <div class="pitfall-num">2</div>
+            <div class="pitfall-body">
+              <strong>Filter numbers.</strong> Numbers like 205 or 153 are 1-based line indices specified in <code>FILTER.RES.latest.info</code>. You can also find a filter you're interested in with:
+              <pre><code class="language-python">for i, filt in enumerate(self.RES.filters):
+    if 'f160w' in filt.name.lower():
+        print(i+1, filt.name)   # +1 because 1-indexed</code></pre>
+            </div>
+          </div>
+
+          <div class="pitfall">
+            <div class="pitfall-num">3</div>
+            <div class="pitfall-body">
+              <strong>Non-detection convention.</strong> Fluxes below <code>NOT_OBS_THRESHOLD</code> (default −90) are masked. If your catalog uses 0.0 for non-detections, those are treated as real zero-flux detections, which you likely do not want, given that this will break your fits.
+            </div>
+          </div>
+
+          <div class="pitfall">
+            <div class="pitfall-num">4</div>
+            <div class="pitfall-body">
+              <strong>chi2 = 0 means the object was not fit.</strong> Check <code>self.nusefilt[i]</code> — if too few filters pass the threshold, the object is skipped.
+              <pre><code class="language-python">unfitted = (self.chi2_fit == 0).all(axis=1)
+print(f"{unfitted.sum()} objects not fit")</code></pre>
+            </div>
+          </div>
+
+          <div class="pitfall">
+            <div class="pitfall-num">5</div>
+            <div class="pitfall-body">
+              <strong>Multimodal P(z).</strong> It is very important that you look at χ²(z) to explore the goodness of fit for alternate redshift solutions. The 
+            </div>
+          </div>
+
+          <div class="pitfall">
+            <div class="pitfall-num">6</div>
+            <div class="pitfall-body">
+              <strong>Memory usage.</strong> With <code>random_draws=100</code>, <code>self.coeffs_draws</code> has shape <code>(NOBJ, 100, NTEMP)</code>. For 100k objects × 12 templates, this is ~5 GB. Reduce <code>random_draws</code> if memory is tight.
+            </div>
+          </div>
+
+          <div class="pitfall">
+            <div class="pitfall-num">7</div>
+            <div class="pitfall-body">
+              <strong>You could do a simple estimate to explore the reduced χ² values.</strong>
+              <pre><code class="language-python">chi2_best = self.chi2_fit[np.arange(self.NOBJ), ez.izbest]
+chinu     = chi2_best / np.maximum(self.nusefilt - 1, 1)
+bad_fits  = chinu > 5   # Flag very poor fits</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="s17">
+        <h2><span class="sec-num">17</span> Key Internal Attributes Reference</h2>
+
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Attribute</th><th>Shape</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>self.zgrid</code></td><td>(NZ,)</td><td>Redshift grid</td></tr>
+              <tr><td><code>self.NZ</code></td><td>scalar</td><td>Number of redshift grid points</td></tr>
+              <tr><td><code>self.NOBJ</code></td><td>scalar</td><td>Number of objects in catalog</td></tr>
+              <tr><td><code>self.NFILT</code></td><td>scalar</td><td>Number of filters</td></tr>
+              <tr><td><code>self.NTEMP</code></td><td>scalar</td><td>Number of templates</td></tr>
+              <tr><td><code>self.fnu</code></td><td>(NOBJ, NFILT)</td><td>Observed fluxes (after zp correction)</td></tr>
+              <tr><td><code>self.efnu</code></td><td>(NOBJ, NFILT)</td><td>Flux errors (after any rescaling)</td></tr>
+              <tr><td><code>self.efnu_orig</code></td><td>(NOBJ, NFILT)</td><td>Original errors before rescaling</td></tr>
+              <tr><td><code>self.ok_data</code></td><td>(NOBJ, NFILT)</td><td>Boolean mask of valid flux measurements</td></tr>
+              <tr><td><code>self.nusefilt</code></td><td>(NOBJ,)</td><td>Number of valid filters per object</td></tr>
+              <tr><td><code>self.chi2_fit</code></td><td>(NOBJ, NZ)</td><td>χ² at each (object, z) grid point</td></tr>
+              <tr><td><code>self.fit_coeffs</code></td><td>(NOBJ, NZ, NTEMP)</td><td>Template coefficients at each (object, z)</td></tr>
+              <tr><td><code>self.lnp</code></td><td>(NOBJ, NZ)</td><td>Log-probability from compute_lnp()</td></tr>
+              <tr><td><code>self.full_logprior</code></td><td>(NOBJ, NZ)</td><td>Log of magnitude prior</td></tr>
+              <tr><td><code>self.lnp_beta</code></td><td>(NOBJ, NZ)</td><td>Log of beta prior</td></tr>
+              <tr><td><code>self.zml</code></td><td>(NOBJ,)</td><td>Maximum likelihood redshift</td></tr>
+              <tr><td><code>self.izbest</code></td><td>(NOBJ,)</td><td>Index into zgrid of best redshift</td></tr>
+              <tr><td><code>self.zbest</code></td><td>(NOBJ,)</td><td>Best redshift used for physical params</td></tr>
+              <tr><td><code>self.chi2_best</code></td><td>(NOBJ,)</td><td>χ² at zbest</td></tr>
+              <tr><td><code>self.coeffs_best</code></td><td>(NOBJ, NTEMP)</td><td>Template coefficients at zbest</td></tr>
+              <tr><td><code>self.fmodel</code></td><td>(NOBJ, NFILT)</td><td>Model fluxes at zbest</td></tr>
+              <tr><td><code>self.coeffs_draws</code></td><td>(NOBJ, N_draws, NTEMP)</td><td>Random coefficient draws for uncertainties</td></tr>
+              <tr><td><code>self.zp</code></td><td>(NFILT,)</td><td>Multiplicative zeropoint corrections</td></tr>
+              <tr><td><code>self.zout</code></td><td>Table</td><td>Output redshift table (from standard_output)</td></tr>
+              <tr><td><code>self.cat</code></td><td>Table</td><td>Input catalog</td></tr>
+              <tr><td><code>self.filters</code></td><td>list</td><td>Filter objects</td></tr>
+              <tr><td><code>self.templates</code></td><td>list</td><td>Template objects</td></tr>
+              <tr><td><code>self.pivot</code></td><td>(NFILT,)</td><td>Pivot wavelengths of filters (Angstroms)</td></tr>
+              <tr><td><code>self.flux_columns</code></td><td>list</td><td>Names of flux columns in catalog</td></tr>
+              <tr><td><code>self.f_numbers</code></td><td>(NFILT,)</td><td>Filter numbers (1-indexed into <code>FILTER.RES.latest</code>, if that's what you're using.)</td></tr>
+              <tr><td><code>self.lc_reddest</code></td><td>(NOBJ,)</td><td>Reddest valid filter pivot wavelength per object</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════ -->
+      <section id="resources" class="resources-section">
+        <h2>Further Resources</h2>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://github.com/gbrammer/eazy-py" target="_blank" rel="noopener">
+            <div class="resource-icon">⌥</div>
+            <div class="resource-title">GitHub Repository</div>
+            <div class="resource-url">gbrammer/eazy-py</div>
+          </a>
+          <a class="resource-card" href="https://eazy-py.readthedocs.io/" target="_blank" rel="noopener">
+            <div class="resource-icon">⊞</div>
+            <div class="resource-title">API Documentation</div>
+            <div class="resource-url">eazy-py.readthedocs.io</div>
+          </a>
+          <a class="resource-card" href="https://colab.research.google.com/github/gbrammer/eazy-py/blob/master/docs/examples/HDFN-demo.ipynb" target="_blank" rel="noopener">
+            <div class="resource-icon">◈</div>
+            <div class="resource-title">HDFN Demo Notebook</div>
+            <div class="resource-url">Google Colab</div>
+          </a>
+          <a class="resource-card" href="https://github.com/gbrammer/eazy-photoz" target="_blank" rel="noopener">
+            <div class="resource-icon">◉</div>
+            <div class="resource-title">Template &amp; Filter Files</div>
+            <div class="resource-url">gbrammer/eazy-photoz</div>
+          </a>
+          <a class="resource-card" href="https://ui.adsabs.harvard.edu/abs/2008ApJ...686.1503B/abstract" target="_blank" rel="noopener">
+            <div class="resource-icon">✦</div>
+            <div class="resource-title">Brammer et al. (2008)</div>
+            <div class="resource-url">ApJ, 686, 1503</div>
+          </a>
+          <a class="resource-card" href="https://github.com/gbrammer/eazy-py/issues" target="_blank" rel="noopener">
+            <div class="resource-icon">⊛</div>
+            <div class="resource-title">Bug Reports &amp; Questions</div>
+            <div class="resource-url">GitHub Issues</div>
+          </a>
+        </div>
+        <p class="guide-credit">Community guide · Based on eazy-py v0.8.5 · May 2026</p>
+      </section>
+
+    </article>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
