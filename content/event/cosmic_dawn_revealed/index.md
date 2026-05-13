@@ -26,7 +26,7 @@ image:
 #links:
 url_code: ''
 url_pdf: ''
-url_slides: 'https://online.kitp.ucsb.edu/online/firstbillion-c24/hainline/'
+url_slides: ''
 url_video: 'https://www.youtube.com/watch?v=QKRKoCgR0Cc'
 
 # Markdown Slides (optional).
