@@ -1,5 +1,5 @@
 ---
-title: Cosmic Dawn Revealed: The JADES View of Galaxies at z > 10
+title: Cosmic Dawn Revealed: The JADES View of Galaxies at Redshift Greater than 10
 
 event: Youtube Discussion 
 event_url: https://www.youtube.com/watch?v=hQWt3P4Eb-c
