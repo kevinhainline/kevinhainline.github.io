@@ -24,7 +24,7 @@
     <div class="sidebar-header">
       <div class="sidebar-logo">EAZY<span>-py</span></div>
       <div class="sidebar-subtitle">A Practical Guide</div>
-      <div class="sidebar-subtitle">(written by Kevin Hainline)</div>
+      <div class="sidebar-subtitle">(written by <a href="https://kevinhainline.github.io">Kevin Hainline</a>)</div>
     </div>
     <ul class="nav-list" id="nav-list">
       <!-- Populated by JS -->
@@ -724,183 +724,181 @@ fig, data = ez.show_fit(id=12345, zshow=1.234)</code></pre>
 		
 		<p>Primarily I am including this to show the user how to go and grab information from <code>ez</code> and <code>zout</code>, and specifically the power of <code>ez.show_fit()</code> to extract information without making a plot.</p>
 		
-        <pre><code class="language-python">
-        import numpy as np
-        import matplotlib.pyplot as plt
+        <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
         
-        def plot_fit_EAZY(object_ID, ez, zout, primary_z = -9999, alt_z = 0.0, h5file = None, savefile = None, savesed = False, savechisq = False):
-    """
-    Plot the EAZY SED fit and chi-squared surface for a single object.
+def plot_fit_EAZY(object_ID, ez, zout, primary_z = -9999, alt_z = 0.0, h5file = None, savefile = None, savesed = False, savechisq = False):
+"""
+Plot the EAZY SED fit and chi-squared surface for a single object.
 
-    Parameters
-    ----------
-    object_ID : int
-        The catalog ID of the object to plot.
-    ez : eazy.photoz.PhotoZ
-        The initialized and fitted EAZY PhotoZ object.
-    zout : astropy.table.Table
-        The output redshift table from ez.standard_output().
-    primary_z : float, optional
-        Redshift at which to show the SED. If negative (default), uses z_raw_chi2.
-    alt_z : float, optional
-        If > 0, overplots the SED at this specific redshift in grey.
-        If < 0, finds and overplots the best fit on the other side of |alt_z|
-        (e.g. alt_z=-7 shows the best low-z fit for a high-z candidate).
-    h5file : bool, optional
-        If True, loads chi2 data from an HDF5 file rather than from memory.
-    savefile : str, optional
-        If provided, saves the figure as {object_ID}_wave_sed.png instead of displaying.
-    savesed : bool, optional
-        If True, saves the best-fit SED and photometry to .dat files.
-    savechisq : bool, optional
-        If True, saves the chi-squared surface to a .dat file.
-    """
+Parameters
+----------
+object_ID : int
+	The catalog ID of the object to plot.
+ez : eazy.photoz.PhotoZ
+	The initialized and fitted EAZY PhotoZ object.
+zout : astropy.table.Table
+	The output redshift table from ez.standard_output().
+primary_z : float, optional
+	Redshift at which to show the SED. If negative (default), uses z_raw_chi2.
+alt_z : float, optional
+	If > 0, overplots the SED at this specific redshift in grey.
+	If < 0, finds and overplots the best fit on the other side of |alt_z|
+	(e.g. alt_z=-7 shows the best low-z fit for a high-z candidate).
+h5file : bool, optional
+	If True, loads data from an HDF5 file rather than from memory.
+savefile : str, optional
+	If provided, saves the figure as {object_ID}_wave_sed.png instead of displaying.
+savesed : bool, optional
+	If True, saves the best-fit SED and photometry to .dat files.
+savechisq : bool, optional
+	If True, saves the chi-squared surface to a .dat file.
+"""
 	
-	template_color = '#56B4E9'#'
-	NIRC_photometry_color = '#D55E00'
-	HST_photometry_color =  '#F786AA'
-	chisq_surface_color = '#E69F00'
-	zspec_color = '#332288'
-	alternate_color = 'grey'
+template_color = '#56B4E9'#'
+NIRC_photometry_color = '#D55E00'
+HST_photometry_color =  '#F786AA'
+chisq_surface_color = '#E69F00'
+zspec_color = '#332288'
+alternate_color = 'grey'
 
-	# First, the redshift grid for the chisq surface. 
-	output_zgrid = ez.zgrid
-	
-	# the index of the source. 
-	i = np.where(ez.OBJID == object_ID)[0][0]
+# First, the redshift grid for the chisq surface. 
+output_zgrid = ez.zgrid
 
-	# the chisq values. 
-	if (h5file is not None):
-		output_chisq = ez.chi2_fit[i,:]
-	else:
-		_data = ez.get_object_data(i)
-		z, fnu_i, efnu_i, ra_i, dec_i, output_chisq, zspec_i, ok_i = _data
-	
-	# The redshift corresponding to the minimum chi-square, rounded to the nearest hundredth
-	z_a_value = np.round(zout['z_raw_chi2'][i],2)
+# the index of the source. 
+i = np.where(ez.OBJID == object_ID)[0][0]
 
-	# Now, we use the minimum chi-square redshift, or else we go with the user specified
-	# value primary_z, which, if it's set to a negative number, will be ignored.
-	zshow = zout['z_raw_chi2'][i] if primary_z < 0 else primary_z
-	data = ez.show_fit(object_ID, show_fnu=True, zshow=zshow, get_spec=True)
-	
-	# We unpack the data structure for plotting and developing output.
-	output_wavelength = data['templz']
-	output_flux = data['templf']*1e3
+# the chisq values. 
+if (h5file is not None):
+	output_chisq = ez.chi2_fit[i,:]
+else:
+	_data = ez.get_object_data(i)
+	z, fnu_i, efnu_i, ra_i, dec_i, output_chisq, zspec_i, ok_i = _data
 
-	output_phot_wavelength = data['pivot']
-	output_phot_template = data['model']*1e3
+# The redshift corresponding to the minimum chi-square, rounded to the nearest hundredth
+z_a_value = np.round(zout['z_raw_chi2'][i],2)
 
-	output_phot_err_template = data['emodel']*1e3
+# Now, we use the minimum chi-square redshift, or else we go with the user specified
+# value primary_z, which, if it's set to a negative number, will be ignored.
+zshow = zout['z_raw_chi2'][i] if primary_z < 0 else primary_z
+data = ez.show_fit(object_ID, show_fnu=True, zshow=zshow, get_spec=True)
 
-	output_phot = data['fobs']*1e3
+# We unpack the data structure for plotting and developing output.
+output_wavelength = data['templz']
+output_flux = data['templf']*1e3
 
-	output_phot_err = data['efobs']*1e3
+output_phot_wavelength = data['pivot']
+output_phot_template = data['model']*1e3
 
-	output_tef = data['tef']
+output_phot_err_template = data['emodel']*1e3
 
-	pos_flux_errors = np.where(output_phot_err > 0)[0]
+output_phot = data['fobs']*1e3
 
-	# And now we plot the figure.
-	plt.figure(figsize = (12, 5))
-	plt.subplot(121)
-	plt.plot(output_wavelength/1e4, output_flux, color = template_color, lw = 3, zorder = 0, label = 'z = '+str(zshow))
-	
-	plt.scatter(output_phot_wavelength/1e4, output_phot_template, marker = 's', s = 110, linewidth = 3, edgecolor = template_color, color = 'None', zorder = 5)
-	plt.scatter(output_phot_wavelength[pos_flux_errors]/1e4, output_phot[pos_flux_errors], color = NIRC_photometry_color, s = 50, linewidth = 3, zorder = 10)
-	plt.errorbar(output_phot_wavelength[pos_flux_errors]/1e4, output_phot[pos_flux_errors], yerr = output_phot_err[pos_flux_errors], color = 'black', ls = 'None', alpha = 0.4)
-	plt.semilogy()
-	plt.xlabel('Observed Wavelength ($\mu$m)')
-	plt.ylabel('Flux (nJy)')
-	plt.xlim(0.3, 5.0)
-	pos_fluxes = np.where(output_phot > 0)[0]
-	ymin = np.min(output_phot[pos_fluxes]) - (0.4 * np.min(output_phot[pos_fluxes]))
-	if (ymin < 0.01):
-		ymin = 0.01
-	ymax = np.max(output_phot[pos_fluxes]) + (10.0 * np.max(output_phot[pos_fluxes]))
-	if (ymax > (100.*np.median(output_phot[np.where(output_phot > 0)[0]]))):
-		ymax = 100.*np.median(output_phot[np.where(output_phot > 0)[0]])
-	plt.ylim(ymin, ymax)
-	plt.title(ez.OBJID[i])
+output_phot_err = data['efobs']*1e3
 
-	if (alt_z < 0):
-		alt_z_value = alt_z * -1.0
-		if (zout['z_raw_chi2'][i] > alt_z_value):
-			zgrid_lt_7 = np.where(output_zgrid <= alt_z_value)[0]
-			z_a_lt_7 = np.round(output_zgrid[zgrid_lt_7][np.argmin(output_chisq[zgrid_lt_7])],2)
-			data_zlt_7 = ez.show_fit(object_ID, show_fnu = True, zshow = z_a_lt_7, get_spec = True)
+output_tef = data['tef']
 
-			iz_alt = np.argmin(np.abs(output_zgrid - alt_z_value))
-			delta_chisq = output_chisq[iz_alt] - output_chisq[np.argmin(output_chisq)]
+pos_flux_errors = np.where(output_phot_err > 0)[0]
 
-			print('Delta chisq = '+str(np.round(delta_chisq,2)))
+# And now we plot the figure.
+plt.figure(figsize = (12, 5))
+plt.subplot(121)
+plt.plot(output_wavelength/1e4, output_flux, color = template_color, lw = 3, zorder = 0, label = 'z = '+str(zshow))
 
-			output_wavelength_zlt_7 = data_zlt_7['templz']
-			output_flux_zlt_7 = data_zlt_7['templf']*1e3
-			output_phot_template_zlt_7 = data_zlt_7['model']*1e3
-		
-			plt.plot(output_wavelength_zlt_7/1e4, output_flux_zlt_7, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(z_a_lt_7,2)), alpha = 0.4)
-		else:
-			zgrid_gt_7 = np.where(output_zgrid > alt_z_value)[0]
-			z_a_gt_7 = np.round(output_zgrid[zgrid_gt_7][np.argmin(output_chisq[zgrid_gt_7])],2)
-			data_zgt_7 = ez.show_fit(object_ID, show_fnu = True, zshow = z_a_gt_7, get_spec = True)
+plt.scatter(output_phot_wavelength/1e4, output_phot_template, marker = 's', s = 110, linewidth = 3, edgecolor = template_color, color = 'None', zorder = 5)
+plt.scatter(output_phot_wavelength[pos_flux_errors]/1e4, output_phot[pos_flux_errors], color = NIRC_photometry_color, s = 50, linewidth = 3, zorder = 10)
+plt.errorbar(output_phot_wavelength[pos_flux_errors]/1e4, output_phot[pos_flux_errors], yerr = output_phot_err[pos_flux_errors], color = 'black', ls = 'None', alpha = 0.4)
+plt.semilogy()
+plt.xlabel('Observed Wavelength ($\mu$m)')
+plt.ylabel('Flux (nJy)')
+plt.xlim(0.3, 5.0)
+pos_fluxes = np.where(output_phot > 0)[0]
+ymin = np.min(output_phot[pos_fluxes]) - (0.4 * np.min(output_phot[pos_fluxes]))
+if (ymin < 0.01):
+	ymin = 0.01
+ymax = np.max(output_phot[pos_fluxes]) + (10.0 * np.max(output_phot[pos_fluxes]))
+if (ymax > (100.*np.median(output_phot[np.where(output_phot > 0)[0]]))):
+	ymax = 100.*np.median(output_phot[np.where(output_phot > 0)[0]])
+plt.ylim(ymin, ymax)
+plt.title(ez.OBJID[i])
 
-			delta_chisq = output_chisq[np.argmin(output_chisq[zgrid_gt_7])] - output_chisq[np.argmin(output_chisq)]
-			print('Delta chisq = -'+str(np.round(delta_chisq,2)))
+if (alt_z < 0):
+	alt_z_value = alt_z * -1.0
+	if (zout['z_raw_chi2'][i] > alt_z_value):
+		zgrid_lt_7 = np.where(output_zgrid <= alt_z_value)[0]
+		z_a_lt_7 = np.round(output_zgrid[zgrid_lt_7][np.argmin(output_chisq[zgrid_lt_7])],2)
+		data_zlt_7 = ez.show_fit(object_ID, show_fnu = True, zshow = z_a_lt_7, get_spec = True)
 
-			output_wavelength_zgt_7 = data_zgt_7['templz']
-			output_flux_zgt_7 = data_zgt_7['templf']*1e3
-			output_phot_template_zgt_7 = data_zgt_7['model']*1e3
-		
-			plt.plot(output_wavelength_zgt_7/1e4, output_flux_zgt_7, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(z_a_gt_7,2)), alpha = 0.4)
-	if (alt_z > 0):
-		alt_z_value = alt_z
-		data_zalt = ez.show_fit(object_ID, show_fnu = True, zshow = alt_z_value, get_spec = True)
+		iz_alt = np.argmin(np.abs(output_zgrid - alt_z_value))
+		delta_chisq = output_chisq[iz_alt] - output_chisq[np.argmin(output_chisq)]
 
-		delta_chisq = output_chisq[np.where(output_zgrid == np.round(alt_z_value,2))[0]] - output_chisq[np.argmin(output_chisq)]
 		print('Delta chisq = '+str(np.round(delta_chisq,2)))
 
-		output_wavelength_zalt = data_zalt['templz']
-		output_flux_zalt = data_zalt['templf']*1e3
-		output_phot_template_zalt = data_zalt['model']*1e3
+		output_wavelength_zlt_7 = data_zlt_7['templz']
+		output_flux_zlt_7 = data_zlt_7['templf']*1e3
+		output_phot_template_zlt_7 = data_zlt_7['model']*1e3
 	
-		plt.plot(output_wavelength_zalt/1e4, output_flux_zalt, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(alt_z_value,2)), alpha = 0.4)
-		
-
-	plt.legend()
-
-	plt.subplot(122)
-	plt.plot(output_zgrid, output_chisq, color = chisq_surface_color, lw = 3, zorder = 10)
-	if (primary_z < 0):
-		plt.axvline(zout['z_raw_chi2'][i], lw = 3, zorder = 0)
+		plt.plot(output_wavelength_zlt_7/1e4, output_flux_zlt_7, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(z_a_lt_7,2)), alpha = 0.4)
 	else:
-		plt.axvline(primary_z, lw = 3, zorder = 0)
+		zgrid_gt_7 = np.where(output_zgrid > alt_z_value)[0]
+		z_a_gt_7 = np.round(output_zgrid[zgrid_gt_7][np.argmin(output_chisq[zgrid_gt_7])],2)
+		data_zgt_7 = ez.show_fit(object_ID, show_fnu = True, zshow = z_a_gt_7, get_spec = True)
 
-	if (alt_z < 0):
-		if (zout['z_raw_chi2'][i] > 7.0):
-			plt.axvline(z_a_lt_7, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
-		else:
-			plt.axvline(z_a_gt_7, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
-	if (alt_z > 0):
-		plt.axvline(alt_z_value, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
-		
-	plt.xlabel('Redshift')
-	plt.ylabel('$\chi^2$')
+		delta_chisq = output_chisq[np.argmin(output_chisq[zgrid_gt_7])] - output_chisq[np.argmin(output_chisq)]
+		print('Delta chisq = -'+str(np.round(delta_chisq,2)))
 
-	plt.tight_layout()
-	if (savefile == None):
-		plt.show()
-	else:
-		savefile_name = str(object_ID)+'_wave_sed.png'
-		plt.savefig(savefile_name, dpi = 300)
-
-	if (savesed == True):
-		np.savetxt(str(object_ID)+'_wave_sed.dat', np.c_[output_wavelength/1e4, output_flux])
-		np.savetxt(str(object_ID)+'_wave_sed_photometry.dat', np.c_[output_phot_wavelength/1e4, output_phot_template])
+		output_wavelength_zgt_7 = data_zgt_7['templz']
+		output_flux_zgt_7 = data_zgt_7['templf']*1e3
+		output_phot_template_zgt_7 = data_zgt_7['model']*1e3
 	
-	if (savechisq == True):
-		np.savetxt(str(object_ID)+'_z_chisq.dat', np.c_[output_zgrid, output_chisq])
-		</code></pre>
+		plt.plot(output_wavelength_zgt_7/1e4, output_flux_zgt_7, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(z_a_gt_7,2)), alpha = 0.4)
+if (alt_z > 0):
+	alt_z_value = alt_z
+	data_zalt = ez.show_fit(object_ID, show_fnu = True, zshow = alt_z_value, get_spec = True)
+
+	delta_chisq = output_chisq[np.where(output_zgrid == np.round(alt_z_value,2))[0]] - output_chisq[np.argmin(output_chisq)]
+	print('Delta chisq = '+str(np.round(delta_chisq,2)))
+
+	output_wavelength_zalt = data_zalt['templz']
+	output_flux_zalt = data_zalt['templf']*1e3
+	output_phot_template_zalt = data_zalt['model']*1e3
+
+	plt.plot(output_wavelength_zalt/1e4, output_flux_zalt, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(alt_z_value,2)), alpha = 0.4)
+	
+
+plt.legend()
+
+plt.subplot(122)
+plt.plot(output_zgrid, output_chisq, color = chisq_surface_color, lw = 3, zorder = 10)
+if (primary_z < 0):
+	plt.axvline(zout['z_raw_chi2'][i], lw = 3, zorder = 0)
+else:
+	plt.axvline(primary_z, lw = 3, zorder = 0)
+
+if (alt_z < 0):
+	if (zout['z_raw_chi2'][i] > 7.0):
+		plt.axvline(z_a_lt_7, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
+	else:
+		plt.axvline(z_a_gt_7, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
+if (alt_z > 0):
+	plt.axvline(alt_z_value, color = alternate_color, lw = 3, alpha = 0.4, zorder = 0)
+	
+plt.xlabel('Redshift')
+plt.ylabel('$\chi^2$')
+
+plt.tight_layout()
+if (savefile == None):
+	plt.show()
+else:
+	savefile_name = str(object_ID)+'_wave_sed.png'
+	plt.savefig(savefile_name, dpi = 300)
+
+if (savesed == True):
+	np.savetxt(str(object_ID)+'_wave_sed.dat', np.c_[output_wavelength/1e4, output_flux])
+	np.savetxt(str(object_ID)+'_wave_sed_photometry.dat', np.c_[output_phot_wavelength/1e4, output_phot_template])
+
+if (savechisq == True):
+	np.savetxt(str(object_ID)+'_z_chisq.dat', np.c_[output_zgrid, output_chisq])</code></pre>
 
 
         <h3>z_phot vs z_spec Comparison</h3>
