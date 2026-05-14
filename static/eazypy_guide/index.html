@@ -111,7 +111,7 @@ eazy.symlink_eazy_inputs(path='EAZYCODE', path_is_env=True)</code></pre>
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-body">
-              <strong>First, EAZY reads in the User parameters, and from that, builds the template grid.</strong> EAZY integrates each template SED through each filter at every redshift on a grid from a minimum to a maximum redshift, with a defined grid spacing. This produces <code>tempfilt</code>, an array of shape <code>(NZ, NTEMP, NFILT)</code>, which is the predicted flux of each template in each filter at each redshift. This is precomputed and cached as <code>self.tempfilt</code>. If you have a large span of redshift and a fine grid spacing, this step can take a while, and there are ways in which the user can save this tempfilt file as a pickle for use in future runs, given the same redshift parameters and template set. 
+              <strong>First, EAZY reads in the User parameters, and from that, builds the template grid.</strong> EAZY integrates each template SED through each filter at every redshift on a grid from a minimum to a maximum redshift, with a defined grid spacing. This produces <code>tempfilt</code>, an array of shape <code>(NZ, NTEMP, NFILT)</code>, which is the predicted flux of each template in each filter at each redshift. This is precomputed and cached as <code>ez.tempfilt</code>. If you have a large span of redshift and a fine grid spacing, this step can take a while, and there are ways in which the user can save this tempfilt file as a pickle for use in future runs, given the same redshift parameters and template set. 
             </div>
           </div>
           <div class="step">
@@ -189,7 +189,7 @@ e_NRC_F150W E445
 
         <p>Eventually, you'll pass it to EAZY-py with <code>translate_file='zphot.translate'</code>.</p>
 
-        <p>Note: within EAZY, the <code>N_MIN_COLORS</code> parameter (default 5) sets the minimum number of valid filters required to fit an object. Objects with fewer detected bands are skipped. Maybe I'm getting ahead of myself. Once you've set up your input photometry file and your translate file, you can start setting up your EAZY parameters.</p>
+        <p>Note: within EAZY, the <code>N_MIN_COLORS</code> parameter (default 5) sets the minimum number of valid filters required to fit an object. Objects with fewer detected bands are skipped. Maybe I'm getting ahead of myez. Once you've set up your input photometry file and your translate file, you can start setting up your EAZY parameters.</p>
       </section>
 
       <!-- ═══════════════════════════════════════ -->
@@ -378,8 +378,8 @@ params['OMEGA_L']           = 0.7         # Omega_lambda
 
 # Step 3: Initialize the PhotoZ object
 # This step will take a while depending on your ZMIN, ZMAX, and Z_STEP values, as it creates the
-# template grid. NOTE: I personally like to call this PhotoZ object "self," and this is how I will be referencing this throughout the remainder of the guide.
-self = eazy.photoz.PhotoZ(params=params,
+# template grid. NOTE: I personally like to call this PhotoZ object "ez," and this is how I will be referencing this throughout the remainder of the guide.
+ez = eazy.photoz.PhotoZ(params=params,
                    param_file=None,
                    translate_file='zphot.translate', 
                    zeropoint_file=None,
@@ -388,10 +388,10 @@ self = eazy.photoz.PhotoZ(params=params,
                    n_proc=0)   # 0 = serial; set >0 for running in parallel
 
 # Step 4: Fit the full catalog
-self.fit_catalog(self.idx, n_proc=8)
+ez.fit_catalog(ez.idx, n_proc=8)
 
 # Step 5: Generate output table
-zout, hdu = self.standard_output(
+zout, hdu = ez.standard_output(
     prior=False,
     beta_prior=False,
     rf_pad_width=0.5,
@@ -399,7 +399,7 @@ zout, hdu = self.standard_output(
     percentile_limits=[2.5, 16, 50, 84, 97.5]
 )
 # zout is an astropy Table; also saved to photz.zout.fits
-# data = self.show_fit(object_ID, show_fnu = True, zshow = z_a_value, get_spec = True)
+# data = ez.show_fit(object_ID, show_fnu = True, zshow = z_a_value, get_spec = True)
 </code></pre>
 
 
@@ -411,26 +411,26 @@ zout, hdu = self.standard_output(
       <!-- ═══════════════════════════════════════ -->
       <section id="s7">
         <h2><span class="sec-num">08</span> The χ² and lnp Arrays and Probability Distributions</h2>
-        <p>The central object in EAZY-py is <code>self.chi2_fit</code> and <code>self.lnp</code>, 2D arrays of shape <code>(NOBJ, NZ)</code> containing the χ², and log-probability of each redshift for each object.</p>
+        <p>The central object in EAZY-py is <code>ez.chi2_fit</code> and <code>ez.lnp</code>, 2D arrays of shape <code>(NOBJ, NZ)</code> containing the χ², and log-probability of each redshift for each object.</p>
 
 
-        <h3>self.chi2_fit</h3>
-        <p>The code will calculate the minimum χ² from co-adding the templates at each redshift value specified between <code>Z_MIN</code> and <code>Z_MAX</code> on the grid defined by <code>Z_STEP</code> (<code>self.zgrid</code>). You can access the χ² values as a function of redshift with <code>self.chi2_fit</code>, which is a 2D array of size <code>Nobj</code> by the length of  <code>self.zgrid</code>. So, the fifth object in the flux file would have χ² values given in the array <code>self.chi2_fit[4,:].</code></p>
+        <h3>ez.chi2_fit</h3>
+        <p>The code will calculate the minimum χ² from co-adding the templates at each redshift value specified between <code>Z_MIN</code> and <code>Z_MAX</code> on the grid defined by <code>Z_STEP</code> (<code>ez.zgrid</code>). You can access the χ² values as a function of redshift with <code>ez.chi2_fit</code>, which is a 2D array of size <code>Nobj</code> by the length of  <code>ez.zgrid</code>. So, the fifth object in the flux file would have χ² values given in the array <code>ez.chi2_fit[4,:].</code></p>
 
 
         <h3>compute_lnp()</h3>
-        <p><code>self.compute_lnp(prior=False, beta_prior=False, clip_wavelength=1100)</code> converts <code>chi2_fit</code> to <code>lnp</code>:</p>
+        <p><code>ez.compute_lnp(prior=False, beta_prior=False, clip_wavelength=1100)</code> converts <code>chi2_fit</code> to <code>lnp</code>:</p>
         <div class="equation">lnp[i, iz] = −½ χ²[i, iz] + lnp<sub>prior</sub>[i, iz] + lnp<sub>tef</sub>[i, iz]</div>
-        <p>The <code>clip_wavelength</code> parameter (default 1100 Å) sets <code>lnp = −∞</code> at redshifts where <code>clip_wavelength × (1+z)</code> exceeds the reddest valid filter for a given object — preventing trivially good fits at redshifts where the SED has redshifted entirely beyond the photometric coverage. Similar to <code>self.zgrid</code>, you can access the lnp with <code>self.lnp</code>, which has the same size and shape as <code>self.zgrid</code>.</p>
+        <p>The <code>clip_wavelength</code> parameter (default 1100 Å) sets <code>lnp = −∞</code> at redshifts where <code>clip_wavelength × (1+z)</code> exceeds the reddest valid filter for a given object — preventing trivially good fits at redshifts where the SED has redshifted entirely beyond the photometric coverage. Similar to <code>ez.zgrid</code>, you can access the lnp with <code>ez.lnp</code>, which has the same size and shape as <code>ez.zgrid</code>.</p>
 
         <h3>Accessing P(z) Directly</h3>
         <pre><code class="language-python"># Get normalized P(z) for object at index i
 obj_idx = 42
-chisq_obj = self.chi2_fit[obj_idx, :]
+chisq_obj = ez.chi2_fit[obj_idx, :]
 pz = np.exp((-1.0) * (chisq_obj - np.min(chisq_obj))/2.0)
 
 import matplotlib.pyplot as plt
-plt.plot(self.zgrid, pz)
+plt.plot(ez.zgrid, pz)
 plt.xlabel('Redshift')
 plt.ylabel('P(z)')
 </code></pre>
@@ -442,19 +442,19 @@ plt.ylabel('P(z)')
         <p>This is one of the most confusing aspects of EAZY-py — there are multiple "best redshift" concepts that are closely related but subtly different. Here are the output values as I understand them.</p>
 
         <h3>zml (Maximum Likelihood Redshift)</h3>
-        <p><code>self.zml</code> is the primary internal redshift estimate, and it's defined as the redshift at the maximum of <code>lnp</code>. However, there's some nuance here, as it is computed by <code>eazy.evaluate_zml()</code>, which:</p>
+        <p><code>ez.zml</code> is the primary internal redshift estimate, and it's defined as the redshift at the maximum of <code>lnp</code>. However, there's some nuance here, as it is computed by <code>eazy.evaluate_zml()</code>, which:</p>
         <ol>
           <li>Finds <code>iz_best = argmax(lnp[i, :])</code> for each object</li>
           <li>Fits a parabola around that peak for sub-grid-spacing precision</li>
           <li>Returns the continuous redshift at the parabola peak as <code>eazy.zml</code></li>
         </ol>
         <p>It incorporates whatever priors were active when <code>compute_lnp()</code> was called:</p>
-        <pre><code class="language-python">self.compute_lnp(prior=True, beta_prior=True)
-self.evaluate_zml(prior=True, beta_prior=True)
-# Now self.zml reflects the prior-weighted maximum likelihood</code></pre>
+        <pre><code class="language-python">ez.compute_lnp(prior=True, beta_prior=True)
+ez.evaluate_zml(prior=True, beta_prior=True)
+# Now ez.zml reflects the prior-weighted maximum likelihood</code></pre>
 
         <h3>z_best (zbest)</h3>
-        <p><code>self.zbest</code> is the redshift used for computing physical parameters (rest-frame colors, masses, etc.). It defaults to <code>self.zml</code>, but can be set to any user-specified value. If <code>FIX_ZSPEC = True</code>, <code>zbest</code> is set to <code>z_spec</code> for objects where it's available.</p>
+        <p><code>ez.zbest</code> is the redshift used for computing physical parameters (rest-frame colors, masses, etc.). It defaults to <code>ez.zml</code>, but can be set to any user-specified value. If <code>FIX_ZSPEC = True</code>, <code>zbest</code> is set to <code>z_spec</code> for objects where it's available.</p>
 
         <h3>zout['z_phot']</h3>
         <p>In the output table, <code>z_phot</code> is the maximum-likelihood redshift used to compute everything in that table, effectively <code>zml</code> with whatever prior settings were passed to <code>standard_output()</code>.</p>
@@ -463,7 +463,7 @@ self.evaluate_zml(prior=True, beta_prior=True)
         <p>This is the redshift that corresponds to the overall minimum χ² value across all of the redshifts in the redshift grid.</p>
 
 		<h3>zout['z500'] (and z025, z160, z840, z975)</h3>
-		<p>This redshift corresponding to the 50th percentile in the P(z) surface, derived from the output χ²(z), and a prior, if one is used. The other values are the 2.5, 16, 84, and 97.5th percentiles, for understanding uncertainty. You can specify these values with <code> percentile_limits=[2.5, 16, 50, 84, 97.5]</code> in <code>self.standard_output()</code>.</p>
+		<p>This redshift corresponding to the 50th percentile in the P(z) surface, derived from the output χ²(z), and a prior, if one is used. The other values are the 2.5, 16, 84, and 97.5th percentiles, for understanding uncertainty. You can specify these values with <code> percentile_limits=[2.5, 16, 50, 84, 97.5]</code> in <code>ez.standard_output()</code>.</p>
 
         <h3>Summary</h3>
         <div class="data-table-wrap">
@@ -472,9 +472,9 @@ self.evaluate_zml(prior=True, beta_prior=True)
               <tr><th>Name</th><th>Location</th><th>Description</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>self.zml</code></td><td>PhotoZ attribute</td><td>argmax of lnp (parabola-refined), with/without priors</td></tr>
-              <tr><td><code>self.zbest</code></td><td>PhotoZ attribute</td><td>Redshift used for physical params; defaults to zml</td></tr>
-              <tr><td><code>self.chi2_fit</code></td><td>PhotoZ attribute</td><td>Raw χ² at every (object, z) grid point — shape (NOBJ, NZ)</td></tr>
+              <tr><td><code>ez.zml</code></td><td>PhotoZ attribute</td><td>argmax of lnp (parabola-refined), with/without priors</td></tr>
+              <tr><td><code>ez.zbest</code></td><td>PhotoZ attribute</td><td>Redshift used for physical params; defaults to zml</td></tr>
+              <tr><td><code>ez.chi2_fit</code></td><td>PhotoZ attribute</td><td>Raw χ² at every (object, z) grid point — shape (NOBJ, NZ)</td></tr>
               <tr><td><code>zout['z_phot']</code></td><td>Output table</td><td>The z_ml used in standard_output</td></tr>
               <tr><td><code>zout['z_phot_chi2']</code></td><td>Output table</td><td>χ² at z_phot</td></tr>
               <tr><td><code>zout['z500']</code></td><td>Output table</td><td>Median of P(z) (50th percentile)</td></tr>
@@ -486,7 +486,7 @@ self.evaluate_zml(prior=True, beta_prior=True)
         </div>
 
         <div class="callout callout-tip">
-          <strong>Which to use?</strong> I personally use <code>zout['z_raw_chi2']</code>, since it's easiest to re-calculate, given the fitting involved in estimating <code>self.zml</code>. I also think that <code>zout['z500']</code> is helpful, and the percentile columns (<code>z160</code>–<code>z840</code>) characterize P(z) width, so they are useful for understanding uncertainties. I tend to avoid <code>self.zml</code>, but I think it's the standard value used across the literature. 
+          <strong>Which to use?</strong> I personally use <code>zout['z_raw_chi2']</code>, since it's easiest to re-calculate, given the fitting involved in estimating <code>ez.zml</code>. I also think that <code>zout['z500']</code> is helpful, and the percentile columns (<code>z160</code>–<code>z840</code>) characterize P(z) width, so they are useful for understanding uncertainties. I tend to avoid <code>ez.zml</code>, but I think it's the standard value used across the literature. 
         </div>
       </section>
 
@@ -537,7 +537,7 @@ ez.prior_beta(width_params={
       <!-- ═══════════════════════════════════════ -->
       <section id="s11">
         <h2><span class="sec-num">11</span> Running standard_output: What You Get</h2>
-        <p><code>self.standard_output()</code> is the main output-generation function. It:</p>
+        <p><code>ez.standard_output()</code> is the main output-generation function. It:</p>
         <ol>
           <li>Refits template coefficients at <code>zbest</code> (or <code>z_ml</code>)</li>
           <li>Computes redshift statistics (percentiles of P(z), risk function, etc.)</li>
@@ -569,8 +569,8 @@ ez.prior_beta(width_params={
 zout = Table.read('photz.zout.fits')
 
 # Or reload the full PhotoZ state
-self = photoz.PhotoZ(params=params, load_products=True)
-# self.zout, self.chi2_fit, self.fit_coeffs, self.ubvj all populated</code></pre>
+ez = photoz.PhotoZ(params=params, load_products=True)
+# ez.zout, ez.chi2_fit, ez.fit_coeffs, ez.ubvj all populated</code></pre>
 
         <p>NOTE: You will need to specify trhe rest-frame UBVJ filters, or else the code fails, so if you are defining your own filter file, either point these to arbitrary filter numbers (that exist!) or include the UBVJ filters from <code>FILTER.RES.latest</code>. I tend to just add on filters to the end of this file, as shown above.</p>
 
@@ -620,17 +620,17 @@ vjerr = 2.5 * np.sqrt((zout['restV_err']/zout['restV'])**2 +
       <!-- ═══════════════════════════════════════ -->
       <section id="s13">
         <h2><span class="sec-num">13</span> Iterative Zeropoint Corrections</h2>
-        <p>There may be underlying differences in the fluxes between the photometric datapoints that can be ascertained with EAZY fits. The function <code>iterate_zp_templates()</code> iteratively adjusts per-filter flux zeropoints to minimize the template residuals as compared to the observed flues. After running, <code>self.zp</code> will contain the multiplicative correction factors per filter (close to 1.0 for well-calibrated data), which are normalized to the <code>params['PRIOR_FILTER']</code> filter. </p>
+        <p>There may be underlying differences in the fluxes between the photometric datapoints that can be ascertained with EAZY fits. The function <code>iterate_zp_templates()</code> iteratively adjusts per-filter flux zeropoints to minimize the template residuals as compared to the observed flues. After running, <code>ez.zp</code> will contain the multiplicative correction factors per filter (close to 1.0 for well-calibrated data), which are normalized to the <code>params['PRIOR_FILTER']</code> filter. </p>
 
         <pre><code class="language-python">NITER = 3
-NBIN  = min(self.NOBJ // 100, 180)
+NBIN  = min(ez.NOBJ // 100, 180)
 
 for i in range(NITER):
-    sn   = self.fnu / self.efnu
+    sn   = ez.fnu / ez.efnu
     clip = (sn > 3).sum(axis=1) > 4   # objects with good multi-band SNR, you can adjust this to your liking
 
-    self.iterate_zp_templates(
-        idx=self.idx[clip],
+    ez.iterate_zp_templates(
+        idx=ez.idx[clip],
         update_templates=False,
         update_zeropoints=True,
         iter=i,
@@ -671,7 +671,7 @@ for i in range(NITER):
 
         <p>Examine the templates after initialization:</p>
         <pre><code class="language-python">import matplotlib.pyplot as plt
-for i, temp in enumerate(self.templates):
+for i, temp in enumerate(ez.templates):
     plt.plot(temp.wave / 1e4, temp.flux[0,:], label=temp.name, alpha=0.7)
 plt.xlabel('Wavelength (µm)')
 plt.xscale('log')
@@ -698,7 +698,7 @@ plt.legend(fontsize=6)</code></pre>
 
         <h3>Individual SED Fits</h3>
         <pre><code class="language-python"># By object ID (from catalog)
-fig, data = self.show_fit(
+fig, data = ez.show_fit(
     id=12345,
     xlim=[0.3, 9],           # Wavelength range in µm
     show_components=True,    # Show individual template contributions
@@ -712,23 +712,49 @@ fig, data = self.show_fit(
 )
 
 # By index rather than ID
-fig, data = self.show_fit(id=42, id_is_idx=True)
+fig, data = ez.show_fit(id=42, id_is_idx=True)
 
 # At a specific redshift (e.g., z_spec)
-fig, data = self.show_fit(id=12345, zshow=1.234)</code></pre>
+fig, data = ez.show_fit(id=12345, zshow=1.234)</code></pre>
         <p>The <code>data</code> return value is a dict containing the SED, template fluxes, and P(z) arrays — useful for customizing the plot.</p>
 
 		<h3>plot_fit_EAZY()</h3>
 
-		<p>While the built-in function <code>self.show_fit()</code> works well, here is a python function I wrote which will allow you to plot the fit for individual sources with the minimum χ² value as well as the χ² surface, while also allowing the user to plot alternate redshift solutions and save the plot, or the SED fit and/or χ²(z) values. </p>
+		<p>While the built-in function <code>ez.show_fit()</code> works well, here is a python function I wrote which will allow you to plot the fit for individual sources with the minimum χ² value as well as the χ² surface, while also allowing the user to plot alternate redshift solutions and save the plot, or the SED fit and/or χ²(z) values. </p>
 		
-		<p>Primarily I am including this to show the user how to go and grab information from <code>self</code> and <code>zout</code>, and specifically the power of <code>self.show_fit()</code> to extract information without making a plot.</p>
+		<p>Primarily I am including this to show the user how to go and grab information from <code>ez</code> and <code>zout</code>, and specifically the power of <code>ez.show_fit()</code> to extract information without making a plot.</p>
 		
         <pre><code class="language-python">
         import numpy as np
         import matplotlib.pyplot as plt
         
-        def plot_fit_EAZY(object_ID, self, zout, primary_z = -9999, alt_z = 0.0, h5file = False, savefile = None, savesed = False, savechisq = False):
+        def plot_fit_EAZY(object_ID, ez, zout, primary_z = -9999, alt_z = 0.0, h5file = None, savefile = None, savesed = False, savechisq = False):
+    """
+    Plot the EAZY SED fit and chi-squared surface for a single object.
+
+    Parameters
+    ----------
+    object_ID : int
+        The catalog ID of the object to plot.
+    ez : eazy.photoz.PhotoZ
+        The initialized and fitted EAZY PhotoZ object.
+    zout : astropy.table.Table
+        The output redshift table from ez.standard_output().
+    primary_z : float, optional
+        Redshift at which to show the SED. If negative (default), uses z_raw_chi2.
+    alt_z : float, optional
+        If > 0, overplots the SED at this specific redshift in grey.
+        If < 0, finds and overplots the best fit on the other side of |alt_z|
+        (e.g. alt_z=-7 shows the best low-z fit for a high-z candidate).
+    h5file : bool, optional
+        If True, loads chi2 data from an HDF5 file rather than from memory.
+    savefile : str, optional
+        If provided, saves the figure as {object_ID}_wave_sed.png instead of displaying.
+    savesed : bool, optional
+        If True, saves the best-fit SED and photometry to .dat files.
+    savechisq : bool, optional
+        If True, saves the chi-squared surface to a .dat file.
+    """
 	
 	template_color = '#56B4E9'#'
 	NIRC_photometry_color = '#D55E00'
@@ -738,25 +764,27 @@ fig, data = self.show_fit(id=12345, zshow=1.234)</code></pre>
 	alternate_color = 'grey'
 
 	# First, the redshift grid for the chisq surface. 
-	output_zgrid = self.zgrid
+	output_zgrid = ez.zgrid
 	
 	# the index of the source. 
-	i = np.where(self.OBJID == object_ID)[0][0]
+	i = np.where(ez.OBJID == object_ID)[0][0]
 
 	# the chisq values. 
-	if (h5file == False):
-		output_chisq = self.chi2_fit[i,:]
+	if (h5file is not None):
+		output_chisq = ez.chi2_fit[i,:]
 	else:
-		_data = self.get_object_data(i)
+		_data = ez.get_object_data(i)
 		z, fnu_i, efnu_i, ra_i, dec_i, output_chisq, zspec_i, ok_i = _data
 	
+	# The redshift corresponding to the minimum chi-square, rounded to the nearest hundredth
 	z_a_value = np.round(zout['z_raw_chi2'][i],2)
-	
-	if (primary_z < 0):
-		data = self.show_fit(object_ID, show_fnu = True, zshow = z_a_value, get_spec = True)
-	else:
-		data = self.show_fit(object_ID, show_fnu = True, zshow = primary_z, get_spec = True)
 
+	# Now, we use the minimum chi-square redshift, or else we go with the user specified
+	# value primary_z, which, if it's set to a negative number, will be ignored.
+	zshow = zout['z_raw_chi2'][i] if primary_z < 0 else primary_z
+	data = ez.show_fit(object_ID, show_fnu=True, zshow=zshow, get_spec=True)
+	
+	# We unpack the data structure for plotting and developing output.
 	output_wavelength = data['templz']
 	output_flux = data['templf']*1e3
 
@@ -773,12 +801,10 @@ fig, data = self.show_fit(id=12345, zshow=1.234)</code></pre>
 
 	pos_flux_errors = np.where(output_phot_err > 0)[0]
 
+	# And now we plot the figure.
 	plt.figure(figsize = (12, 5))
 	plt.subplot(121)
-	if (primary_z < 0):
-		plt.plot(output_wavelength/1e4, output_flux, color = template_color, lw = 3, zorder = 0, label = 'z = '+str(round(zout['z_raw_chi2'][i],2)))
-	else:
-		plt.plot(output_wavelength/1e4, output_flux, color = template_color, lw = 3, zorder = 0, label = 'z = '+str(round(primary_z,2)))
+	plt.plot(output_wavelength/1e4, output_flux, color = template_color, lw = 3, zorder = 0, label = 'z = '+str(zshow))
 	
 	plt.scatter(output_phot_wavelength/1e4, output_phot_template, marker = 's', s = 110, linewidth = 3, edgecolor = template_color, color = 'None', zorder = 5)
 	plt.scatter(output_phot_wavelength[pos_flux_errors]/1e4, output_phot[pos_flux_errors], color = NIRC_photometry_color, s = 50, linewidth = 3, zorder = 10)
@@ -794,18 +820,19 @@ fig, data = self.show_fit(id=12345, zshow=1.234)</code></pre>
 	ymax = np.max(output_phot[pos_fluxes]) + (10.0 * np.max(output_phot[pos_fluxes]))
 	if (ymax > (100.*np.median(output_phot[np.where(output_phot > 0)[0]]))):
 		ymax = 100.*np.median(output_phot[np.where(output_phot > 0)[0]])
-	print(ymin, ymax)
 	plt.ylim(ymin, ymax)
-	plt.title(self.OBJID[i])
+	plt.title(ez.OBJID[i])
 
 	if (alt_z < 0):
 		alt_z_value = alt_z * -1.0
 		if (zout['z_raw_chi2'][i] > alt_z_value):
 			zgrid_lt_7 = np.where(output_zgrid <= alt_z_value)[0]
 			z_a_lt_7 = np.round(output_zgrid[zgrid_lt_7][np.argmin(output_chisq[zgrid_lt_7])],2)
-			data_zlt_7 = self.show_fit(object_ID, show_fnu = True, zshow = z_a_lt_7, get_spec = True)
+			data_zlt_7 = ez.show_fit(object_ID, show_fnu = True, zshow = z_a_lt_7, get_spec = True)
 
-			delta_chisq = output_chisq[np.argmin(output_chisq[zgrid_lt_7])] - output_chisq[np.argmin(output_chisq)]
+			iz_alt = np.argmin(np.abs(output_zgrid - alt_z_value))
+			delta_chisq = output_chisq[iz_alt] - output_chisq[np.argmin(output_chisq)]
+
 			print('Delta chisq = '+str(np.round(delta_chisq,2)))
 
 			output_wavelength_zlt_7 = data_zlt_7['templz']
@@ -816,7 +843,7 @@ fig, data = self.show_fit(id=12345, zshow=1.234)</code></pre>
 		else:
 			zgrid_gt_7 = np.where(output_zgrid > alt_z_value)[0]
 			z_a_gt_7 = np.round(output_zgrid[zgrid_gt_7][np.argmin(output_chisq[zgrid_gt_7])],2)
-			data_zgt_7 = self.show_fit(object_ID, show_fnu = True, zshow = z_a_gt_7, get_spec = True)
+			data_zgt_7 = ez.show_fit(object_ID, show_fnu = True, zshow = z_a_gt_7, get_spec = True)
 
 			delta_chisq = output_chisq[np.argmin(output_chisq[zgrid_gt_7])] - output_chisq[np.argmin(output_chisq)]
 			print('Delta chisq = -'+str(np.round(delta_chisq,2)))
@@ -828,7 +855,7 @@ fig, data = self.show_fit(id=12345, zshow=1.234)</code></pre>
 			plt.plot(output_wavelength_zgt_7/1e4, output_flux_zgt_7, color = alternate_color, lw = 2, zorder = 0, label = 'z = '+str(round(z_a_gt_7,2)), alpha = 0.4)
 	if (alt_z > 0):
 		alt_z_value = alt_z
-		data_zalt = self.show_fit(object_ID, show_fnu = True, zshow = alt_z_value, get_spec = True)
+		data_zalt = ez.show_fit(object_ID, show_fnu = True, zshow = alt_z_value, get_spec = True)
 
 		delta_chisq = output_chisq[np.where(output_zgrid == np.round(alt_z_value,2))[0]] - output_chisq[np.argmin(output_chisq)]
 		print('Delta chisq = '+str(np.round(delta_chisq,2)))
@@ -877,15 +904,15 @@ fig, data = self.show_fit(id=12345, zshow=1.234)</code></pre>
 
 
         <h3>z_phot vs z_spec Comparison</h3>
-        <p> If you happen to have spectroscopic redshifts for your sources, you could use the built-in function <code>self.zphot_zspec()</code>:</p>
+        <p> If you happen to have spectroscopic redshifts for your sources, you could use the built-in function <code>ez.zphot_zspec()</code>:</p>
         
-        <pre><code class="language-python">fig = self.zphot_zspec()   # Produces a standard comparison plot</code></pre>
+        <pre><code class="language-python">fig = ez.zphot_zspec()   # Produces a standard comparison plot</code></pre>
 
         <h3>Interactive Dashboard</h3>
         <p> Similarly, there's a Plotly/Dash browser app that you can run which will allow you to explore the source fits interactively:</p>
                 
         <pre><code class="language-python">from eazy import visualization
-app = visualization.EazyExplorer(photoz=self, zout=zout)
+app = visualization.EazyExplorer(photoz=ez, zout=zout)
 app.make_dash_app(server_mode='external', port=8050)
 # Opens a Plotly/Dash browser app for interactive exploration</code></pre>
       </section>
@@ -906,7 +933,7 @@ app.make_dash_app(server_mode='external', port=8050)
             <div class="pitfall-num">2</div>
             <div class="pitfall-body">
               <strong>Filter numbers.</strong> Numbers like 205 or 153 are 1-based line indices specified in <code>FILTER.RES.latest.info</code>. You can also find a filter you're interested in with:
-              <pre><code class="language-python">for i, filt in enumerate(self.RES.filters):
+              <pre><code class="language-python">for i, filt in enumerate(ez.RES.filters):
     if 'f160w' in filt.name.lower():
         print(i+1, filt.name)   # +1 because 1-indexed</code></pre>
             </div>
@@ -918,7 +945,7 @@ app.make_dash_app(server_mode='external', port=8050)
               <strong>The creation of the tempfilt object can take a long time, especially if you have a lot of filters, and lot of redshift values.</strong> A quick hack, if you want to fit additional sources in the future with the same filters, templates, and redshift grid (ie, the exact same fitting setup, just new sources), is that you can <i>save</i> the tempfilt to something like a pickle file:
               <pre><code class="language-python">import pickle
 with open("tempfilt_example.pkl","wb") as f:
-      pickle.dump(self.tempfilt,f)</code></pre>
+      pickle.dump(ez.tempfilt,f)</code></pre>
       
               ...and then you can read it in before running EAZY:
 
@@ -927,7 +954,7 @@ with open("tempfilt_example.pkl","wb") as f:
       
                ...and at this point:
 
-              <pre><code class="language-python">self = eazy.photoz.PhotoZ(params=params,
+              <pre><code class="language-python">ez = eazy.photoz.PhotoZ(params=params,
                    param_file=None,
                    translate_file='zphot.translate',
                    tempfilt = test_tempfilt, # <-- right here! 
@@ -950,8 +977,8 @@ with open("tempfilt_example.pkl","wb") as f:
           <div class="pitfall">
             <div class="pitfall-num">5</div>
             <div class="pitfall-body">
-              <strong>If a source has χ² = 0, that means the object was not fit.</strong> Check <code>self.nusefilt[i]</code> — if too few filters pass the threshold, the object is skipped.
-              <pre><code class="language-python">unfitted = (self.chi2_fit == 0).all(axis=1)
+              <strong>If a source has χ² = 0, that means the object was not fit.</strong> Check <code>ez.nusefilt[i]</code> — if too few filters pass the threshold, the object is skipped.
+              <pre><code class="language-python">unfitted = (ez.chi2_fit == 0).all(axis=1)
 print(f"{unfitted.sum()} objects not fit")</code></pre>
             </div>
           </div>
@@ -966,7 +993,7 @@ print(f"{unfitted.sum()} objects not fit")</code></pre>
           <div class="pitfall">
             <div class="pitfall-num">7</div>
             <div class="pitfall-body">
-              <strong>Memory usage.</strong> With <code>random_draws=100</code>, <code>self.coeffs_draws</code> has shape <code>(NOBJ, 100, NTEMP)</code>. For 100k objects × 12 templates, this is ~5 GB. Reduce <code>random_draws</code> if memory is tight.
+              <strong>Memory usage.</strong> With <code>random_draws=100</code>, <code>ez.coeffs_draws</code> has shape <code>(NOBJ, 100, NTEMP)</code>. For 100k objects × 12 templates, this is ~5 GB. Reduce <code>random_draws</code> if memory is tight.
             </div>
           </div>
 
@@ -974,8 +1001,8 @@ print(f"{unfitted.sum()} objects not fit")</code></pre>
             <div class="pitfall-num">8</div>
             <div class="pitfall-body">
               <strong>You could do a simple estimate to explore the reduced χ² values:</strong>
-              <pre><code class="language-python">chi2_best = self.chi2_fit[np.arange(self.NOBJ), ez.izbest]
-chinu     = chi2_best / np.maximum(self.nusefilt - 1, 1)
+              <pre><code class="language-python">chi2_best = ez.chi2_fit[np.arange(ez.NOBJ), ez.izbest]
+chinu     = chi2_best / np.maximum(ez.nusefilt - 1, 1)
 bad_fits  = chinu > 5   # Flag very poor fits</code></pre>
             </div>
           </div>
@@ -992,37 +1019,37 @@ bad_fits  = chinu > 5   # Flag very poor fits</code></pre>
               <tr><th>Attribute</th><th>Shape</th><th>Description</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>self.zgrid</code></td><td>(NZ,)</td><td>Redshift grid</td></tr>
-              <tr><td><code>self.NZ</code></td><td>scalar</td><td>Number of redshift grid points</td></tr>
-              <tr><td><code>self.NOBJ</code></td><td>scalar</td><td>Number of objects in catalog</td></tr>
-              <tr><td><code>self.NFILT</code></td><td>scalar</td><td>Number of filters</td></tr>
-              <tr><td><code>self.NTEMP</code></td><td>scalar</td><td>Number of templates</td></tr>
-              <tr><td><code>self.fnu</code></td><td>(NOBJ, NFILT)</td><td>Observed fluxes (after zp correction)</td></tr>
-              <tr><td><code>self.efnu</code></td><td>(NOBJ, NFILT)</td><td>Flux errors (after any rescaling)</td></tr>
-              <tr><td><code>self.efnu_orig</code></td><td>(NOBJ, NFILT)</td><td>Original errors before rescaling</td></tr>
-              <tr><td><code>self.ok_data</code></td><td>(NOBJ, NFILT)</td><td>Boolean mask of valid flux measurements</td></tr>
-              <tr><td><code>self.nusefilt</code></td><td>(NOBJ,)</td><td>Number of valid filters per object</td></tr>
-              <tr><td><code>self.chi2_fit</code></td><td>(NOBJ, NZ)</td><td>χ² at each (object, z) grid point</td></tr>
-              <tr><td><code>self.fit_coeffs</code></td><td>(NOBJ, NZ, NTEMP)</td><td>Template coefficients at each (object, z)</td></tr>
-              <tr><td><code>self.lnp</code></td><td>(NOBJ, NZ)</td><td>Log-probability from compute_lnp()</td></tr>
-              <tr><td><code>self.full_logprior</code></td><td>(NOBJ, NZ)</td><td>Log of magnitude prior</td></tr>
-              <tr><td><code>self.lnp_beta</code></td><td>(NOBJ, NZ)</td><td>Log of beta prior</td></tr>
-              <tr><td><code>self.zml</code></td><td>(NOBJ,)</td><td>Maximum likelihood redshift</td></tr>
-              <tr><td><code>self.izbest</code></td><td>(NOBJ,)</td><td>Index into zgrid of best redshift</td></tr>
-              <tr><td><code>self.zbest</code></td><td>(NOBJ,)</td><td>Best redshift used for physical params</td></tr>
-              <tr><td><code>self.chi2_best</code></td><td>(NOBJ,)</td><td>χ² at zbest</td></tr>
-              <tr><td><code>self.coeffs_best</code></td><td>(NOBJ, NTEMP)</td><td>Template coefficients at zbest</td></tr>
-              <tr><td><code>self.fmodel</code></td><td>(NOBJ, NFILT)</td><td>Model fluxes at zbest</td></tr>
-              <tr><td><code>self.coeffs_draws</code></td><td>(NOBJ, N_draws, NTEMP)</td><td>Random coefficient draws for uncertainties</td></tr>
-              <tr><td><code>self.zp</code></td><td>(NFILT,)</td><td>Multiplicative zeropoint corrections</td></tr>
-              <tr><td><code>self.zout</code></td><td>Table</td><td>Output redshift table (from standard_output)</td></tr>
-              <tr><td><code>self.cat</code></td><td>Table</td><td>Input catalog</td></tr>
-              <tr><td><code>self.filters</code></td><td>list</td><td>Filter objects</td></tr>
-              <tr><td><code>self.templates</code></td><td>list</td><td>Template objects</td></tr>
-              <tr><td><code>self.pivot</code></td><td>(NFILT,)</td><td>Pivot wavelengths of filters (Angstroms)</td></tr>
-              <tr><td><code>self.flux_columns</code></td><td>list</td><td>Names of flux columns in catalog</td></tr>
-              <tr><td><code>self.f_numbers</code></td><td>(NFILT,)</td><td>Filter numbers (1-indexed into <code>FILTER.RES.latest</code>, if that's what you're using.)</td></tr>
-              <tr><td><code>self.lc_reddest</code></td><td>(NOBJ,)</td><td>Reddest valid filter pivot wavelength per object</td></tr>
+              <tr><td><code>ez.zgrid</code></td><td>(NZ,)</td><td>Redshift grid</td></tr>
+              <tr><td><code>ez.NZ</code></td><td>scalar</td><td>Number of redshift grid points</td></tr>
+              <tr><td><code>ez.NOBJ</code></td><td>scalar</td><td>Number of objects in catalog</td></tr>
+              <tr><td><code>ez.NFILT</code></td><td>scalar</td><td>Number of filters</td></tr>
+              <tr><td><code>ez.NTEMP</code></td><td>scalar</td><td>Number of templates</td></tr>
+              <tr><td><code>ez.fnu</code></td><td>(NOBJ, NFILT)</td><td>Observed fluxes (after zp correction)</td></tr>
+              <tr><td><code>ez.efnu</code></td><td>(NOBJ, NFILT)</td><td>Flux errors (after any rescaling)</td></tr>
+              <tr><td><code>ez.efnu_orig</code></td><td>(NOBJ, NFILT)</td><td>Original errors before rescaling</td></tr>
+              <tr><td><code>ez.ok_data</code></td><td>(NOBJ, NFILT)</td><td>Boolean mask of valid flux measurements</td></tr>
+              <tr><td><code>ez.nusefilt</code></td><td>(NOBJ,)</td><td>Number of valid filters per object</td></tr>
+              <tr><td><code>ez.chi2_fit</code></td><td>(NOBJ, NZ)</td><td>χ² at each (object, z) grid point</td></tr>
+              <tr><td><code>ez.fit_coeffs</code></td><td>(NOBJ, NZ, NTEMP)</td><td>Template coefficients at each (object, z)</td></tr>
+              <tr><td><code>ez.lnp</code></td><td>(NOBJ, NZ)</td><td>Log-probability from compute_lnp()</td></tr>
+              <tr><td><code>ez.full_logprior</code></td><td>(NOBJ, NZ)</td><td>Log of magnitude prior</td></tr>
+              <tr><td><code>ez.lnp_beta</code></td><td>(NOBJ, NZ)</td><td>Log of beta prior</td></tr>
+              <tr><td><code>ez.zml</code></td><td>(NOBJ,)</td><td>Maximum likelihood redshift</td></tr>
+              <tr><td><code>ez.izbest</code></td><td>(NOBJ,)</td><td>Index into zgrid of best redshift</td></tr>
+              <tr><td><code>ez.zbest</code></td><td>(NOBJ,)</td><td>Best redshift used for physical params</td></tr>
+              <tr><td><code>ez.chi2_best</code></td><td>(NOBJ,)</td><td>χ² at zbest</td></tr>
+              <tr><td><code>ez.coeffs_best</code></td><td>(NOBJ, NTEMP)</td><td>Template coefficients at zbest</td></tr>
+              <tr><td><code>ez.fmodel</code></td><td>(NOBJ, NFILT)</td><td>Model fluxes at zbest</td></tr>
+              <tr><td><code>ez.coeffs_draws</code></td><td>(NOBJ, N_draws, NTEMP)</td><td>Random coefficient draws for uncertainties</td></tr>
+              <tr><td><code>ez.zp</code></td><td>(NFILT,)</td><td>Multiplicative zeropoint corrections</td></tr>
+              <tr><td><code>ez.zout</code></td><td>Table</td><td>Output redshift table (from standard_output)</td></tr>
+              <tr><td><code>ez.cat</code></td><td>Table</td><td>Input catalog</td></tr>
+              <tr><td><code>ez.filters</code></td><td>list</td><td>Filter objects</td></tr>
+              <tr><td><code>ez.templates</code></td><td>list</td><td>Template objects</td></tr>
+              <tr><td><code>ez.pivot</code></td><td>(NFILT,)</td><td>Pivot wavelengths of filters (Angstroms)</td></tr>
+              <tr><td><code>ez.flux_columns</code></td><td>list</td><td>Names of flux columns in catalog</td></tr>
+              <tr><td><code>ez.f_numbers</code></td><td>(NFILT,)</td><td>Filter numbers (1-indexed into <code>FILTER.RES.latest</code>, if that's what you're using.)</td></tr>
+              <tr><td><code>ez.lc_reddest</code></td><td>(NOBJ,)</td><td>Reddest valid filter pivot wavelength per object</td></tr>
             </tbody>
           </table>
         </div>
