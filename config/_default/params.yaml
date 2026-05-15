@@ -58,10 +58,3 @@ features:
     enable: false
   privacy_pack:
     enable: false
-
-# Custom css
-custom_css:
-  - css/custom.css
-  
-custom_js:
-  - js/hero-video.js
