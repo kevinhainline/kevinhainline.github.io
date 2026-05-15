@@ -19,7 +19,7 @@ sections:
         text: Download CV
         url: uploads/Kevin_Hainline_CV.pdf
     design:
-      css_class: dark
+      css_class: dark video-background
       background:
         color: black
         image:

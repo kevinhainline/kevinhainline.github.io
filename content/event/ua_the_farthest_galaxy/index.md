@@ -9,7 +9,7 @@ summary: A University of Arizona interview with myself, Jakob Helton, and Marcia
 abstract: 'The farthest galaxy ever found has just been confirmed. University of Arizona–led scientists used NASA’s James Webb Space Telescope to identify JADES-GS-z14-0, a galaxy that existed just 300 million years after the Big Bang, pushing the boundaries of what we know about the early universe. In this video, we explain how JWST’s instruments, NIRCam and MIRI, worked together to capture this record-breaking galaxy and confirm its distance. This discovery reveals that some of the earliest galaxies were brighter, more evolved, and more complex than expected – offering new clues about galaxy formation, the evolution of the cosmos, and the origins of the elements that make life possible.'
 
 # Schedule page publish date (NOT talk date).
-publishDate: '2024-10-3T00:00:00Z'
+publishDate: '2024-10-03T00:00:00Z'
 
 authors:
   - admin
