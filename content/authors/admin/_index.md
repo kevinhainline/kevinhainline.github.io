@@ -79,9 +79,11 @@ work:
     company_logo: ''
     date_start: 2024-07-01
     summary: |
-      JADES Researcher
-      - Mentored Graduate Student Jakob Helton and Sophie Lebowitz
-      - Mentored Undergraduate Student Tristen Shields
+      Researcher, Mentor
+      - Serve as PhD Advisor to <a href="https://astro.arizona.edu/person/sophie-lebowitz">Sophie Lebowitz</a>, who is on track to defend her PhD in July of 2026.
+      - Served as PhD Advisor to <a href="https://jakobhelton.github.io/">Jakob Helton</a>, who successfully defended in July 2025 before starting as the Evolving Universe Postdoctoral Fellow at Penn State University. 
+      - Served as Co-Advisor for University of Arizona undergraduate <a href="https://spacegrant.arizona.edu/students/tristen-shields">Tristen Shields</a>, who will be attending graduate school at Yale University starting the fall of 2026.
+      - Taught Introduction to the Solar System at <a href="https://www.pima.edu">Pima Community College</a>, Fall 2025.
 
   - position: Assistant Research Professor
     company_name: University of Arizona, Steward Observatory
@@ -89,7 +91,11 @@ work:
     company_logo: ''
     date_start: 2020-03-01
     date_end: 2024-07-01
-
+    summary: |
+      Researcher, Mentor
+      - Served as PhD Advisor to <a href="https://hviding.www3.mpia.de/">Raphael Hviding</a>, who successfully defended in August 2023 before starting as a Postdoctoral Researcher at the Max Planck Institute for Astronomy. 
+      - Commissioned JWST/NIRCam on orbit, as described <a href="https://iopscience.iop.org/article/10.1088/1538-3873/acb293">in Rigby et al. (2023)</a>.
+ 
   - position: Postdoctoral Researcher
     company_name: University of Arizona, Steward Observatory
     company_url: 'www.arizona.edu'
@@ -99,8 +105,8 @@ work:
     summary: |
       Researcher on the JWST/NIRCam Science Team
       - Helped write <a href="https://fenrir.as.arizona.edu/jwstmock/index.html">JAGUAR</a>, <a href="https://github.com/kevinhainline/NIRCPrepareMock">NIRCPrepareMock</a>, and used these to assist in the development of <a href="https://jades-survey.github.io/">JADES</a>.
-      - Mentored Graduate Student Raphael Hviding
-
+	  - Helped test the NIRCam instrument prior to JWST launch.
+	  
   - position: Postdoctoral Researcher
     company_name: Dartmouth College
     company_url: 'www.dartmouth.edu'
@@ -109,7 +115,7 @@ work:
     date_end: 2015-08-15
     summary: |
       Research under Postdoctoral advisor Dr. Ryan Hickox. 
-      - Mentored Undergraduates Raphael Hviding and Alexandros Zervos
+      - Served as Co-Advisor for Dartmouth undergraduate Raphael Hviding and Alexandros Zervos
       - Taught Dartmouth Course "Introduction to the Solar System," Summer 2015
 
 # Skills
