@@ -35,6 +35,8 @@ profiles:
     label: E-mail Me
   - icon: brands/instagram
     url: https://www.instagram.com/kevinhainline
+  - icon: assets/media/bluesky.svg
+    url: https://bsky.app/profile/kevinhainline.bsky.social
   - icon: brands/github
     url: https://github.com/kevinhainline
   - icon: brands/linkedin
