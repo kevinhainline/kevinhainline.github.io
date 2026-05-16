@@ -72,6 +72,7 @@ education:
     date_end: 2006-05-14
     summary: |
       Researched stellar clusters with Dr. Ann Esin. 
+
 work:
   - position: Associate Research Professor
     company_name: University of Arizona, Steward Observatory
@@ -105,7 +106,7 @@ work:
     summary: |
       Researcher on the JWST/NIRCam Science Team
       - Helped write <a href="https://fenrir.as.arizona.edu/jwstmock/index.html">JAGUAR</a>, <a href="https://github.com/kevinhainline/NIRCPrepareMock">NIRCPrepareMock</a>, and used these to assist in the development of <a href="https://jades-survey.github.io/">JADES</a>.
-	  - Helped test the NIRCam instrument prior to JWST launch.
+      - Helped test the NIRCam instrument prior to JWST launch.
 	  
   - position: Postdoctoral Researcher
     company_name: Dartmouth College
