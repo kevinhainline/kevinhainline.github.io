@@ -2,7 +2,7 @@
 
 A community-written practical guide to [eazy-py](https://github.com/gbrammer/eazy-py) — the Python photometric redshift code by Gabriel Brammer.
 
-🌐 **Live site:** https://[yourusername].github.io/eazy-guide/
+🌐 **Live site:** https://kevinhainline.github.io/eazypy_guide/
 
 ## About
 
@@ -21,23 +21,6 @@ This guide covers:
 - Visualization tools
 - Common pitfalls and tips
 - Internal attributes reference
-
-## How to Edit
-
-The entire site is a single `index.html` file with accompanying `style.css` and `main.js`. To update content:
-
-1. Edit `index.html` directly — each section is clearly delimited with HTML comments
-2. Each `<section id="sN">` block corresponds to one guide section
-3. Add new sections by copying an existing `<section>` block, incrementing the ID, and adding a label to the `navLabels` object in `main.js`
-
-## Hosting on GitHub Pages
-
-1. Fork or clone this repo
-2. Go to **Settings → Pages** in your GitHub repo
-3. Under **Source**, select `main` branch and `/ (root)` folder
-4. Click **Save** — your site will be live at `https://[yourusername].github.io/[reponame]/`
-
-No build step required. Pure HTML/CSS/JS.
 
 ## Citation
 
