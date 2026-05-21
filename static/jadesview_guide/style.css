@@ -631,6 +631,14 @@ li { margin-bottom: 6px; }
   letter-spacing: 0.05em;
 }
 
+.responsive-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto; /* Centers the image with some nice vertical breathing room */
+  border-radius: 6px;  /* Optional: gives it a subtle, modern rounded edge */
+}
+
 /* ── Scrollbar styling ── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }

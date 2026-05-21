@@ -61,7 +61,7 @@
       <!-- ═══════════════════════════════════════ -->
       <section id="s1">
         <h2><span class="sec-num">01</span> What is JADESView?</h2>
-        <p>JADESView is a Python script that allows the user to explore the photometric SEDs and imaging thumbnails for sources in the <a href="https://jades-survey.github.io">JWST Advanced Deep Extragalactic Survey</a> (JADES) public data. After downloading the public catalogs and (optionally!) the reduced mosaics, this software will allow the user to run fits to a source or user-supplied list of sources using the code <a href="https://github.com/gbrammer/eazy-py">EAZY</a>, after which it will present the SED, the fit, χ²(z) (or probability as a function of redshift), and (again, optionally) thumbnails for each source using a list of mosaics. JADESView was designed to allow for a quick exploration of source SEDs at multiple redshifts, and can also be used to generate thumbnail fits files centered on the sources along with output SED fit files for use generating manuscript plots. </p>
+        <p>JADESView is a Python script that allows the user to explore the photometric SEDs and imaging thumbnails for sources in the <a href="https://jades-survey.github.io">JWST Advanced Deep Extragalactic Survey</a> (JADES) public data. After downloading the public catalogs and (optionally!) the reduced mosaics, this software will allow the user to run fits to a source or user-supplied list of sources using the code <a href="https://github.com/gbrammer/eazy-py">EAZY</a>, after which it will present the SED, the fit, χ²(z) (or probability as a function of redshift), and (again, optionally) thumbnails for each source using a list of mosaics. JADESView was designed to allow for a quick exploration of source SEDs at multiple redshifts, and can also be used to generate thumbnail .FITS files centered on the sources along with output SED fit files for use generating manuscript plots. </p>
         <p>Because the user is running EAZY as a part of JADESView, it needs to be installed, and the user can explore alternate fits, to understand how trustworthy a given redshift is.</p>
         <div class="callout callout-cite">
           <strong> JADESView is continually being developed. I recommend setting things up for both the JADES GOODS-S and GOODS-N survey areas separately, running it once as is, and then coming back to look at individual files as you see fit.</strong> 
@@ -96,7 +96,7 @@
       <!-- ═══════════════════════════════════════ -->
       <section id="s4">
         <h2><span class="sec-num">04</span> How the Code Works</h2>
-        <p>This tool was designed to allow users to look at SEDs, and EAZY fits to galaxies alongside thumbnails for for objects, assuming the user is pointing to the official JADES photometric catalogs. </p>
+        <p>This tool was designed to allow users to look at SEDs, and EAZY fits to galaxies alongside thumbnails for objects, assuming the user is pointing to the official JADES photometric catalogs. </p>
 
 		<p>JADESView, as discussed in the previous section, requires the installation of EAZY-py, as it serves as a wrapper and visualizer for running this photometric redshift code on sources within the JADES catalog. In addition, the tool requires a number of other python packages, and is written using Python 3.12+. The primary parameters file is <code>JADESView_input_file.dat</code>, and the user will use this to point to the various photometry and mosaic files and also to change how the code is run.</p>
 
@@ -122,7 +122,7 @@
           <div class="step">
             <div class="step-num">4</div>
             <div class="step-body">
-              Finally, a GUI is created on the user's screen with the results of the fit. This GUI is interactive, and allows the user to click on the χ²(z) to plot alternate redshift solutions, P(z), χ² in terms of significance, or to change the size of the thumbnails or output SED plots or thumbnail fits files. 
+              Finally, a GUI is created on the user's screen with the results of the fit. This GUI is interactive, and allows the user to click on the χ²(z) to plot alternate redshift solutions, P(z), χ² in terms of significance, or to change the size of the thumbnails or output SED plots or thumbnail .FITS files. 
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
       <!-- ═══════════════════════════════════════ -->
       <section id="s5">
         <h2><span class="sec-num">05</span>JADESView Parameters</h2>
-        <p>When running JADESView, you'll need to point to a file with various input parameters. There is an example file showing the exact format provided on the <a href="https://github.com/kevinhainline/JADESView">github repo</a>, but the parameters </p>
+        <p>When running JADESView, you'll need to point to a file with various input parameters. There is an example file showing the exact format provided on the <a href="https://github.com/kevinhainline/JADESView">github repo</a>, but the primary parameters are detailed below.</p>
 
         <h3>Input Parameters</h3>
         <div class="param-table">
@@ -141,11 +141,11 @@
           </div>
           <div class="param-row">
             <div class="param-name"><code>convolved</code></div>
-            <div class="param-desc">True for False for whether you want to fit the fluxes derived from images convolved to a common PSF (F444W) in the catalog.</div>
+            <div class="param-desc">True or False for whether you want to fit the fluxes derived from images convolved to a common PSF (F444W) in the catalog.</div>
           </div>
           <div class="param-row">
             <div class="param-name"><code>aperture</code></div>
-            <div class="param-desc">The name for the aperture size you desire to fit: CIRC0 CIRC1, CIRC2, CIRC3, CIRC4, CIRC5, or KRON. Again, <a href="https://jades-survey.github.io/scientists/catalog_index/">the specific values for these are provided</a>. </div>
+            <div class="param-desc">The name for the aperture size you desire to fit: CIRC0, CIRC1, CIRC2, CIRC3, CIRC4, CIRC5, or KRON. Again, <a href="https://jades-survey.github.io/scientists/catalog_index/">the specific values for these are provided</a>. </div>
           </div>
           <div class="param-row">
             <div class="param-name"><code>uncertainty</code></div>
@@ -226,7 +226,7 @@ NRC_F444W 1 /Path/to/Mosaic/File/F444W.fits
 
           <div class="param-row">
             <div class="param-name"><code>generate_thumbnails</code></div>
-            <div class="param-desc">Set to True if you want to skip running EAZY and just create the thumbnail fits files for the source with size  <code>ra_dec_size_value</code>. These files will be created in a directory labeled by the source ID, where you're running JADESView.</div>
+            <div class="param-desc">Set to True if you want to skip running EAZY and just create the thumbnail .FITS files for the source with size  <code>ra_dec_size_value</code>. These files will be created in a directory labeled by the source ID, where you're running JADESView.</div>
           </div>
 
           <div class="param-row">
@@ -241,15 +241,15 @@ NRC_F444W 1 /Path/to/Mosaic/File/F444W.fits
 
           <div class="param-row">
             <div class="param-name"><code>fitsmap_link</code></div>
-            <div class="param-desc">Within the GUI, for each source, you can click a button and it will take you to the position of the object on the JADES "fitsmap" software, a scrollable map of the survey area. For GOODS-S, this should be:
+            <div class="param-desc">Within the GUI, for each source, you can click a button and it will take you to the position of the object on the JADES "Fitsmap" software, a scrollable map of the survey area. For GOODS-S, this should be:
             
-            <p><p><code>https://jades.idies.jhu.edu/goods-s/index.html?ra=RA_VALUE&dec=DEC_VALUE&zoom=10</code>
+            <br><code>https://jades.idies.jhu.edu/goods-s/index.html?ra=RA_VALUE&dec=DEC_VALUE&zoom=10</code>
             
-            <p>while for GOODS-N, it should be:
+            <br>while for GOODS-N, it should be:
             
-            <p><code>https://jades.idies.jhu.edu/goods-n/index.html?ra=RA_VALUE&dec=DEC_VALUE&zoom=10</code>
+            <br><code>https://jades.idies.jhu.edu/goods-n/index.html?ra=RA_VALUE&dec=DEC_VALUE&zoom=10</code>
             
-            <p>The <code>RA_VALUE</code> and <code>DEC_VALUE</code> tags are what the code searches for when creating the link that the button in the GUI uses. 
+            <br>The <code>RA_VALUE</code> and <code>DEC_VALUE</code> tags are what the code searches for when creating the link that the button in the GUI uses.
             </div>
           </div>
 
@@ -271,16 +271,18 @@ NRC_F444W 1 /Path/to/Mosaic/File/F444W.fits
 (jadesview) % python JADESView.py -jv_params JADESView_input_file.dat -idlist list-of-IDs.dat
 (jadesview) % python JADESView.py -jv_params JADESView_input_file.dat -idarglist '5, 6, 7, 8, 9, 10' </code></pre>
 
-		<p> Here's an example plot showing a run on a GOODS-S source, ID 99723:</p>
-		<a href="images/example_run.png"><img src="images/example_run.png" width="600"></img></a>
+		<p>Here's an example plot showing a run on a GOODS-S source, ID 99723:</p>
+		<a href="images/example_run.png" target="_blank" rel="noopener">
+		  <img src="images/example_run.png" alt="Example plot of JADESView run on ID 99723" class="responsive-img">
+		</a>
 
 		<p>In the top left corner the SED is plotted, with the observed photometry provided as red circular points, and the minimum-χ² fit to the source from EAZY provided in blue, with the model photometry corresponding to this fit given with blue squares. The redshift for this fit is given in the top left corner of this plot. Next to the SED, on the right, is the χ²(z) surface in orange, with a blue vertical line showing the minimum χ² value, presented in the key. In shades of grey are the 1σ uncertainties for the fit, which are also provided in the key. For more information about these uncertainties, see <a href="https://kevinhainline.github.io/eazypy_guide/#s8">this portion of my EAZY-py Users Guide</a>. If you click on this right plot, a new fit will be shown on the left, with the χ² value, showing fits from EAZY at those alternate redshifts.</p>
 		
-		<p>Below these plots are the thumbnails for each provided filter, with the thumbnail size specified in the box at bottom, or the vlaue of <code>ra_dec_size_value</code> on startup. At the top of each thumbnail is the filter name, and the bottom shows the flux signal-to-noise ratio for that filter.</p>
+		<p>Below these plots are the thumbnails for each provided filter, with the thumbnail size specified in the box at bottom, or the value of <code>ra_dec_size_value</code> on startup. At the top of each thumbnail is the filter name, and the bottom shows the flux signal-to-noise ratio for that filter.</p>
 		
 		<p>Finally, at the bottom are values the user can specify, or buttons to change the plots. The user can provide a new ID from their input list in the far left box, they can change the wavelength (<code>X</code>) or flux (<code>Y</code>) limits in the next boxes. They can input their own alternate redshift (in lieu of clicking on the χ² plot, for more precision) in the final input box on the left. The "Previous" and "Next" buttons advance through the list of IDs. On the right there is an input box to change the size of the thumbnails, and then there's a button that will change from plotting χ² to plotting the square-root of the difference between the χ² corresponding to all redshifts and the redshift at the minimum χ², which is the statistical significance of the different fits. The next button, "P(z)", changes the plot from χ² to a probability surface. There's a box that allows you to change the maximum χ² you plot on the right panel.</p>
 		
-		<p> Along the bottom are buttons that, on the left: Update the plot based on the input values and Reset the Axes to the standard values. On the right, there's a button that opens up your default browser and takes you to the Fitsmap focused on the source, a button that Saves the thumbnails as individual fits files, a button that Saves the EAZY SED at the current redshift being shown, and the χ²(z) surface as a pair of text files, a button that saves the whole GUI, as is, as a .png file, and finally, a button to Quit JADESView.</p>
+		<p> Along the bottom are buttons that, on the left: Update the plot based on the input values and Reset the Axes to the standard values. On the right, there's a button that opens up your default browser and takes you to the Fitsmap focused on the source, a button that Saves the thumbnails as individual .FITS files, a button that Saves the EAZY SED at the current redshift being shown, and the χ²(z) surface as a pair of text files, a button that saves the whole GUI, as is, as a .png file, and finally, a button to Quit JADESView.</p>
 
       </section>
 
@@ -303,6 +305,8 @@ NRC_F444W 1 /Path/to/Mosaic/File/F444W.fits
               <strong>Watch out for the tempfilt mismatch.</strong> It is important that you make sure, if you're using a tempfilt.pkl file, to only use this file if you're not changing the EAZY properties, and most importantly, the redshift and templates. Essentially, the usage of a tempfilt.pkl file is good if you want to set things up such that you can go back and look closely at fits and thumbnails for different sources, quickly.
             </div>
           </div>
+        
+        </div>
 
        </section>
 
