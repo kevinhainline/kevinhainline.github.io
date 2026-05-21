@@ -6,6 +6,6 @@ tags:
   - JADES
 ---
 
-Visualizer of JADES images/cutouts along with SED fits for individual objects.
+Visualizer for JADES images/cutouts along with SED fits from EAZY for individual objects. Allows for the user to create thumbnails and SED/fit files for creating external plots. [You can read more about how to use JADESView with this Users Guide here](https://https://kevinhainline.github.io/jadesview_guide/).
 
 <!--more-->
