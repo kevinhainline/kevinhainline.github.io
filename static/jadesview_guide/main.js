@@ -1,5 +1,5 @@
 /* ===================================================
-   EAZY-py User's Guide — main.js
+   JADESView Users Guide — main.js
    =================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
