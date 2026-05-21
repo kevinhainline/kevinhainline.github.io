@@ -6,6 +6,6 @@ tags:
   - JADES
 ---
 
-Visualizer for JADES sources. [You can read more about how to use JADESView in this Users Guide here](https://https://kevinhainline.github.io/jadesview_guide/).
+Visualizer for JADES source SEDs and thumbnails.
 
 <!--more-->
